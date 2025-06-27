@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:auto_scroll_row/auto_scroll_row.dart';
 import 'package:barcontent/screen/design/design3/controller/design3_controller.dart';
 import 'package:barcontent/screen/design/design3/widgets/design3_item.dart';
+import 'package:barcontent/screen/design/design4/controller/design4_controller.dart';
+import 'package:barcontent/screen/design/design4/widgets/design4_item.dart';
+import 'package:barcontent/screen/design/design5/controller/design5_controller.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
@@ -10,17 +13,18 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_gradient_picker/flutter_gradient_picker.dart';
 
-class Design3 extends StatefulWidget {
-  const Design3({super.key});
+class Design5 extends StatefulWidget {
+  const Design5({super.key});
 
   @override
-  State<Design3> createState() => _Design3State();
+  State<Design5> createState() => _Design5State();
 }
 
-class _Design3State extends State<Design3> {
+class _Design5State extends State<Design5> {
   final GlobalKey<ScaffoldState> _Key = GlobalKey<ScaffoldState>();
-  final design3Controller designController = Get.put(design3Controller());
+  final Design5Controller designController = Get.put(Design5Controller());
   TextEditingController videoTimer = TextEditingController();
   double containerSize = 360;
   final ScrollController _scrollController = ScrollController();
@@ -45,7 +49,7 @@ class _Design3State extends State<Design3> {
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<design3Controller>(builder: (controller) {
+      body: GetBuilder<Design5Controller>(builder: (controller) {
         return Stack(
           children: [
             Positioned(
@@ -58,12 +62,25 @@ class _Design3State extends State<Design3> {
                   child: Container(
                     width: containerSize, // You can change this value
                     decoration: BoxDecoration(
-                      color: controller.backgroundColor,
+                      gradient: controller.backgroundGradient,
                     ),
                     child: Container(
                       height: Get.height,
                       child: Column(
                         children: [
+                          Container(
+                            width: (containerSize - 40),
+                            alignment: Alignment.center,
+                            margin: spacing(v: 10),
+                            child: Text(
+                              controller.title.text,
+                              style: GoogleFonts.manrope(
+                                fontWeight: FontWeight.bold,
+                                color: controller.titleFontColor,
+                                fontSize: controller.titleFontSize,
+                              ),
+                            ),
+                          ),
                           Container(
                             color: greyColor,
                             height: designController.logoSize,
@@ -73,24 +90,27 @@ class _Design3State extends State<Design3> {
                                 Expanded(
                                   child: FlagSection(
                                     designController.logo1.text,
+                                    designController.name1.text,
                                   ),
                                 ),
                                 Expanded(
-                                  child:
-                                      FlagSection(designController.logo2.text),
+                                  child: FlagSection(
+                                      designController.logo2.text,
+                                      designController.name2.text),
                                 ),
                               ],
                             ),
                           ),
                           Expanded(
                             child: SingleChildScrollView(
-                              padding: spaceOnly(bottom: 60),
+                              padding: spaceOnly(bottom: 70),
                               controller: controller.scrollController,
                               child: Column(
                                 children: controller.itemsList,
                               ),
                             ),
-                          )
+                          ),
+                          gap(h: 20),
                         ],
                       ),
                     ),
@@ -150,36 +170,72 @@ class _Design3State extends State<Design3> {
     );
   }
 
-  Widget FlagSection(String image) {
-    return Container(
-      margin: spacing(h: 10, v: 10),
-      decoration: BoxDecoration(
-        color: whiteColor,
-        borderRadius: borderRadius(designController.logoRadius),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x26442A7C),
-            blurRadius: 28.68,
-            offset: Offset(0, 28.68),
-            spreadRadius: 0,
+  Widget FlagSection(String image, String name) {
+    return Column(
+      children: [
+        Container(
+          margin: spacing(h: 10, v: 10),
+          decoration: BoxDecoration(
+            color: whiteColor,
+            borderRadius: borderRadius(designController.logoRadius),
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x26442A7C),
+                blurRadius: 28.68,
+                offset: Offset(0, 28.68),
+                spreadRadius: 0,
+              ),
+              BoxShadow(
+                color: Color(0x26442A7C),
+                blurRadius: 28.68,
+                offset: Offset(0, 28.68),
+                spreadRadius: 0,
+              )
+            ],
           ),
-          BoxShadow(
-            color: Color(0x26442A7C),
-            blurRadius: 28.68,
-            offset: Offset(0, 28.68),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: borderRadius(designController.logoRadius),
-        child: CachedNetworkImage(
-          imageUrl: image.isNotEmpty
-              ? image
-              : 'https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg',
-          fit: BoxFit.cover,
+          child: ClipRRect(
+            borderRadius: borderRadius(designController.logoRadius),
+            child: CachedNetworkImage(
+              imageUrl: image.isNotEmpty
+                  ? image
+                  : 'https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-      ),
+        Container(
+          width: double.infinity,
+          margin: spacing(h: 15),
+          padding: spacing(v: 5),
+          decoration: BoxDecoration(
+            color: whiteColor,
+            borderRadius: borderRadius(designController.logoRadius),
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x26442A7C),
+                blurRadius: 28.68,
+                offset: Offset(0, 28.68),
+                spreadRadius: 0,
+              ),
+              BoxShadow(
+                color: Color(0x26442A7C),
+                blurRadius: 28.68,
+                offset: Offset(0, 28.68),
+                spreadRadius: 0,
+              )
+            ],
+          ),
+          child: Text(
+            name,
+            style: GoogleFonts.manrope(
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              color: halfBlack,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
     );
   }
 
@@ -251,7 +307,7 @@ class _Design3State extends State<Design3> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 400,
+                  width: 300,
                   height: 50,
                   padding: spacing(
                     h: 14,
@@ -287,82 +343,236 @@ class _Design3State extends State<Design3> {
                   ),
                 ),
                 gap(h: 10),
-                Text('Logo1'),
-                gap(h: 5),
-                Container(
-                  width: 400,
-                  height: 50,
-                  padding: spacing(
-                    h: 14,
-                  ),
-                  decoration: BoxDecoration(
-                      color: whiteColor,
-                      boxShadow: shadow,
-                      borderRadius: borderRadius(50),
-                      border: Border.all(
-                        width: 2,
-                        color: halfBlack,
-                      )),
-                  child: TextFormField(
-                    controller: designController.logo1,
-                    onChanged: (x) {
-                      setState(() {});
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Enter First Image Url',
-                      border: InputBorder.none,
-                      hintStyle: GoogleFonts.manrope(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: halfBlack,
-                      ),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Title'),
+                        gap(h: 5),
+                        Container(
+                          width: 300,
+                          height: 50,
+                          padding: spacing(
+                            h: 14,
+                          ),
+                          decoration: BoxDecoration(
+                              color: whiteColor,
+                              boxShadow: shadow,
+                              borderRadius: borderRadius(50),
+                              border: Border.all(
+                                width: 2,
+                                color: halfBlack,
+                              )),
+                          child: TextFormField(
+                            controller: designController.title,
+                            onChanged: (x) {
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Enter Title',
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.manrope(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: halfBlack,
+                              ),
+                            ),
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ],
                     ),
-                    style: GoogleFonts.manrope(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: halfBlack,
-                    ),
-                    keyboardType: TextInputType.text,
-                  ),
+                  ],
                 ),
                 gap(h: 10),
-                Text('Logo2'),
-                gap(h: 5),
-                Container(
-                  width: 400,
-                  height: 50,
-                  padding: spacing(
-                    h: 14,
-                  ),
-                  decoration: BoxDecoration(
-                      color: whiteColor,
-                      boxShadow: shadow,
-                      borderRadius: borderRadius(50),
-                      border: Border.all(
-                        width: 2,
-                        color: halfBlack,
-                      )),
-                  child: TextFormField(
-                    controller: designController.logo2,
-                    onChanged: (x) {
-                      setState(() {});
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Enter 2nd Image Url',
-                      border: InputBorder.none,
-                      hintStyle: GoogleFonts.manrope(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: halfBlack,
-                      ),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Name1'),
+                        gap(h: 5),
+                        Container(
+                          width: 300,
+                          height: 50,
+                          padding: spacing(
+                            h: 14,
+                          ),
+                          decoration: BoxDecoration(
+                              color: whiteColor,
+                              boxShadow: shadow,
+                              borderRadius: borderRadius(50),
+                              border: Border.all(
+                                width: 2,
+                                color: halfBlack,
+                              )),
+                          child: TextFormField(
+                            controller: designController.name1,
+                            onChanged: (x) {
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Enter Name',
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.manrope(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: halfBlack,
+                              ),
+                            ),
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ],
                     ),
-                    style: GoogleFonts.manrope(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: halfBlack,
+                    gap(w: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Logo1'),
+                        gap(h: 5),
+                        Container(
+                          width: 300,
+                          height: 50,
+                          padding: spacing(
+                            h: 14,
+                          ),
+                          decoration: BoxDecoration(
+                              color: whiteColor,
+                              boxShadow: shadow,
+                              borderRadius: borderRadius(50),
+                              border: Border.all(
+                                width: 2,
+                                color: halfBlack,
+                              )),
+                          child: TextFormField(
+                            controller: designController.logo1,
+                            onChanged: (x) {
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Enter First Image Url',
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.manrope(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: halfBlack,
+                              ),
+                            ),
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ],
                     ),
-                    keyboardType: TextInputType.text,
-                  ),
+                  ],
+                ),
+                gap(h: 10),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Name2'),
+                        gap(h: 5),
+                        Container(
+                          width: 300,
+                          height: 50,
+                          padding: spacing(
+                            h: 14,
+                          ),
+                          decoration: BoxDecoration(
+                              color: whiteColor,
+                              boxShadow: shadow,
+                              borderRadius: borderRadius(50),
+                              border: Border.all(
+                                width: 2,
+                                color: halfBlack,
+                              )),
+                          child: TextFormField(
+                            controller: designController.name2,
+                            onChanged: (x) {
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Enter Name2',
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.manrope(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: halfBlack,
+                              ),
+                            ),
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ],
+                    ),
+                    gap(w: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Logo2'),
+                        gap(h: 5),
+                        Container(
+                          width: 300,
+                          height: 50,
+                          padding: spacing(
+                            h: 14,
+                          ),
+                          decoration: BoxDecoration(
+                              color: whiteColor,
+                              boxShadow: shadow,
+                              borderRadius: borderRadius(50),
+                              border: Border.all(
+                                width: 2,
+                                color: halfBlack,
+                              )),
+                          child: TextFormField(
+                            controller: designController.logo2,
+                            onChanged: (x) {
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Enter 2nd Image Url',
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.manrope(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: halfBlack,
+                              ),
+                            ),
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -379,6 +589,8 @@ class _Design3State extends State<Design3> {
                 boxShadow: shadow,
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,22 +623,6 @@ class _Design3State extends State<Design3> {
                         },
                         decrease: () {
                           designController.logoSize--;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                      ),
-                      FontSizer(
-                        hintText: 'Value Text Font Size',
-                        fontSize: designController.valueFontSize.toInt(),
-                        increase: () {
-                          designController.valueFontSize++;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueFontSize--;
                           designController.update();
 
                           setState(() {});
@@ -528,6 +724,13 @@ class _Design3State extends State<Design3> {
                           setState(() {});
                         },
                       ),
+                    ],
+                  ),
+                  gap(w: 40),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
                       FontSizer(
                         hintText: 'Name Text Font Size',
                         fontSize: designController.nameTextSize.toInt(),
@@ -542,13 +745,6 @@ class _Design3State extends State<Design3> {
                           setState(() {});
                         },
                       ),
-                    ],
-                  ),
-                  gap(w: 40),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
                       ColorPickerItem(
                         hintText: 'Name Font Color',
                         pickerTap: () {
@@ -561,6 +757,22 @@ class _Design3State extends State<Design3> {
                           );
                         },
                         currentColor: designController.nameFontColor,
+                      ),
+                      FontSizer(
+                        hintText: 'Value Text Font Size',
+                        fontSize: designController.valueFontSize.toInt(),
+                        increase: () {
+                          designController.valueFontSize++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.valueFontSize--;
+                          designController.update();
+
+                          setState(() {});
+                        },
                       ),
                       ColorPickerItem(
                         hintText: 'Value Container Animation Color',
@@ -615,31 +827,83 @@ class _Design3State extends State<Design3> {
                         },
                         currentColor: designController.valueFontColor,
                       ),
+                      FontSizer(
+                        hintText: 'Title Font Size',
+                        fontSize: designController.titleFontSize.toInt(),
+                        increase: () {
+                          designController.titleFontSize++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.titleFontSize--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
                       ColorPickerItem(
                         hintText: 'Title Text Color',
                         pickerTap: () {
                           colorPicker(
-                            currentColor: designController.smallFontColor,
+                            currentColor: designController.titleFontColor,
                             onChange: (color) {
-                              designController.smallFontColor = color;
+                              designController.titleFontColor = color;
                               designController.update();
                             },
                           );
                         },
-                        currentColor: designController.smallFontColor,
+                        currentColor: designController.titleFontColor,
                       ),
-                      ColorPickerItem(
-                        hintText: 'Background Color',
-                        pickerTap: () {
-                          colorPicker(
-                            currentColor: designController.backgroundColor,
-                            onChange: (color) {
-                              designController.backgroundColor = color;
-                              designController.update();
-                            },
-                          );
-                        },
-                        currentColor: designController.backgroundColor,
+                 
+                      Container(
+                        width: Get.width * 0.2,
+                        margin: spacing(v: 7),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Background Gradient:'),
+                                Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                    designController.showBackgroundGradient =
+                                        !designController
+                                            .showBackgroundGradient;
+                                    designController.update();
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      gradient:
+                                          designController.backgroundGradient,
+                                      borderRadius: borderRadius(25),
+                                      boxShadow: shadow,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            gap(h: 10),
+                            designController.showBackgroundGradient
+                                ? Container(
+                                    width: Get.width * 0.2,
+                                    child: FlutterGradientPicker(
+                                      onGradientChanged: (gradient) {
+                                        designController.backgroundGradient =
+                                            gradient;
+                                        designController.update();
+                                        setState(() {});
+                                      },
+                                    ),
+                                  )
+                                : gap(),
+                          ],
+                        ),
                       ),
                     ],
                   ),
