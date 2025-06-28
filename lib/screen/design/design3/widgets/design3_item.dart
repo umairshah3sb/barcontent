@@ -41,7 +41,7 @@ class _Design3ItemState extends State<Design3Item> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<Design4Controller>(builder: (controller) {
+    return GetBuilder<design3Controller>(builder: (controller) {
       return Container(
         width: controller.dataContainerWidth,
         margin: spacing(v: controller.dataContainerSpacing),
