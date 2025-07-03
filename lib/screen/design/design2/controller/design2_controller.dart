@@ -8,6 +8,7 @@ class design2Controller extends GetxController {
   List<dynamic> csvData = [design2Data, design2Data, design2Data];
   bool isGenerating = false;
   bool enableScroll = false;
+  bool hideIndex = false;
   double nameFontSize = 45;
   int itemsPerScreen = 4;
   double largTextSize = 90;

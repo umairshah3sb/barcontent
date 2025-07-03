@@ -653,6 +653,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  typethis:
+    dependency: "direct main"
+    description:
+      name: typethis
+      sha256: faeb206f5fc3159f3b177ebe0b298aafc5845d8fd3b2f7f9ef34699176adc090
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  typewrite_text:
+    dependency: "direct main"
+    description:
+      name: typewrite_text
+      sha256: "8c18f9f5d9d8a98e20ac5b433a4a804af509b6d0d1d4f3df7a69eeda44ea5042"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  typewritertext:
+    dependency: "direct main"
+    description:
+      name: typewritertext
+      sha256: c6b90cdc9f7fd7ae3235d9c926012000f7a1765cd49d67b78370dc61123212b2
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.9"
   uuid:
     dependency: transitive
     description:

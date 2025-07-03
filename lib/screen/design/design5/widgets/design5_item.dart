@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:math';
 
-import 'package:barcontent/screen/design/design3/controller/design3_controller.dart';
-import 'package:barcontent/screen/design/design4/controller/design4_controller.dart';
 import 'package:barcontent/screen/design/design5/controller/design5_controller.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:typewritertext/typewritertext.dart';
 
 class Design5Item extends StatefulWidget {
   int sec;
@@ -29,7 +27,24 @@ class _Design5ItemState extends State<Design5Item>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
+  TypeWriterController? tcontroller;
+  TypeWriterController? t2controller;
   AnimateDesign() {
+    Timer(Duration(seconds: widget.sec), () {
+      tcontroller = TypeWriterController(
+        text: widget.data['value1'].toString(),
+        duration: const Duration(milliseconds: 100),
+      );
+      setState(() {});
+
+      Timer(Duration(seconds: 1), () {
+        t2controller = TypeWriterController(
+          text: widget.data['value2'].toString(),
+          duration: const Duration(milliseconds: 100),
+        );
+        setState(() {});
+      });
+    });
     _controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: widget.sec),
@@ -74,28 +89,58 @@ class _Design5ItemState extends State<Design5Item>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ScaleTransition(
-                              scale: _scaleAnimation,
-                              child: Text(
-                                widget.data['value1'].toString(),
-                                style: GoogleFonts.manrope(
-                                  fontWeight: FontWeight.bold,
-                                  color: controller.valueFontColor,
-                                  fontSize: controller.valueFontSize,
-                                ),
-                              ),
-                            ),
-                            ScaleTransition(
-                              scale: _scaleAnimation,
-                              child: Text(
-                                widget.data['value2'].toString(),
-                                style: GoogleFonts.manrope(
-                                  fontWeight: FontWeight.bold,
-                                  color: controller.valueFontColor,
-                                  fontSize: controller.valueFontSize,
-                                ),
-                              ),
-                            ),
+                            tcontroller != null
+                                ? TypeWriter(
+                                    controller:
+                                        tcontroller, // valueController // streamController
+                                    builder: (context, value) {
+                                      return Text(
+                                        value.text,
+                                        style: GoogleFonts.manrope(
+                                          fontWeight: FontWeight.bold,
+                                          color: controller.valueFontColor,
+                                          fontSize: controller.valueFontSize,
+                                        ),
+                                      );
+                                    })
+                                : gap(),
+                            // ScaleTransition(
+                            //   scale: _scaleAnimation,
+                            //   child: Text(
+                            //     widget.data['value1'].toString(),
+                            //     style: GoogleFonts.manrope(
+                            //       fontWeight: FontWeight.bold,
+                            //       color: controller.valueFontColor,
+                            //       fontSize: controller.valueFontSize,
+                            //     ),
+                            //   ),
+                            // ),
+                            t2controller != null
+                                ? TypeWriter(
+                                    controller:
+                                        t2controller, // valueController // streamController
+                                    builder: (context, value) {
+                                      return Text(
+                                        value.text,
+                                        style: GoogleFonts.manrope(
+                                          fontWeight: FontWeight.bold,
+                                          color: controller.valueFontColor,
+                                          fontSize: controller.valueFontSize,
+                                        ),
+                                      );
+                                    })
+                                : gap(),
+                            // ScaleTransition(
+                            //   scale: _scaleAnimation,
+                            //   child: Text(
+                            //     widget.data['value2'].toString(),
+                            //     style: GoogleFonts.manrope(
+                            //       fontWeight: FontWeight.bold,
+                            //       color: controller.valueFontColor,
+                            //       fontSize: controller.valueFontSize,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -114,8 +159,7 @@ class _Design5ItemState extends State<Design5Item>
                   width: controller.picContainerSize,
                   height: controller.picContainerSize,
                   decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: borderRadius(100),
+                    borderRadius: borderRadius(controller.picContainerRadius),
                     boxShadow: [
                       BoxShadow(
                         color: Color(0x26442A7C),

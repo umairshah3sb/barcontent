@@ -1,16 +1,13 @@
 import 'dart:async';
 
-import 'package:barcontent/screen/design/design3/widgets/design3_item.dart';
-import 'package:barcontent/screen/design/design4/widgets/design4_item.dart';
-import 'package:barcontent/screen/design/design5/widgets/design5_item.dart';
+import 'package:barcontent/screen/design/Design6/widgets/Design6_item.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
-import 'package:barcontent/util/helper.dart';
 
-class Design5Controller extends GetxController {
+class Design6Controller extends GetxController {
   List<dynamic> csvData = [];
+  Map<String, dynamic> currentItems = {};
   TextEditingController title = TextEditingController();
-  TextEditingController title2 = TextEditingController();
   TextEditingController logo1 = TextEditingController();
   TextEditingController logo2 = TextEditingController();
   TextEditingController name1 = TextEditingController();
@@ -42,7 +39,9 @@ class Design5Controller extends GetxController {
 
   double titleFontSize = 40;
   Color titleFontColor = halfBlack;
-  Color titleBackgroundColor = Colors.green;
+
+  double countryNameFontSize = 40;
+  Color countryNameFontColor = halfBlack;
 
   int animationGap = 3;
   Color backgroundColor = whiteColor;
@@ -72,24 +71,15 @@ class Design5Controller extends GetxController {
     });
   }
 
-  addItems() {
+  addItems() async {
     itemsList = [];
     if (csvData.isNotEmpty) {
       for (var i = 0; i < csvData.length; i++) {
-        print(csvData[i]);
-        itemsList.add(
-          Design5Item(
-            data: csvData[i],
-            sec: ((i + 1) * animationGap),
-          ),
-        );
-      }
-      Timer(Duration(seconds: animationGap * 4), () {
-        scrollToBottom(((csvData.length - 4) * animationGap));
+        currentItems = csvData[i];
         update();
-      });
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
-    
     update();
   }
 }
