@@ -53,6 +53,8 @@ dependencies:
   typewritertext: ^3.0.9
   typewrite_text: ^1.0.3
   typethis: ^1.0.3
+  auto_size_text: ^3.0.0
+  text_style_editor: ^1.1.1
 
 dev_dependencies:
   flutter_test:

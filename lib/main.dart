@@ -1,3 +1,4 @@
+import 'package:barcontent/screen/design/design11/design11.dart';
 import 'package:barcontent/screen/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Home(),
+      home: false ? Design11() : Home(),
     );
   }
 }

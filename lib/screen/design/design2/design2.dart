@@ -140,7 +140,15 @@ class _Design2State extends State<Design2> {
                     width: width,
                     height: Get.height * 0.4,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: getRandomColor(),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          getRandomColor(),
+                          getRandomColor(),
+                        ],
+                      ),
                     ),
                     child: CachedNetworkImage(
                       imageUrl: data['pic1'],

@@ -1,13 +1,13 @@
 import 'dart:async';
-import 'package:barcontent/screen/design/design6/widgets/design6_item.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 
-class Design6Controller extends GetxController {
+class Design11Controller extends GetxController {
   List<dynamic> csvData = [];
   Map<String, dynamic> dumyData = {
     'value1': '180',
     'value2': '170',
+    'value3': '170',
     'name': 'Nuclear Warheads',
     'pic':
         'https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg',
@@ -16,8 +16,10 @@ class Design6Controller extends GetxController {
   TextEditingController title = TextEditingController();
   TextEditingController logo1 = TextEditingController();
   TextEditingController logo2 = TextEditingController();
+  TextEditingController logo3 = TextEditingController();
   TextEditingController name1 = TextEditingController();
   TextEditingController name2 = TextEditingController();
+  TextEditingController name3 = TextEditingController();
   TextEditingController backgroundImage = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
@@ -29,23 +31,26 @@ class Design6Controller extends GetxController {
   int itemsPerScreen = 4;
   int currentIndex = 0;
 
-  double valueFontSize = 18;
-  double valueContainerSize = 70;
-  Color valueFontColor = halfBlack;
+  double valueFontSize = 30;
+  double valueContainerSize = 220;
+  Color valueFontColor = whiteColor;
   Color valueContainerLeft = HexColor('#919191');
   Color valueContainerRight = HexColor('#919191');
   Color valueContainerAnimation = Colors.blue;
   double picContainerSize = 100;
   double picContainerRadius = 8;
-  double dataContainerHeight = 45;
+  double dataContainerHeight = Get.height * 0.75;
   double dataContainerSpacing = 5;
   double dataContainerWidth = 430;
 
-  double nameTextSize = 20;
-  Color nameFontColor = halfBlack;
+  double nameTextSize = 40;
+  Color nameContainerColor = halfBlack;
+  Color nameFontColor = whiteColor;
 
   double titleFontSize = 40;
   Color titleFontColor = halfBlack;
+  double subtitleFontSize = 40;
+  Color subtitleFontColor = halfBlack;
 
   double countryNameFontSize = 40;
   double countryFlagSize = 100;

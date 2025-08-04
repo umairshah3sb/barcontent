@@ -90,57 +90,55 @@ class _Design5ItemState extends State<Design5Item>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             tcontroller != null
-                                ? TypeWriter(
-                                    controller:
-                                        tcontroller, // valueController // streamController
-                                    builder: (context, value) {
-                                      return Text(
-                                        value.text,
-                                        style: GoogleFonts.manrope(
-                                          fontWeight: FontWeight.bold,
-                                          color: controller.valueFontColor,
-                                          fontSize: controller.valueFontSize,
-                                        ),
-                                      );
-                                    })
+                                ? Container(
+                                    width: controller.valueWidth,
+                                    height: controller.dataContainerHeight,
+                                    alignment: Alignment.centerRight,
+                                    child: FittedBox(
+                                      child: TypeWriter(
+                                          controller:
+                                              tcontroller, // valueController // streamController
+                                          builder: (context, value) {
+                                            return Text(
+                                              value.text,
+                                              style: GoogleFonts.manrope(
+                                                fontWeight: FontWeight.bold,
+                                                color:
+                                                    controller.valueFontColor,
+                                                fontSize:
+                                                    controller.valueFontSize,
+                                              ),
+                                              maxLines: 2,
+                                            );
+                                          }),
+                                    ),
+                                  )
                                 : gap(),
-                            // ScaleTransition(
-                            //   scale: _scaleAnimation,
-                            //   child: Text(
-                            //     widget.data['value1'].toString(),
-                            //     style: GoogleFonts.manrope(
-                            //       fontWeight: FontWeight.bold,
-                            //       color: controller.valueFontColor,
-                            //       fontSize: controller.valueFontSize,
-                            //     ),
-                            //   ),
-                            // ),
                             t2controller != null
-                                ? TypeWriter(
-                                    controller:
-                                        t2controller, // valueController // streamController
-                                    builder: (context, value) {
-                                      return Text(
-                                        value.text,
-                                        style: GoogleFonts.manrope(
-                                          fontWeight: FontWeight.bold,
-                                          color: controller.valueFontColor,
-                                          fontSize: controller.valueFontSize,
-                                        ),
-                                      );
-                                    })
+                                ? Container(
+                                    width: controller.valueWidth,
+                                    height: controller.dataContainerHeight,
+                                    alignment: Alignment.centerLeft,
+                                    child: FittedBox(
+                                      child: TypeWriter(
+                                          controller:
+                                              t2controller, // valueController // streamController
+                                          builder: (context, value) {
+                                            return Text(
+                                              value.text,
+                                              style: GoogleFonts.manrope(
+                                                fontWeight: FontWeight.bold,
+                                                color:
+                                                    controller.valueFontColor,
+                                                fontSize:
+                                                    controller.valueFontSize,
+                                              ),
+                                              maxLines: 2,
+                                            );
+                                          }),
+                                    ),
+                                  )
                                 : gap(),
-                            // ScaleTransition(
-                            //   scale: _scaleAnimation,
-                            //   child: Text(
-                            //     widget.data['value2'].toString(),
-                            //     style: GoogleFonts.manrope(
-                            //       fontWeight: FontWeight.bold,
-                            //       color: controller.valueFontColor,
-                            //       fontSize: controller.valueFontSize,
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -183,6 +181,7 @@ class _Design5ItemState extends State<Design5Item>
                       padding: const EdgeInsets.all(8.0),
                       child: CachedNetworkImage(
                         imageUrl: widget.data['pic'],
+                        color: controller.picIconColor,
                         fit: BoxFit.cover,
                       ),
                     ),

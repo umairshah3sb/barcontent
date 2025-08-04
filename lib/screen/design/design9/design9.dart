@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:barcontent/screen/design/design5/controller/design5_controller.dart';
+
+import 'package:barcontent/screen/design/design9/controller/design9_controller.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
@@ -9,43 +10,28 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gradient_picker/flutter_gradient_picker.dart';
+import 'package:text_style_editor/text_style_editor.dart';
+import 'package:typewritertext/typewritertext.dart';
 
-class Design5 extends StatefulWidget {
-  const Design5({super.key});
+class Design9 extends StatefulWidget {
+  const Design9({super.key});
 
   @override
-  State<Design5> createState() => _Design5State();
+  State<Design9> createState() => _Design9State();
 }
 
-class _Design5State extends State<Design5> {
+class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _Key = GlobalKey<ScaffoldState>();
-  final Design5Controller designController = Get.put(Design5Controller());
+  final Design9Controller designController = Get.put(Design9Controller());
   TextEditingController videoTimer = TextEditingController();
-  double containerSize = 360;
-  final ScrollController _scrollController = ScrollController();
-
-  void _scrollToBottom() {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    _scrollController.animateTo(
-      maxScroll,
-      duration: Duration(seconds: 2),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose(); // Always dispose the controller!
-    super.dispose();
-  }
+  TypeWriterController? tcontroller;
 
   @override
   Widget build(BuildContext context) {
-    Offset distance = const Offset(10, 10);
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<Design5Controller>(builder: (controller) {
+      body: GetBuilder<Design9Controller>(builder: (controller) {
         return Stack(
           children: [
             Positioned(
@@ -55,21 +41,38 @@ class _Design5State extends State<Design5> {
               child: Center(
                 child: AspectRatio(
                   aspectRatio: 9 / 16,
-                  child: Container(
-                    height: Get.height,
-                    width: containerSize, // You can change this value
-                    decoration: BoxDecoration(
-                      gradient: controller.backgroundGradient,
-                    ),
-                    child: controller.backgroundImage.text.isNotEmpty
-                        ? Opacity(
-                            opacity: (controller.backgroundImageOpacity / 10),
-                            child: Image.network(
-                              controller.backgroundImage.text,
-                              fit: BoxFit.cover,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: Get.height,
+                        width: controller
+                            .dataContainerWidth, // You can change this value
+                        decoration: BoxDecoration(
+                          gradient: controller.backgroundGradient,
+                        ),
+                        child: controller.backgroundImage.text.isNotEmpty
+                            ? Opacity(
+                                opacity:
+                                    (controller.backgroundImageOpacity / 10),
+                                child: Image.network(
+                                  controller.backgroundImage.text,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : gap(),
+                      ),
+                      Positioned(
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: controller.backgroundGradient,
                             ),
-                          )
-                        : gap(),
+                            height: Get.height,
+                            width: controller.dataContainerWidth,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -82,122 +85,76 @@ class _Design5State extends State<Design5> {
                 child: AspectRatio(
                   aspectRatio: 9 / 16,
                   child: Container(
-                    width: containerSize, // You can change this value
+                    width: controller
+                        .dataContainerWidth, // You can change this value
                     height: Get.height,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          padding: spacing(h: 15, v: 7),
-                          alignment: Alignment.center,
-                          decoration: true
-                              ? BoxDecoration(
-                                  color: controller.titleBackgroundColor,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey[500]!,
-                                      offset: distance,
-                                      blurRadius: 20,
-                                      spreadRadius: 1,
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.white,
-                                      offset: -distance,
-                                      blurRadius: 20,
-                                      spreadRadius: 1,
-                                    )
-                                  ],
-                                )
-                              : BoxDecoration(
-                                  color: controller.titleBackgroundColor,
-                                ),
-                          child: Text(
-                            controller.title.text,
-                            style: GoogleFonts.manrope(
-                              fontWeight: FontWeight.bold,
-                              color: controller.titleFontColor,
-                              fontSize: controller.titleFontSize,
-                              shadows: [
-                                Shadow(
-                                  color: controller.titleShadowColor,
-                                  offset: Offset.zero,
-                                  blurRadius: 10,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          color: greyColor,
-                          height: designController.logoSize,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    margin: spacing(
+                      v: controller.dataContainerMarginV,
+                      h: controller.dataContainerMarginH,
+                    ),
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Stack(
                             children: [
-                              Expanded(
-                                child: FlagSection(
-                                  designController.logo1.text,
-                                  designController.name1.text,
+                              Container(
+                                height: controller.logoContainerHeight,
+                                width: controller.dataContainerWidth,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    FlagSection(
+                                      designController.logo1.text,
+                                      designController.name1.text,
+                                      isFirst: true,
+                                    ),
+                                    FlagSection(
+                                      designController.logo2.text,
+                                      designController.name2.text,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Expanded(
-                                child: FlagSection(designController.logo2.text,
-                                    designController.name2.text),
-                              ),
+                              Positioned(
+                                left: 0,
+                                right: 0,
+                                top: 15,
+                                child: Center(
+                                  child: Container(
+                                    width: controller.titleContainerWidth,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      controller.title.text,
+                                      style: controller.titleTextStyle.copyWith(
+                                        color: controller.titleFontColor,
+                                        shadows: [
+                                          Shadow(
+                                            color: controller.titleShadowColor,
+                                            offset: Offset.zero,
+                                            blurRadius: 10,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            padding: spaceOnly(bottom: 70),
-                            controller: controller.scrollController,
-                            child: Column(
-                              children: controller.itemsList,
+                          Expanded(
+                            child: SingleChildScrollView(
+                              padding: spaceOnly(bottom: 70),
+                              controller: controller.scrollController,
+                              child: Column(
+                                children: controller.itemsList,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          padding: spacing(h: 15, v: 7),
-                          alignment: Alignment.center,
-                          decoration: true
-                              ? BoxDecoration(
-                                  color: controller.titleBackgroundColor,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey[500]!,
-                                      offset: distance,
-                                      blurRadius: 20,
-                                      spreadRadius: 1,
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.white,
-                                      offset: -distance,
-                                      blurRadius: 20,
-                                      spreadRadius: 1,
-                                    )
-                                  ],
-                                )
-                              : BoxDecoration(
-                                  color: controller.titleBackgroundColor,
-                                ),
-                          child: Text(
-                            controller.title2.text,
-                            style: GoogleFonts.manrope(
-                              fontWeight: FontWeight.bold,
-                              color: controller.titleFontColor,
-                              fontSize: controller.titleFontSize,
-                              shadows: [
-                                Shadow(
-                                  color: controller.titleShadowColor,
-                                  offset: Offset.zero,
-                                  blurRadius: 10,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        gap(h: 20),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -227,105 +184,61 @@ class _Design5State extends State<Design5> {
                       ),
                     ),
                   ),
-            Positioned(
-              top: 100,
-              left: 15,
-              child: InkWell(
-                onTap: () {
-                  _scrollToBottom();
-                  setState(() {});
-                },
-                child: Container(
-                  padding: spacing(h: 7, v: 7),
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: borderRadius(50),
-                  ),
-                  child: Icon(
-                    Icons.arrow_downward,
-                    color: halfBlack,
-                    size: 25,
-                  ),
-                ),
-              ),
-            )
           ],
         );
       }),
     );
   }
 
-  Widget FlagSection(String image, String name) {
-    return Column(
+  Widget FlagSection(String president, String flag, {bool isFirst = false}) {
+    return Stack(
       children: [
-        Container(
-          margin: spacing(h: 5, v: 5),
-          height: 150,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: borderRadius(designController.logoRadius),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x26442A7C),
-                blurRadius: 28.68,
-                offset: Offset(0, 28.68),
-                spreadRadius: 0,
-              ),
-              BoxShadow(
-                color: Color(0x26442A7C),
-                blurRadius: 28.68,
-                offset: Offset(0, 28.68),
-                spreadRadius: 0,
-              )
-            ],
-          ),
+        SizedBox(
+          width: designController.logoSize,
+          height: designController.logoSize,
           child: ClipRRect(
             borderRadius: borderRadius(designController.logoRadius),
-            child: SizedBox(
-              height: 200,
-              child: CachedNetworkImage(
-                imageUrl: image.isNotEmpty
-                    ? image
-                    : 'https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg',
-                fit: BoxFit.cover,
-              ),
+            child: CachedNetworkImage(
+              imageUrl: president.isNotEmpty
+                  ? president
+                  : 'https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg',
+              fit: BoxFit.cover,
             ),
           ),
         ),
-        gap(h: 5),
-        Container(
-          width: double.infinity,
-          margin: spacing(h: 15),
-          padding: spacing(v: 5),
-          decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: borderRadius(designController.logoRadius),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x26442A7C),
-                blurRadius: 28.68,
-                offset: Offset(0, 28.68),
-                spreadRadius: 0,
-              ),
-              BoxShadow(
-                color: Color(0x26442A7C),
-                blurRadius: 28.68,
-                offset: Offset(0, 28.68),
-                spreadRadius: 0,
+        isFirst
+            ? Positioned(
+                bottom: 0,
+                right: 0,
+                child: SizedBox(
+                  width: designController.flagWidth,
+                  child: ClipRRect(
+                    borderRadius: borderRadius(designController.logoRadius),
+                    child: CachedNetworkImage(
+                      imageUrl: flag.isNotEmpty
+                          ? flag
+                          : 'https://cdn.pixabay.com/animation/2022/08/07/20/19/20-19-52-205_512.gif',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               )
-            ],
-          ),
-          child: Text(
-            name,
-            style: GoogleFonts.manrope(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              color: halfBlack,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
+            : Positioned(
+                bottom: 0,
+                left: 0,
+                child: SizedBox(
+                  width: designController.flagWidth,
+                  child: ClipRRect(
+                    borderRadius: borderRadius(designController.logoRadius),
+                    child: CachedNetworkImage(
+                      imageUrl: flag.isNotEmpty
+                          ? flag
+                          : 'https://cdn.pixabay.com/animation/2022/08/07/20/19/20-19-52-205_512.gif',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              )
       ],
     );
   }
@@ -580,7 +493,7 @@ class _Design5State extends State<Design5> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Name1'),
+                        Text('Flag 1'),
                         gap(h: 5),
                         Container(
                           width: 300,
@@ -624,7 +537,7 @@ class _Design5State extends State<Design5> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Logo1'),
+                        Text('PM 1'),
                         gap(h: 5),
                         Container(
                           width: 300,
@@ -672,7 +585,7 @@ class _Design5State extends State<Design5> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Name2'),
+                        Text('Flag 2'),
                         gap(h: 5),
                         Container(
                           width: 300,
@@ -694,7 +607,7 @@ class _Design5State extends State<Design5> {
                               setState(() {});
                             },
                             decoration: InputDecoration(
-                              hintText: 'Enter Name2',
+                              hintText: 'Enter Flag2',
                               border: InputBorder.none,
                               hintStyle: GoogleFonts.manrope(
                                 fontSize: 14,
@@ -716,7 +629,7 @@ class _Design5State extends State<Design5> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Logo2'),
+                        Text('PM 2'),
                         gap(h: 5),
                         Container(
                           width: 300,
@@ -738,7 +651,7 @@ class _Design5State extends State<Design5> {
                               setState(() {});
                             },
                             decoration: InputDecoration(
-                              hintText: 'Enter 2nd Image Url',
+                              hintText: 'Enter PM2 Image Url',
                               border: InputBorder.none,
                               hintStyle: GoogleFonts.manrope(
                                 fontSize: 14,
@@ -807,6 +720,38 @@ class _Design5State extends State<Design5> {
                         },
                         decrease: () {
                           designController.logoSize--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
+                      FontSizer(
+                        hintText: 'Logo Container Height',
+                        fontSize: designController.logoContainerHeight.toInt(),
+                        increase: () {
+                          designController.logoContainerHeight++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.logoContainerHeight--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
+                      FontSizer(
+                        hintText: 'Flag width',
+                        fontSize: designController.flagWidth.toInt(),
+                        increase: () {
+                          designController.flagWidth++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.flagWidth--;
                           designController.update();
 
                           setState(() {});
@@ -893,6 +838,38 @@ class _Design5State extends State<Design5> {
                         },
                       ),
                       FontSizer(
+                        hintText: 'Data Container vertical',
+                        fontSize: designController.dataContainerMarginV.toInt(),
+                        increase: () {
+                          designController.dataContainerMarginV++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.dataContainerMarginV--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
+                      FontSizer(
+                        hintText: 'Data Container Horizontal',
+                        fontSize: designController.dataContainerMarginH.toInt(),
+                        increase: () {
+                          designController.dataContainerMarginH++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.dataContainerMarginH--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
+                      FontSizer(
                         hintText: 'Pic Contaner Size',
                         fontSize: designController.picContainerSize.toInt(),
                         increase: () {
@@ -973,6 +950,29 @@ class _Design5State extends State<Design5> {
                         },
                         currentColor: designController.nameFontColor,
                       ),
+                      Container(
+                        width: 300,
+                        child: TextStyleEditor(
+                          fonts: fontFamilies,
+                          textStyle: designController.valueTextStyle,
+                          textAlign: designController.valueTextAlign,
+                          onTextAlignEdited: (align) {
+                            setState(() {
+                              designController.valueTextAlign = align;
+                            });
+                            designController.update();
+                          },
+                          onTextStyleEdited: (style) {
+                            setState(() {
+                              designController.valueTextStyle = style;
+                            });
+                            designController.update();
+                          },
+                          onCpasLockTaggle: (caps) {
+                            // Uppercase or lowercase letters
+                          },
+                        ),
+                      ),
                       FontSizer(
                         hintText: 'Value Text Font Size',
                         fontSize: designController.valueFontSize.toInt(),
@@ -1007,40 +1007,98 @@ class _Design5State extends State<Design5> {
                         hintText: 'Value Container Left Color',
                         pickerTap: () {
                           colorPicker(
-                            currentColor: designController.valueContainerLeft,
+                            currentColor:
+                                designController.valueContainerLeft == null
+                                    ? Colors.white
+                                    : designController.valueContainerLeft!,
                             onChange: (color) {
                               designController.valueContainerLeft = color;
                               designController.update();
                             },
                           );
                         },
-                        currentColor: designController.valueContainerLeft,
+                        currentColor:
+                            designController.valueContainerLeft == null
+                                ? Colors.white
+                                : designController.valueContainerLeft!,
                       ),
                       ColorPickerItem(
                         hintText: 'Value Container Right Color',
                         pickerTap: () {
                           colorPicker(
-                            currentColor: designController.valueContainerRight,
+                            currentColor:
+                                designController.valueContainerRight == null
+                                    ? Colors.white
+                                    : designController.valueContainerRight!,
                             onChange: (color) {
                               designController.valueContainerRight = color;
                               designController.update();
                             },
                           );
                         },
-                        currentColor: designController.valueContainerRight,
+                        currentColor:
+                            designController.valueContainerRight == null
+                                ? Colors.white
+                                : designController.valueContainerRight!,
+                      ),
+                      FontSizer(
+                        hintText: 'Value Container Radius',
+                        fontSize: designController.valueContainerRadius.toInt(),
+                        increase: () {
+                          designController.valueContainerRadius++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.valueContainerRadius--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
+                      FontSizer(
+                        hintText: 'Value Container Spacing Horizontal',
+                        fontSize:
+                            designController.valueContainerSpacing.toInt(),
+                        increase: () {
+                          designController.valueContainerSpacing++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.valueContainerSpacing--;
+                          designController.update();
+
+                          setState(() {});
+                        },
                       ),
                       ColorPickerItem(
-                        hintText: 'Value Text Color',
+                        hintText: 'Value Text Color1',
                         pickerTap: () {
                           colorPicker(
-                            currentColor: designController.valueFontColor,
+                            currentColor: designController.valueFontColor1,
                             onChange: (color) {
-                              designController.valueFontColor = color;
+                              designController.valueFontColor1 = color;
                               designController.update();
                             },
                           );
                         },
-                        currentColor: designController.valueFontColor,
+                        currentColor: designController.valueFontColor1,
+                      ),
+                      ColorPickerItem(
+                        hintText: 'Value Text Color2',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.valueFontColor2,
+                            onChange: (color) {
+                              designController.valueFontColor2 = color;
+                              designController.update();
+                            },
+                          );
+                        },
+                        currentColor: designController.valueFontColor2,
                       ),
                       ColorPickerItem(
                         hintText: 'Title Background Color',
@@ -1054,6 +1112,45 @@ class _Design5State extends State<Design5> {
                           );
                         },
                         currentColor: designController.titleBackgroundColor,
+                      ),
+                      FontSizer(
+                        hintText: 'Title Container Width',
+                        fontSize: designController.titleContainerWidth.toInt(),
+                        increase: () {
+                          designController.titleContainerWidth++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.titleContainerWidth--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
+                      Container(
+                        width: 300,
+                        child: TextStyleEditor(
+                          fonts: fontFamilies,
+                          textStyle: designController.titleTextStyle,
+                          textAlign: designController.titleTextAlign,
+                          onTextAlignEdited: (align) {
+                            setState(() {
+                              designController.titleTextAlign = align;
+                            });
+                            designController.update();
+                          },
+                          onTextStyleEdited: (style) {
+                            setState(() {
+                              designController.titleTextStyle = style;
+                            });
+                            designController.update();
+                          },
+                          onCpasLockTaggle: (caps) {
+                            // Uppercase or lowercase letters
+                          },
+                        ),
                       ),
                       FontSizer(
                         hintText: 'Title Font Size',

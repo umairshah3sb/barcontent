@@ -1,329 +1,187 @@
 import 'dart:async';
-import 'package:barcontent/screen/design/design5/controller/design5_controller.dart';
+
+import 'package:barcontent/screen/design/Design8/widgets/Design8_item.dart';
+import 'package:barcontent/screen/design/design8/controller/design8_controller.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gradient_picker/flutter_gradient_picker.dart';
 
-class Design5 extends StatefulWidget {
-  const Design5({super.key});
+class Design8 extends StatefulWidget {
+  const Design8({super.key});
 
   @override
-  State<Design5> createState() => _Design5State();
+  State<Design8> createState() => _Design8State();
 }
 
-class _Design5State extends State<Design5> {
+class _Design8State extends State<Design8> {
   final GlobalKey<ScaffoldState> _Key = GlobalKey<ScaffoldState>();
-  final Design5Controller designController = Get.put(Design5Controller());
+  final Design8Controller designController = Get.put(Design8Controller());
   TextEditingController videoTimer = TextEditingController();
   double containerSize = 360;
-  final ScrollController _scrollController = ScrollController();
-
-  void _scrollToBottom() {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    _scrollController.animateTo(
-      maxScroll,
-      duration: Duration(seconds: 2),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose(); // Always dispose the controller!
-    super.dispose();
-  }
-
+  Offset _offset = Offset.zero;
   @override
   Widget build(BuildContext context) {
-    Offset distance = const Offset(10, 10);
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<Design5Controller>(builder: (controller) {
-        return Stack(
-          children: [
-            Positioned(
-              right: 50,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: 9 / 16,
-                  child: Container(
-                    height: Get.height,
-                    width: containerSize, // You can change this value
-                    decoration: BoxDecoration(
-                      gradient: controller.backgroundGradient,
-                    ),
-                    child: controller.backgroundImage.text.isNotEmpty
-                        ? Opacity(
-                            opacity: (controller.backgroundImageOpacity / 10),
-                            child: Image.network(
-                              controller.backgroundImage.text,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : gap(),
+      body: SafeArea(
+        child: Center(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onPanUpdate: (details) {
+                    setState(() {
+                      _offset += details.delta;
+                    });
+                  },
+                  child: Transform(
+                    transform: Matrix4.identity()
+                      ..setEntry(
+                        3,
+                        2,
+                        0.0001,
+                      )
+                      ..rotateX((_offset.dy * pi) / 180)
+                      ..rotateY((_offset.dx * pi) / 180),
+                    alignment: Alignment.center,
+                    child: Cube3D(),
                   ),
-                ),
-              ),
+                )
+              ],
             ),
-            Positioned(
-              right: 50,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: 9 / 16,
-                  child: Container(
-                    width: containerSize, // You can change this value
-                    height: Get.height,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          padding: spacing(h: 15, v: 7),
-                          alignment: Alignment.center,
-                          decoration: true
-                              ? BoxDecoration(
-                                  color: controller.titleBackgroundColor,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey[500]!,
-                                      offset: distance,
-                                      blurRadius: 20,
-                                      spreadRadius: 1,
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.white,
-                                      offset: -distance,
-                                      blurRadius: 20,
-                                      spreadRadius: 1,
-                                    )
-                                  ],
-                                )
-                              : BoxDecoration(
-                                  color: controller.titleBackgroundColor,
-                                ),
-                          child: Text(
-                            controller.title.text,
-                            style: GoogleFonts.manrope(
-                              fontWeight: FontWeight.bold,
-                              color: controller.titleFontColor,
-                              fontSize: controller.titleFontSize,
-                              shadows: [
-                                Shadow(
-                                  color: controller.titleShadowColor,
-                                  offset: Offset.zero,
-                                  blurRadius: 10,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          color: greyColor,
-                          height: designController.logoSize,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: FlagSection(
-                                  designController.logo1.text,
-                                  designController.name1.text,
-                                ),
-                              ),
-                              Expanded(
-                                child: FlagSection(designController.logo2.text,
-                                    designController.name2.text),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            padding: spaceOnly(bottom: 70),
-                            controller: controller.scrollController,
-                            child: Column(
-                              children: controller.itemsList,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          padding: spacing(h: 15, v: 7),
-                          alignment: Alignment.center,
-                          decoration: true
-                              ? BoxDecoration(
-                                  color: controller.titleBackgroundColor,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey[500]!,
-                                      offset: distance,
-                                      blurRadius: 20,
-                                      spreadRadius: 1,
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.white,
-                                      offset: -distance,
-                                      blurRadius: 20,
-                                      spreadRadius: 1,
-                                    )
-                                  ],
-                                )
-                              : BoxDecoration(
-                                  color: controller.titleBackgroundColor,
-                                ),
-                          child: Text(
-                            controller.title2.text,
-                            style: GoogleFonts.manrope(
-                              fontWeight: FontWeight.bold,
-                              color: controller.titleFontColor,
-                              fontSize: controller.titleFontSize,
-                              shadows: [
-                                Shadow(
-                                  color: controller.titleShadowColor,
-                                  offset: Offset.zero,
-                                  blurRadius: 10,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        gap(h: 20),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            controller.isGenerating
-                ? gap()
-                : Positioned(
-                    top: 15,
-                    left: 15,
-                    child: InkWell(
-                      onTap: () {
-                        _Key.currentState!.openDrawer();
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: spacing(h: 7, v: 7),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: borderRadius(50),
-                        ),
-                        child: Icon(
-                          Icons.menu,
-                          color: halfBlack,
-                          size: 25,
-                        ),
-                      ),
-                    ),
-                  ),
-            Positioned(
-              top: 100,
-              left: 15,
-              child: InkWell(
-                onTap: () {
-                  _scrollToBottom();
-                  setState(() {});
-                },
-                child: Container(
-                  padding: spacing(h: 7, v: 7),
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: borderRadius(50),
-                  ),
-                  child: Icon(
-                    Icons.arrow_downward,
-                    color: halfBlack,
-                    size: 25,
-                  ),
-                ),
-              ),
-            )
-          ],
-        );
-      }),
+          ),
+        ),
+      ),
     );
   }
 
-  Widget FlagSection(String image, String name) {
-    return Column(
+  Widget Cube3D() {
+    return Stack(
       children: [
-        Container(
-          margin: spacing(h: 5, v: 5),
-          height: 150,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: borderRadius(designController.logoRadius),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x26442A7C),
-                blurRadius: 28.68,
-                offset: Offset(0, 28.68),
-                spreadRadius: 0,
-              ),
-              BoxShadow(
-                color: Color(0x26442A7C),
-                blurRadius: 28.68,
-                offset: Offset(0, 28.68),
-                spreadRadius: 0,
-              )
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: borderRadius(designController.logoRadius),
-            child: SizedBox(
-              height: 200,
-              child: CachedNetworkImage(
-                imageUrl: image.isNotEmpty
-                    ? image
-                    : 'https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg',
-                fit: BoxFit.cover,
+        Transform(
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0001)
+            ..translate(0.0, 0.0, -150),
+
+          // Push it out so center of cube is visible
+          child: Container(
+            width: 300,
+            height: 600,
+            decoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: borderRadius(12),
+            ),
+            child: Center(
+              child: FlutterLogo(
+                size: 120,
               ),
             ),
           ),
         ),
-        gap(h: 5),
-        Container(
-          width: double.infinity,
-          margin: spacing(h: 15),
-          padding: spacing(v: 5),
-          decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: borderRadius(designController.logoRadius),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x26442A7C),
-                blurRadius: 28.68,
-                offset: Offset(0, 28.68),
-                spreadRadius: 0,
-              ),
-              BoxShadow(
-                color: Color(0x26442A7C),
-                blurRadius: 28.68,
-                offset: Offset(0, 28.68),
-                spreadRadius: 0,
-              )
-            ],
-          ),
-          child: Text(
-            name,
-            style: GoogleFonts.manrope(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              color: halfBlack,
+        Transform(
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0001)
+            ..translate(
+                0.0, 0.0, 150.0), // Push it out so center of cube is visible
+          child: Container(
+            width: 300,
+            height: 600,
+            decoration: BoxDecoration(
+              color: Colors.yellow,
+              borderRadius: borderRadius(12),
             ),
-            textAlign: TextAlign.center,
+            child: Center(
+              child: FlutterLogo(
+                size: 120,
+              ),
+            ),
+          ),
+        ),
+        Transform(
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0001) // 🔥 Add perspective
+            ..translate(150.0, 0.0, 0.0)
+            ..rotateY(-pi / 2), // Rotate around Y axis
+          alignment: Alignment.center,
+          child: Container(
+            width: 300,
+            height: 600,
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: borderRadius(12),
+            ),
+            child: Center(
+              child: FlutterLogo(
+                size: 120,
+              ),
+            ),
+          ),
+        ),
+        Transform(
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0001) // 🔥 Add perspective
+            ..translate(-150.0, 0.0, 0.0)
+            ..rotateY(-pi / 2), // Rotate around Y axis
+          alignment: Alignment.center,
+          child: Container(
+            width: 300,
+            height: 600,
+            decoration: BoxDecoration(
+              color: Colors.purple,
+              borderRadius: borderRadius(12),
+            ),
+            child: Center(
+              child: FlutterLogo(
+                size: 120,
+              ),
+            ),
+          ),
+        ),
+        Transform(
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0001) // 🔥 Add perspective
+            ..translate(0.0, -150.0, 0.0)
+            ..rotateX(pi / 2), // Rotate around Y axis
+          alignment: Alignment.center,
+          child: Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: borderRadius(12),
+            ),
+            child: Center(
+              child: FlutterLogo(
+                size: 120,
+              ),
+            ),
+          ),
+        ),
+        Transform(
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0001) // 🔥 Add perspective
+            ..translate(0.0, 450.0, 0.0)
+            ..rotateX(-pi / 2), // Rotate around Y axis
+          alignment: Alignment.center,
+          child: Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+              color: Colors.pink,
+              borderRadius: borderRadius(12),
+            ),
+            child: Center(
+              child: FlutterLogo(
+                size: 120,
+              ),
+            ),
           ),
         ),
       ],
@@ -338,7 +196,6 @@ class _Design5State extends State<Design5> {
 
     if (result != null) {
       Uint8List fileBytes = result.files.single.bytes!;
-      fileBytes.toString();
       String csvString = utf8.decode(fileBytes);
       List<List<dynamic>> data = const CsvToListConverter().convert(csvString);
       if (data.isNotEmpty) {
@@ -354,7 +211,7 @@ class _Design5State extends State<Design5> {
         }
 
         setState(() {
-          designController.csvData = dataAsMap;
+          designController.csvData = dataAsMap.reversed.toList();
         });
       }
     }
@@ -398,89 +255,41 @@ class _Design5State extends State<Design5> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 300,
-                      height: 50,
-                      padding: spacing(
-                        h: 14,
-                      ),
-                      decoration: BoxDecoration(
-                          color: whiteColor,
-                          boxShadow: shadow,
-                          borderRadius: borderRadius(50),
-                          border: Border.all(
-                            width: 2,
-                            color: halfBlack,
-                          )),
-                      child: TextFormField(
-                        controller: videoTimer,
-                        decoration: InputDecoration(
-                          hintText: 'Enter Animation Gap',
-                          border: InputBorder.none,
-                          hintStyle: GoogleFonts.manrope(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: halfBlack,
-                          ),
-                        ),
-                        style: GoogleFonts.manrope(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: halfBlack,
-                        ),
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                        ],
+                Container(
+                  width: 300,
+                  height: 50,
+                  padding: spacing(
+                    h: 14,
+                  ),
+                  decoration: BoxDecoration(
+                      color: whiteColor,
+                      boxShadow: shadow,
+                      borderRadius: borderRadius(50),
+                      border: Border.all(
+                        width: 2,
+                        color: halfBlack,
+                      )),
+                  child: TextFormField(
+                    controller: videoTimer,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Animation Gap',
+                      border: InputBorder.none,
+                      hintStyle: GoogleFonts.manrope(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: halfBlack,
                       ),
                     ),
-                    gap(w: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Background Image'),
-                        gap(h: 5),
-                        Container(
-                          width: 300,
-                          height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
-                          decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
-                          child: TextFormField(
-                            controller: designController.backgroundImage,
-                            onChanged: (v) {
-                              designController.update();
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'Enter background Image Url',
-                              border: InputBorder.none,
-                              hintStyle: GoogleFonts.manrope(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: halfBlack,
-                              ),
-                            ),
-                            style: GoogleFonts.manrope(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: halfBlack,
-                            ),
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                      ],
+                    style: GoogleFonts.manrope(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: halfBlack,
                     ),
-                  ],
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
+                  ),
                 ),
                 gap(h: 10),
                 Row(
@@ -532,7 +341,7 @@ class _Design5State extends State<Design5> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Title Bottom'),
+                        Text('Background Image'),
                         gap(h: 5),
                         Container(
                           width: 300,
@@ -549,12 +358,12 @@ class _Design5State extends State<Design5> {
                                 color: halfBlack,
                               )),
                           child: TextFormField(
-                            controller: designController.title2,
-                            onChanged: (x) {
-                              setState(() {});
+                            controller: designController.backgroundImage,
+                            onChanged: (v) {
+                              designController.update();
                             },
                             decoration: InputDecoration(
-                              hintText: 'Enter Title',
+                              hintText: 'Enter background Image Url',
                               border: InputBorder.none,
                               hintStyle: GoogleFonts.manrope(
                                 fontSize: 14,
@@ -813,22 +622,6 @@ class _Design5State extends State<Design5> {
                         },
                       ),
                       FontSizer(
-                        hintText: 'Value Width',
-                        fontSize: designController.valueWidth.toInt(),
-                        increase: () {
-                          designController.valueWidth++;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueWidth--;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                      ),
-                      FontSizer(
                         hintText: 'Data Container Size',
                         fontSize: designController.valueContainerSize.toInt(),
                         increase: () {
@@ -924,20 +717,34 @@ class _Design5State extends State<Design5> {
                           setState(() {});
                         },
                       ),
+                      FontSizer(
+                        hintText: 'Title Font Size',
+                        fontSize: designController.titleFontSize.toInt(),
+                        increase: () {
+                          designController.titleFontSize++;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.titleFontSize--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
                       ColorPickerItem(
-                        hintText: 'Pic Icons Color',
+                        hintText: 'Title Text Color',
                         pickerTap: () {
                           colorPicker(
-                            currentColor:
-                                designController.picIconColor ?? Colors.black,
+                            currentColor: designController.titleFontColor,
                             onChange: (color) {
-                              designController.picIconColor = color;
+                              designController.titleFontColor = color;
                               designController.update();
                             },
                           );
                         },
-                        currentColor:
-                            designController.picIconColor ?? Colors.black,
+                        currentColor: designController.titleFontColor,
                       ),
                     ],
                   ),
@@ -1042,60 +849,34 @@ class _Design5State extends State<Design5> {
                         },
                         currentColor: designController.valueFontColor,
                       ),
-                      ColorPickerItem(
-                        hintText: 'Title Background Color',
-                        pickerTap: () {
-                          colorPicker(
-                            currentColor: designController.titleBackgroundColor,
-                            onChange: (color) {
-                              designController.titleBackgroundColor = color;
-                              designController.update();
-                            },
-                          );
-                        },
-                        currentColor: designController.titleBackgroundColor,
-                      ),
                       FontSizer(
-                        hintText: 'Title Font Size',
-                        fontSize: designController.titleFontSize.toInt(),
+                        hintText: 'Country Name Font Size',
+                        fontSize: designController.countryNameFontSize.toInt(),
                         increase: () {
-                          designController.titleFontSize++;
+                          designController.countryNameFontSize++;
                           designController.update();
 
                           setState(() {});
                         },
                         decrease: () {
-                          designController.titleFontSize--;
+                          designController.countryNameFontSize--;
                           designController.update();
 
                           setState(() {});
                         },
                       ),
                       ColorPickerItem(
-                        hintText: 'Title Text Color',
+                        hintText: 'Country Name Text Color',
                         pickerTap: () {
                           colorPicker(
-                            currentColor: designController.titleFontColor,
+                            currentColor: designController.countryNameFontColor,
                             onChange: (color) {
-                              designController.titleFontColor = color;
+                              designController.countryNameFontColor = color;
                               designController.update();
                             },
                           );
                         },
-                        currentColor: designController.titleFontColor,
-                      ),
-                      ColorPickerItem(
-                        hintText: 'Title Shadow Color',
-                        pickerTap: () {
-                          colorPicker(
-                            currentColor: designController.titleShadowColor,
-                            onChange: (color) {
-                              designController.titleShadowColor = color;
-                              designController.update();
-                            },
-                          );
-                        },
-                        currentColor: designController.titleShadowColor,
+                        currentColor: designController.countryNameFontColor,
                       ),
                       Container(
                         width: Get.width * 0.2,
@@ -1151,6 +932,8 @@ class _Design5State extends State<Design5> {
                             designController.backgroundImageOpacity.toInt(),
                         increase: () {
                           if (designController.backgroundImageOpacity <= 10) {
+                            print(
+                                'Increaseing  ${designController.backgroundImageOpacity / 10}');
                             designController.backgroundImageOpacity++;
                             designController.update();
                             setState(() {});
@@ -1158,7 +941,31 @@ class _Design5State extends State<Design5> {
                         },
                         decrease: () {
                           if (designController.backgroundImageOpacity >= 0) {
+                            print(
+                                'Descreasing ${designController.backgroundImageOpacity / 10}');
                             designController.backgroundImageOpacity--;
+                            designController.update();
+                            setState(() {});
+                          }
+                        },
+                      ),
+                      FontSizer(
+                        hintText: 'Text Shadow Opacity',
+                        fontSize: designController.textShadowOpacity.toInt(),
+                        increase: () {
+                          if (designController.textShadowOpacity <= 10) {
+                            print(
+                                'Increaseing  ${designController.textShadowOpacity / 10}');
+                            designController.textShadowOpacity++;
+                            designController.update();
+                            setState(() {});
+                          }
+                        },
+                        decrease: () {
+                          if (designController.textShadowOpacity >= 0) {
+                            print(
+                                'Descreasing ${designController.textShadowOpacity / 10}');
+                            designController.textShadowOpacity--;
                             designController.update();
                             setState(() {});
                           }

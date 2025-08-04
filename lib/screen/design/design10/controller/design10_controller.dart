@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:barcontent/screen/design/design6/widgets/design6_item.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 
-class Design6Controller extends GetxController {
+class Design10Controller extends GetxController {
   List<dynamic> csvData = [];
   Map<String, dynamic> dumyData = {
     'value1': '180',

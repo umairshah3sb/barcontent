@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:barcontent/screen/design/Design6/controller/Design6_controller.dart';
 import 'package:barcontent/screen/design/design3/widgets/design3_item.dart';
 import 'package:barcontent/screen/design/design6/widgets/design6_item.dart';
+import 'package:barcontent/screen/design/design6/widgets/sample.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
@@ -88,35 +89,35 @@ class _Design6State extends State<Design6> {
                     height: Get.height,
                     child: Column(
                       children: [
+                        gap(h: 10),
                         Container(
                           alignment: Alignment.center,
                           margin: spacing(v: 10),
                           padding: spacing(h: 15),
                           child: Text(
                             controller.title.text,
-                            style: GoogleFonts.manrope(
+                            style: GoogleFonts.alfaSlabOne(
                               fontWeight: FontWeight.bold,
                               color: controller.titleFontColor,
                               fontSize: controller.titleFontSize,
+                              shadows: [
+                                Shadow(
+                                  color: controller.shadowColor.withAlpha(
+                                    (255 * (controller.textShadowOpacity / 10))
+                                        .toInt(),
+                                  ),
+                                  offset: Offset.zero,
+                                  blurRadius: 10,
+                                )
+                              ],
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Design6Item(
-                                sec: 4,
-                              ),
-                            ),
-                            Text('vs'),
-                            Expanded(
-                              child: Design6Item(
-                                sec: 4,
-                                isFirst: false,
-                              ),
-                            ),
-                          ],
+                        Design6MainUI(
+                          itemData: controller.csvData.isEmpty
+                              ? controller.dumyData
+                              : controller.csvData[controller.currentIndex],
+                          key: Key(getRandomString(20)),
                         ),
                         gap(h: 20),
                       ],
@@ -149,149 +150,9 @@ class _Design6State extends State<Design6> {
                       ),
                     ),
                   ),
-            Positioned(
-              top: 100,
-              left: 15,
-              child: InkWell(
-                onTap: () {
-                  _scrollToBottom();
-                  setState(() {});
-                },
-                child: Container(
-                  padding: spacing(h: 7, v: 7),
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: borderRadius(50),
-                  ),
-                  child: Icon(
-                    Icons.arrow_downward,
-                    color: halfBlack,
-                    size: 25,
-                  ),
-                ),
-              ),
-            )
           ],
         );
       }),
-    );
-  }
-
-  Widget FlagSection1(String image, String name) {
-    return Column(
-      children: [
-        Text(
-          name,
-          style: GoogleFonts.manrope(
-            fontSize: designController.countryNameFontSize,
-            fontWeight: FontWeight.w800,
-            color: designController.countryNameFontColor,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        Stack(
-          children: [
-            Container(
-              width: 400,
-              height: 300,
-              margin: spacing(h: 10, v: 10),
-              decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: borderRadius(designController.logoRadius),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x26442A7C),
-                    blurRadius: 28.68,
-                    offset: Offset(0, 28.68),
-                    spreadRadius: 0,
-                  ),
-                  BoxShadow(
-                    color: Color(0x26442A7C),
-                    blurRadius: 28.68,
-                    offset: Offset(0, 28.68),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: borderRadius(designController.logoRadius),
-                child: CachedNetworkImage(
-                  imageUrl: image.isNotEmpty
-                      ? image
-                      : 'https://upload.wikimedia.org/wikipedia/commons/3/32/Flag_of_Pakistan.svg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              top: 0,
-              child: Center(
-                child: Container(
-                  width: 320,
-                  height: 250,
-                  margin: spacing(h: 10, v: 10),
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: borderRadius(designController.logoRadius),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x26442A7C),
-                        blurRadius: 28.68,
-                        offset: Offset(0, 28.68),
-                        spreadRadius: 0,
-                      ),
-                      BoxShadow(
-                        color: Color(0x26442A7C),
-                        blurRadius: 28.68,
-                        offset: Offset(0, 28.68),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: borderRadius(designController.logoRadius),
-                    child: CachedNetworkImage(
-                      imageUrl: designController.currentItems.isNotEmpty
-                          ? designController.currentItems['pic']
-                          : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YUGZxyDSsiMSLCv5rk3Fj2m3P3xGNwXPID2ec91RzMIHU2gOYq1-UVkM0pP6vjQ1e10&usqp=CAU',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-        gap(h: 30),
-        Column(
-          children: [
-            Text(
-              designController.currentItems.isNotEmpty
-                  ? designController.currentItems['name'].toString()
-                  : 'Tanks',
-              style: GoogleFonts.manrope(
-                fontWeight: FontWeight.bold,
-                color: designController.nameFontColor,
-                fontSize: designController.nameTextSize,
-              ),
-            ),
-            gap(h: 10),
-            Text(
-              designController.currentItems.isNotEmpty
-                  ? designController.currentItems['value1'].toString()
-                  : '1439',
-              style: GoogleFonts.manrope(
-                fontWeight: FontWeight.bold,
-                color: designController.valueFontColor,
-                fontSize: designController.valueFontSize,
-              ),
-            ),
-          ],
-        )
-      ],
     );
   }
 
@@ -958,6 +819,21 @@ class _Design6State extends State<Design6> {
                       ),
                       FontSizer(
                         hintText: 'Country Name Font Size',
+                        fontSize: designController.countryFlagSize.toInt(),
+                        increase: () {
+                          designController.countryFlagSize++;
+                          designController.update();
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.countryFlagSize--;
+                          designController.update();
+
+                          setState(() {});
+                        },
+                      ),
+                      FontSizer(
+                        hintText: 'Country Name Font Size',
                         fontSize: designController.countryNameFontSize.toInt(),
                         increase: () {
                           designController.countryNameFontSize++;
@@ -1051,6 +927,41 @@ class _Design6State extends State<Design6> {
                             print(
                                 'Descreasing ${designController.backgroundImageOpacity / 10}');
                             designController.backgroundImageOpacity--;
+                            designController.update();
+                            setState(() {});
+                          }
+                        },
+                      ),
+                      ColorPickerItem(
+                        hintText: 'Shadow Color',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.shadowColor,
+                            onChange: (color) {
+                              designController.shadowColor = color;
+                              designController.update();
+                            },
+                          );
+                        },
+                        currentColor: designController.shadowColor,
+                      ),
+                      FontSizer(
+                        hintText: 'Text Shadow Opacity',
+                        fontSize: designController.textShadowOpacity.toInt(),
+                        increase: () {
+                          if (designController.textShadowOpacity <= 10) {
+                            print(
+                                'Increaseing  ${designController.textShadowOpacity / 10}');
+                            designController.textShadowOpacity++;
+                            designController.update();
+                            setState(() {});
+                          }
+                        },
+                        decrease: () {
+                          if (designController.textShadowOpacity >= 0) {
+                            print(
+                                'Descreasing ${designController.textShadowOpacity / 10}');
+                            designController.textShadowOpacity--;
                             designController.update();
                             setState(() {});
                           }

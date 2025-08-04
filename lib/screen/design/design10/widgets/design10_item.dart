@@ -1,20 +1,16 @@
 import 'dart:async';
 
+import 'package:barcontent/screen/design/design10/controller/design10_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:typewritertext/typewritertext.dart';
-
-import 'package:barcontent/screen/design/Design6/controller/Design6_controller.dart';
-import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
 
-class Design6Item extends StatefulWidget {
+class Design10Item extends StatefulWidget {
   int sec;
   bool isFirst;
   Map<String, dynamic> itemData;
-  Design6Item({
+  Design10Item({
     Key? key,
     required this.sec,
     this.isFirst = true,
@@ -22,10 +18,10 @@ class Design6Item extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<Design6Item> createState() => _Design6ItemState();
+  State<Design10Item> createState() => _Design10ItemState();
 }
 
-class _Design6ItemState extends State<Design6Item>
+class _Design10ItemState extends State<Design10Item>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   Animation<double>? _scaleAnimation;
@@ -74,7 +70,7 @@ class _Design6ItemState extends State<Design6Item>
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<Design6Controller>(builder: (controller) {
+    return GetBuilder<Design10Controller>(builder: (controller) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -142,8 +138,8 @@ class _Design6ItemState extends State<Design6Item>
                                 key: Key(getRandomString(20)),
                                 imageUrl: controller.csvData.isNotEmpty
                                     ? widget.isFirst
-                                        ? widget.itemData['pic']
-                                        : widget.itemData['pic']
+                                        ? widget.itemData['pic1']
+                                        : widget.itemData['pic2']
                                     : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YUGZxyDSsiMSLCv5rk3Fj2m3P3xGNwXPID2ec91RzMIHU2gOYq1-UVkM0pP6vjQ1e10&usqp=CAU',
                                 fit: BoxFit.cover,
                               ),
@@ -338,19 +334,19 @@ class _Design6ItemState extends State<Design6Item>
   }
 }
 
-class Design6MainUI extends StatefulWidget {
+class Design10MainUI extends StatefulWidget {
   Map<String, dynamic> itemData;
-  Design6MainUI({
+  Design10MainUI({
     Key? key,
     required this.itemData,
   }) : super(key: key);
 
   @override
-  State<Design6MainUI> createState() => _Design6MainUIState();
+  State<Design10MainUI> createState() => _Design10MainUIState();
 }
 
-class _Design6MainUIState extends State<Design6MainUI> {
-  final Design6Controller designController = Get.put(Design6Controller());
+class _Design10MainUIState extends State<Design10MainUI> {
+  final Design10Controller designController = Get.put(Design10Controller());
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -358,7 +354,7 @@ class _Design6MainUIState extends State<Design6MainUI> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: Design6Item(
+          child: Design10Item(
             sec: 1,
             itemData: widget.itemData,
           ),
@@ -386,7 +382,7 @@ class _Design6MainUIState extends State<Design6MainUI> {
           ),
         ),
         Expanded(
-          child: Design6Item(
+          child: Design10Item(
             sec: 1,
             itemData: widget.itemData,
             isFirst: false,
