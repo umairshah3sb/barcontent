@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:html' as html;
 
 import 'package:barcontent/util/colors.dart';
-import 'package:barcontent/util/config.dart';
 import 'package:barcontent/util/constants.dart';
 import 'package:barcontent/util/helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,9 +11,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class CountriesFlagGenerator extends StatefulWidget {
   const CountriesFlagGenerator({super.key});
@@ -48,7 +43,6 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
               row[headers[j]] = data[i][j];
             }
           }
-
           dataAsMap.add(row);
         }
 

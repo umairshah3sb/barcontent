@@ -238,4 +238,130 @@ Widget ColorPickerItem({
   );
 }
 
+Color getRandomDarkColor() {
+  final Random random = Random();
+  return Color.fromARGB(
+    255, // Full opacity
+    random.nextInt(100), // Red (0-99)
+    random.nextInt(100), // Green (0-99)
+    random.nextInt(100), // Blue (0-99)
+  );
+}
 
+Color getRandomColor() {
+  return Color.fromRGBO(
+    Random().nextInt(256), // Red (0-255)
+    Random().nextInt(256), // Green (0-255)
+    Random().nextInt(256), // Blue (0-255)
+    1.0, // Opacity (1.0 for fully opaque)
+  );
+}
+
+List<BoxShadow> newShadow = [
+  BoxShadow(
+      color: Colors.grey.shade300,
+      spreadRadius: 0.0,
+      blurRadius: 3,
+      offset: Offset(3.0, 3.0)),
+  BoxShadow(
+      color: Colors.grey.shade400,
+      spreadRadius: 0.0,
+      blurRadius: 3 / 2.0,
+      offset: Offset(3.0, 3.0)),
+  BoxShadow(
+      color: Colors.black.withAlpha(80),
+      spreadRadius: 2.0,
+      blurRadius: 3,
+      offset: Offset(-3.0, -3.0)),
+  BoxShadow(
+      color: Colors.black.withAlpha(80),
+      spreadRadius: 2.0,
+      blurRadius: 3 / 2,
+      offset: Offset(-3.0, -3.0)),
+];
+
+int getRandomValue({int minValue = 0}) {
+  final Random random = Random();
+  if (minValue != 257) {
+    return minValue +
+        random.nextInt((256 - minValue)); // Generates 0 to 256 inclusive
+  }
+  return random.nextInt(minValue); // Generates 0 to 256 inclusive
+}
+
+List<Color> generate100ColorShades() {
+  final List<Color> colors = [];
+  for (int i = 0; i < 30; i++) {
+    final Color rgbaColor = Color.fromARGB(
+        getRandomValue(), getRandomValue(), getRandomValue(), 255);
+
+    colors.add(rgbaColor);
+  }
+
+  return colors;
+}
+
+List<String> fontFamilies = [
+  'Russo+One',
+  'Bebas Neue',
+  'Futura',
+  'Oswald'
+  'Archivo Black',
+  'Roboto',
+  'San Francisco',
+  'Helvetica',
+  'Arial',
+  'Times New Roman',
+  'Courier New',
+  'Georgia',
+  'Verdana',
+  'ABeeZee',
+  
+  'PT Sans',
+  'PT Serif',
+  'Proxima Nova',
+  'JetBrains Mono',
+  'Fira Code',
+  'Source Code Pro',
+];
+
+Widget ValueChangeSlider({
+  required String title,
+  required void Function(double)? onChanged,
+  required double value,
+  double max = 430,
+}) {
+  return StatefulBuilder(builder: (context, setState) {
+    return Container(
+      margin: spacing(v: 10),
+      width: 300,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.russoOne(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: halfBlack,
+            ),
+          ),
+          gap(h: 10),
+          Slider(
+            max: max,
+            value: value,
+            onChanged: onChanged,
+          ),
+        ],
+      ),
+    );
+  });
+}
+
+class NoScrollbarBehavior extends ScrollBehavior {
+  @override
+  Widget buildScrollbar(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child; // Don’t wrap in a scrollbar
+  }
+}

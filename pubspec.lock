@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -177,6 +185,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.3.3"
+  firebase_core:
+    dependency: "direct main"
+    description:
+      name: firebase_core
+      sha256: "6b343e6f7b72a4f32d7ce8df8c9a28d8f54b4ac20d7c6500f3e8b3969afca457"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
+  firebase_core_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_core_platform_interface
+      sha256: "5dbc900677dcbe5873d22ad7fbd64b047750124f1f9b7ebe2a33b9ddccc838eb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
+  firebase_core_web:
+    dependency: transitive
+    description:
+      name: firebase_core_web
+      sha256: "5d28b14dd32282fb7ce2b22b897362453755b6b8541d491127dc72b755bb7b16"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   fixnum:
     dependency: transitive
     description:
@@ -645,6 +677,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.3"
+  text_style_editor:
+    dependency: "direct main"
+    description:
+      name: text_style_editor
+      sha256: "6e0a6086df50b84e54c38453a12cd7bb3edf5d08c94d0a5caf4329859bcd3291"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   typed_data:
     dependency: transitive
     description:
@@ -653,6 +693,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  typethis:
+    dependency: "direct main"
+    description:
+      name: typethis
+      sha256: faeb206f5fc3159f3b177ebe0b298aafc5845d8fd3b2f7f9ef34699176adc090
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  typewrite_text:
+    dependency: "direct main"
+    description:
+      name: typewrite_text
+      sha256: "8c18f9f5d9d8a98e20ac5b433a4a804af509b6d0d1d4f3df7a69eeda44ea5042"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  typewritertext:
+    dependency: "direct main"
+    description:
+      name: typewritertext
+      sha256: c6b90cdc9f7fd7ae3235d9c926012000f7a1765cd49d67b78370dc61123212b2
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.9"
   uuid:
     dependency: transitive
     description:

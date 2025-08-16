@@ -140,7 +140,15 @@ class _Design2State extends State<Design2> {
                     width: width,
                     height: Get.height * 0.4,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: getRandomColor(),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          getRandomColor(),
+                          getRandomColor(),
+                        ],
+                      ),
                     ),
                     child: CachedNetworkImage(
                       imageUrl: data['pic1'],
@@ -149,25 +157,27 @@ class _Design2State extends State<Design2> {
                   ),
                 ),
                 Positioned(
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: designController.indexContainerColor,
-                      borderRadius: borderRadius(50),
-                      boxShadow: shadow,
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${data['index']}',
-                        style: GoogleFonts.manrope(
-                          color: designController.indexFontColor,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w900,
+                  child: designController.hideIndex
+                      ? gap()
+                      : Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: designController.indexContainerColor,
+                            borderRadius: borderRadius(50),
+                            boxShadow: shadow,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${data['index']}',
+                              style: GoogleFonts.manrope(
+                                color: designController.indexFontColor,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 )
               ],
             ),
@@ -421,6 +431,24 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Hide Index',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.hideIndex,
+                              onChanged: (value) {
+                                designController.hideIndex = value;
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                   gap(w: 40),
@@ -591,8 +619,4 @@ class _Design2State extends State<Design2> {
       },
     );
   }
-
-  
-
-  
 }
