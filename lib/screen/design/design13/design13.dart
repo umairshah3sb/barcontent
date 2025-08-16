@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:barcontent/screen/design/design12/controller/design12_controller.dart';
-import 'package:barcontent/screen/design/design12/widgets/image_slide.dart';
-import 'package:barcontent/screen/design/design12/widgets/ribbon_design.dart';
-import 'package:barcontent/screen/design/design12/widgets/text_animator.dart';
+
+import 'package:barcontent/screen/design/design13/controller/design13_controller.dart';
+import 'package:barcontent/screen/design/design13/widgets/design13_item.dart';
+import 'package:barcontent/screen/design/design13/widgets/design13_text_animator.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
@@ -16,16 +16,16 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gradient_picker/flutter_gradient_picker.dart';
 import 'package:text_style_editor/text_style_editor.dart';
 
-class Design12 extends StatefulWidget {
-  const Design12({super.key});
+class Design13 extends StatefulWidget {
+  const Design13({super.key});
 
   @override
-  State<Design12> createState() => _Design12State();
+  State<Design13> createState() => _Design13State();
 }
 
-class _Design12State extends State<Design12> {
+class _Design13State extends State<Design13> {
   final GlobalKey<ScaffoldState> _Key = GlobalKey<ScaffoldState>();
-  final Design12Controller designController = Get.put(Design12Controller());
+  final Design13Controller designController = Get.put(Design13Controller());
   TextEditingController videoTimer = TextEditingController();
   double containerSize = 360;
   final ScrollController _scrollController = ScrollController();
@@ -56,7 +56,7 @@ class _Design12State extends State<Design12> {
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<Design12Controller>(builder: (controller) {
+      body: GetBuilder<Design13Controller>(builder: (controller) {
         return Stack(
           children: [
             Positioned(
@@ -107,64 +107,28 @@ class _Design12State extends State<Design12> {
                           ),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            gap(w: 30),
                             DataItem(controller,
                                 title: controller.name1.text,
                                 image: controller.logo1.text,
                                 index: 1),
-                            Column(
-                              children: [
-                                Container(
-                                  width: controller.picContainerSize,
-                                  child: TextAnimator(
-                                    key: Key(getRandomString(30)),
-                                    delayInSeconds: 2,
-                                    text: controller.csvData.isNotEmpty
-                                        ? controller.csvData[
-                                            controller.currentIndex]['subtitle']
-                                        : controller.dumyData['name'],
-                                    style:
-                                        controller.subTitleTextStyle.copyWith(
-                                      color: controller.subtitleFontColor,
-                                    ),
-                                    overflow: TextOverflow.visible,
-                                    textAlign: controller.subTitleTextAlign,
-                                    maxlines: 2,
-                                  ),
+                            gap(w: controller.spacingBetween),
+                            Container(
+                              height: controller.dataContainerHeight,
+                              child: SingleChildScrollView(
+                                controller: controller.scrollController,
+                                padding: spaceOnly(bottom: 250),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: controller.dataItems,
                                 ),
-                                // Text(
-                                //   controller.csvData.isNotEmpty
-                                //       ? controller
-                                //               .csvData[controller.currentIndex]
-                                //           ['subtitle']
-                                //       : controller.dumyData['name'],
-                                //   style: controller.subTitleTextStyle.copyWith(
-                                //     color: controller.subtitleFontColor,
-                                //   ),
-                                // ),
-                                gap(h: controller.IconsSpacing),
-                                Container(
-                                  width: controller.picContainerSize,
-                                  child: SlideImageFromBottom(
-                                    seconds: 1,
-                                    key: Key(getRandomString(30)),
-                                    img: controller.csvData.isNotEmpty
-                                        ? controller.csvData[
-                                            controller.currentIndex]['icon']
-                                        : controller.dumyData['icon'],
-                                  ),
-                                ),
-                                gap(h: controller.IconPosition),
-                              ],
+                              ),
                             ),
-                            DataItem(
-                              controller,
-                              title: controller.name2.text,
-                              image: controller.logo2.text,
-                              index: 2,
-                            ),
+                            gap(w: 30),
                           ],
                         ),
                       ],
@@ -204,7 +168,7 @@ class _Design12State extends State<Design12> {
   }
 
   Widget DataItem(
-    Design12Controller controller, {
+    Design13Controller controller, {
     String title = '',
     String image = '',
     int index = 1,
@@ -214,120 +178,17 @@ class _Design12State extends State<Design12> {
       width: controller.dataContainerWidth,
       child: Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                height: controller.dataContainerHeight,
-                child: CachedNetworkImage(
-                  key: Key(getRandomString(20)),
-                  imageUrl: image.isEmpty ? 'https://bit.ly/3GUeno8' : image,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 0,
-                bottom: 0,
-                right: 0,
-                left: 0,
-                child: Center(
-                    child: FittedBox(
-                  child: Container(
-                    width: controller.valueContainerSize,
-                    // height: controller.dataContainerHeight,
-                    alignment: Alignment.center,
-                    padding: spacing(h: 10, v: 10),
-                    decoration: BoxDecoration(
-                      color: index.isEven
-                          ? controller.valueContainerRight
-                          : controller.valueContainerLeft,
-                      boxShadow: [
-                        BoxShadow(
-                            color: controller.valueContainerShadow1,
-                            spreadRadius: 0.0,
-                            blurRadius: controller.valueContainerShadowRadius,
-                            offset: Offset(3.0, 3.0)),
-                        BoxShadow(
-                            color: controller.valueContainerShadow1,
-                            spreadRadius: 0.0,
-                            blurRadius:
-                                controller.valueContainerShadowRadius / 2.0,
-                            offset: Offset(3.0, 3.0)),
-                        BoxShadow(
-                            color: controller.valueContainerShadow2,
-                            spreadRadius: 2.0,
-                            blurRadius: controller.valueContainerShadowRadius,
-                            offset: Offset(-3.0, -3.0)),
-                        BoxShadow(
-                            color: controller.valueContainerShadow2,
-                            spreadRadius: 2.0,
-                            blurRadius:
-                                controller.valueContainerShadowRadius / 2,
-                            offset: Offset(-3.0, -3.0)),
-                      ],
-                      borderRadius: borderRadius(15),
-                    ),
-                    child: true
-                        ? TextAnimator(
-                            key: Key(getRandomString(30)),
-                            delayInSeconds: index == 1 ? 3 : 4,
-                            text: controller.csvData.isEmpty
-                                ? '  ${controller.dumyData['value${index}']}  '
-                                : '  ${controller.csvData[controller.currentIndex]['value${index}']}  ',
-                            style: controller.valueTextStyle.copyWith(
-                              color: controller.valueFontColor,
-                            ),
-                            textAlign: controller.valueTextAlign,
-                            maxlines: 8,
-                            overflow: TextOverflow.visible,
-                          )
-                        : AutoSizeText(
-                            controller.csvData.isEmpty
-                                ? '  ${controller.dumyData['value${index}']}  '
-                                : '  ${controller.csvData[controller.currentIndex]['value${index}']}  ',
-                            style: designController.valueTextStyle.copyWith(
-                              color: controller.valueFontColor,
-                            ),
-                            maxLines: 8,
-                            textAlign: designController.valueTextAlign,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                  ),
-                )),
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: controller.flagPosition,
-                child: controller.csvData.isNotEmpty &&
-                        controller.csvData[controller.currentIndex]
-                                    ['flag${index}']
-                                .toString() ==
-                            '2'
-                    ? gap()
-                    : Center(
-                        child: Container(
-                          width: controller.flagWidth,
-                          child: SlideImageFromBottom(
-                            seconds: 6,
-                            key: Key(getRandomString(30)),
-                            img: controller.csvData.isEmpty
-                                ? index == 1
-                                    ? 'https://i.postimg.cc/sD7R4R2x/image.png'
-                                    : 'https://i.postimg.cc/RVcjnQPn/image.png'
-                                : controller.csvData[controller.currentIndex]
-                                                ['flag${index}']
-                                            .toString() ==
-                                        '1'
-                                    ? 'https://i.postimg.cc/sD7R4R2x/image.png'
-                                    : 'https://i.postimg.cc/RVcjnQPn/image.png',
-                          ),
-                        ),
-                      ),
-              )
-            ],
+          Container(
+            height: controller.dataContainerHeight,
+            child: CachedNetworkImage(
+              key: Key(getRandomString(20)),
+              imageUrl: image.isEmpty ? 'https://bit.ly/3GUeno8' : image,
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             width: controller.dataContainerWidth,
+            margin: spaceOnly(top: controller.nameTopSpacing),
             decoration: BoxDecoration(
               color: controller.nameContainerColor,
             ),
@@ -368,8 +229,6 @@ class _Design12State extends State<Design12> {
 
         setState(() {
           designController.csvData = dataAsMap;
-          designController.title.text =
-              designController.csvData[0]['title'] ?? '';
         });
       }
     }
@@ -634,98 +493,6 @@ class _Design12State extends State<Design12> {
                   ],
                 ),
                 gap(h: 10),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Name2'),
-                        gap(h: 5),
-                        Container(
-                          width: 300,
-                          height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
-                          decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
-                          child: TextFormField(
-                            controller: designController.name2,
-                            onChanged: (x) {
-                              setState(() {});
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'Enter Name2',
-                              border: InputBorder.none,
-                              hintStyle: GoogleFonts.manrope(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: halfBlack,
-                              ),
-                            ),
-                            style: GoogleFonts.manrope(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: halfBlack,
-                            ),
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                      ],
-                    ),
-                    gap(w: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Logo2'),
-                        gap(h: 5),
-                        Container(
-                          width: 300,
-                          height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
-                          decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
-                          child: TextFormField(
-                            controller: designController.logo2,
-                            onChanged: (x) {
-                              setState(() {});
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'Enter 2nd Image Url',
-                              border: InputBorder.none,
-                              hintStyle: GoogleFonts.manrope(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: halfBlack,
-                              ),
-                            ),
-                            style: GoogleFonts.manrope(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: halfBlack,
-                            ),
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                gap(h: 10),
               ],
             ),
             Container(
@@ -780,35 +547,25 @@ class _Design12State extends State<Design12> {
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Data Container Height',
-                        fontSize: designController.dataContainerHeight.toInt(),
-                        increase: () {
-                          designController.dataContainerHeight++;
+                      ValueChangeSlider(
+                        value: designController.dataContainerHeight,
+                        max: 1000,
+                        title:
+                            'Image Height: ${designController.dataContainerHeight.toInt()}',
+                        onChanged: (value) {
+                          designController.dataContainerHeight = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.dataContainerHeight--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Data Container Width',
-                        fontSize: designController.dataContainerWidth.toInt(),
-                        increase: () {
-                          designController.dataContainerWidth++;
+                      ValueChangeSlider(
+                        value: designController.dataContainerWidth,
+                        max: 1000,
+                        title:
+                            'Image Width: ${designController.dataContainerWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.dataContainerWidth = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.dataContainerWidth--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -886,6 +643,17 @@ class _Design12State extends State<Design12> {
                             'Top Spacing: ${designController.topSpacing.toInt()}',
                         onChanged: (value) {
                           designController.topSpacing = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.spacingBetween,
+                        max: 200,
+                        title:
+                            'Spacing Between: ${designController.spacingBetween.toInt()}',
+                        onChanged: (value) {
+                          designController.spacingBetween = value;
                           designController.update();
                           setState(() {});
                         },
@@ -1016,6 +784,17 @@ class _Design12State extends State<Design12> {
                         },
                         currentColor: designController.nameContainerColor,
                       ),
+                      ValueChangeSlider(
+                        value: designController.nameTopSpacing,
+                        max: 200,
+                        title:
+                            'Name Top Spacing: ${designController.nameTopSpacing.toInt()}',
+                        onChanged: (value) {
+                          designController.nameTopSpacing = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
                       Container(
                         width: 300,
                         child: TextStyleEditor(
@@ -1075,19 +854,25 @@ class _Design12State extends State<Design12> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      FontSizer(
-                        hintText: 'Data Container Width',
-                        fontSize: designController.valueContainerSize.toInt(),
-                        increase: () {
-                          designController.valueContainerSize++;
+                      ValueChangeSlider(
+                        value: designController.valueContainerWidth,
+                        max: 1200,
+                        title:
+                            'Value Container Width: ${designController.valueContainerWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.valueContainerWidth = value;
                           designController.update();
-
                           setState(() {});
                         },
-                        decrease: () {
-                          designController.valueContainerSize--;
+                      ),
+                      ValueChangeSlider(
+                        value: designController.valueContainerSpacing,
+                        max: 100,
+                        title:
+                            'Value Container Width: ${designController.valueContainerSpacing.toInt()}',
+                        onChanged: (value) {
+                          designController.valueContainerSpacing = value;
                           designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -1217,50 +1002,6 @@ class _Design12State extends State<Design12> {
                           );
                         },
                         currentColor: designController.valueFontColor,
-                      ),
-                      FontSizer(
-                        hintText: 'Country Name Font Size',
-                        fontSize: designController.countryFlagSize.toInt(),
-                        increase: () {
-                          designController.countryFlagSize++;
-                          designController.update();
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.countryFlagSize--;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                      ),
-                      FontSizer(
-                        hintText: 'Country Name Font Size',
-                        fontSize: designController.countryNameFontSize.toInt(),
-                        increase: () {
-                          designController.countryNameFontSize++;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.countryNameFontSize--;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                      ),
-                      ColorPickerItem(
-                        hintText: 'Country Name Text Color',
-                        pickerTap: () {
-                          colorPicker(
-                            currentColor: designController.countryNameFontColor,
-                            onChange: (color) {
-                              designController.countryNameFontColor = color;
-                              designController.update();
-                            },
-                          );
-                        },
-                        currentColor: designController.countryNameFontColor,
                       ),
                       Container(
                         width: Get.width * 0.2,

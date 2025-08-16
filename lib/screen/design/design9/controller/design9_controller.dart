@@ -20,7 +20,7 @@ class Design9Controller extends GetxController {
   bool showBackgroundGradient = false;
   double logoSize = 150;
   double logoContainerHeight = 150;
-  double logoRadius = 10;
+  double logoRadius = 0;
   int itemsPerScreen = 4;
   double flagWidth = 65;
   TextStyle valueTextStyle = GoogleFonts.russoOne(
@@ -36,6 +36,7 @@ class Design9Controller extends GetxController {
   Color valueFontColor2 = halfBlack;
   Color? valueContainerLeft = null;
   Color? valueContainerRight = null;
+
   double valueContainerRadius = 8;
   double valueContainerSpacing = 8;
 
@@ -60,6 +61,7 @@ class Design9Controller extends GetxController {
   TextAlign titleTextAlign = TextAlign.center;
   double titleFontSize = 20;
   double titleContainerWidth = 230;
+  double titlePosition = 0;
   Color titleFontColor = Colors.yellow;
   Color titleShadowColor = halfBlack;
   Color titleBackgroundColor = Colors.red;

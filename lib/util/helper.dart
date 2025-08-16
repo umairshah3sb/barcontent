@@ -303,7 +303,9 @@ List<Color> generate100ColorShades() {
 
 List<String> fontFamilies = [
   'Russo+One',
+  'Bebas Neue',
   'Futura',
+  'Oswald'
   'Archivo Black',
   'Roboto',
   'San Francisco',
@@ -314,78 +316,52 @@ List<String> fontFamilies = [
   'Georgia',
   'Verdana',
   'ABeeZee',
-  'Abel',
-  'Abhaya Libre',
-  'Abril Fatface',
-  'Acme',
-  'Alata',
-  'Alegreya',
-  'Alegreya Sans',
-  'Amatic SC',
-  'Annie Use Your Telescope',
-  'Archivo',
-  'Arimo',
-  'Asap',
-  'Assistant',
-  'Barlow',
-  'Bebas Neue',
-  'Bitter',
-  'Bree Serif',
-  'Cabin',
-  'Cairo',
-  'Cantarell',
-  'Catamaran',
-  'Caveat',
-  'Comfortaa',
-  'Cormorant',
-  'Crimson Text',
-  'Dancing Script',
-  'Domine',
-  'EB Garamond',
-  'Exo 2',
-  'Fira Sans',
-  'Great Vibes',
-  'Hind',
-  'IBM Plex Sans',
-  'Inconsolata',
-  'Indie Flower',
-  'Inter',
-  'Josefin Sans',
-  'Karla',
-  'Lato',
-  'Libre Baskerville',
-  'Libre Franklin',
-  'Lobster',
-  'Lora',
-  'Merriweather',
-  'Montserrat',
-  'Mulish',
-  'Nunito',
-  'Open Sans',
-  'Oswald',
-  'Overpass',
-  'Pacifico',
-  'Playfair Display',
-  'Poppins',
+  
   'PT Sans',
   'PT Serif',
-  'Quicksand',
-  'Raleway',
-  'Red Hat Display',
-  'Roboto Condensed',
-  'Roboto Mono',
-  'Rubik',
-  'Source Sans Pro',
-  'Source Serif Pro',
-  'Space Mono',
-  'Titillium Web',
-  'Ubuntu',
-  'Work Sans',
-  'Zilla Slab',
   'Proxima Nova',
-  'Gotham',
-  'Avenir',
   'JetBrains Mono',
   'Fira Code',
   'Source Code Pro',
 ];
+
+Widget ValueChangeSlider({
+  required String title,
+  required void Function(double)? onChanged,
+  required double value,
+  double max = 430,
+}) {
+  return StatefulBuilder(builder: (context, setState) {
+    return Container(
+      margin: spacing(v: 10),
+      width: 300,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.russoOne(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: halfBlack,
+            ),
+          ),
+          gap(h: 10),
+          Slider(
+            max: max,
+            value: value,
+            onChanged: onChanged,
+          ),
+        ],
+      ),
+    );
+  });
+}
+
+class NoScrollbarBehavior extends ScrollBehavior {
+  @override
+  Widget buildScrollbar(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child; // Don’t wrap in a scrollbar
+  }
+}

@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'package:barcontent/screen/design/design13/widgets/design13_item.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
+import 'package:barcontent/util/helper.dart';
 
-class Design12Controller extends GetxController {
+class Design13Controller extends GetxController {
   List<dynamic> csvData = [];
+  List<Widget> dataItems = [];
   Map<String, dynamic> dumyData = {
     'value1': 'GSM / CDMA / HSPA / EVDO / LTE / 5G',
     'value2': 'GSM / CDMA / HSPA / EVDO / LTE / 5G',
@@ -16,11 +19,7 @@ class Design12Controller extends GetxController {
 
   TextEditingController title = TextEditingController();
   TextEditingController logo1 = TextEditingController();
-  TextEditingController logo2 = TextEditingController();
-  TextEditingController logo3 = TextEditingController();
   TextEditingController name1 = TextEditingController();
-  TextEditingController name2 = TextEditingController();
-  TextEditingController name3 = TextEditingController();
   TextEditingController backgroundImage = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
@@ -40,6 +39,7 @@ class Design12Controller extends GetxController {
   double flagPosition = 10;
   double IconsSpacing = 25;
   double topSpacing = 25;
+  double spacingBetween = 25;
   double IconPosition = 25;
   int itemsPerScreen = 4;
   int currentIndex = 0;
@@ -47,33 +47,34 @@ class Design12Controller extends GetxController {
   TextAlign subTitleTextAlign = TextAlign.center;
 
   TextStyle subTitleTextStyle = GoogleFonts.russoOne(
-    fontSize: 33,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Colors.white,
+    color: halfBlack,
   );
 
   TextStyle valueTextStyle = GoogleFonts.russoOne(
-    fontSize: 40,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Colors.white,
+    color: halfBlack,
   );
 
-  TextAlign valueTextAlign = TextAlign.center;
-  double valueFontSize = 30;
+  TextAlign valueTextAlign = TextAlign.left;
   double valueContainerShadowRadius = 3;
-  double valueContainerSize = 420;
-  Color valueFontColor = whiteColor;
+  double valueContainerWidth = 600;
+  double valueContainerSpacing = 20;
+  Color valueFontColor = halfBlack;
   Color valueContainerLeft = HexColor('#919191');
   Color valueContainerRight = HexColor('#919191');
   Color valueContainerShadow1 = Colors.transparent;
   Color valueContainerShadow2 = Colors.transparent;
   Color valueContainerAnimation = Colors.blue;
-  double picContainerSize = 200;
+  double picContainerSize = 50;
   double picContainerRadius = 8;
   double dataContainerHeight = Get.height * 0.7;
   double dataContainerSpacing = 5;
   double dataContainerWidth = 500;
 
+  double nameTopSpacing = 15;
   double nameTextSize = 40;
   Color nameContainerColor = halfBlack;
   Color nameFontColor = whiteColor;
@@ -81,19 +82,15 @@ class Design12Controller extends GetxController {
   TextStyle nameTextStyle = GoogleFonts.russoOne(
     fontSize: 40,
     fontWeight: FontWeight.bold,
-    color: Colors.white,
+    color: whiteColor,
   );
 
   double titleFontSize = 65;
   Color titleFontColor = halfBlack;
+
   double subtitleFontSize = 33;
   Color subtitleFontColor = halfBlack;
 
-  double countryNameFontSize = 40;
-  double countryFlagSize = 100;
-  Color countryNameFontColor = halfBlack;
-
-  int animationGap = 3;
   Color backgroundColor = whiteColor;
   LinearGradient backgroundGradient = LinearGradient(
     colors: [whiteColor, whiteColor],
@@ -103,7 +100,7 @@ class Design12Controller extends GetxController {
   Color shadowColor = halfBlack;
 
   List<Widget> itemsList = [];
-
+  int animationGap = 5;
   void scrollToBottom(int sec) {
     final maxScroll = scrollController.position.maxScrollExtent;
     scrollController.animateTo(
@@ -115,6 +112,7 @@ class Design12Controller extends GetxController {
 
   updateFlow() {
     itemsList = [];
+    dataItems = [];
     update();
     Timer(Duration(seconds: (5)), () {
       addItems();
@@ -127,12 +125,17 @@ class Design12Controller extends GetxController {
     itemsList = [];
     if (csvData.isNotEmpty) {
       for (var i = 0; i < csvData.length; i++) {
-        await Future.delayed(Duration(seconds: 10));
         currentIndex = i;
-        if (csvData[i]['title'].toString().isNotEmpty) {
-          title.text = csvData[i]['title'].toString();
-        }
+        dataItems.add(
+          Design13Item(
+            key: Key(getRandomString(30)),
+            itemData: csvData[i],
+            index: i,
+          ),
+        );
+        await Future.delayed(Duration(seconds: animationGap));
         update();
+        scrollToBottom(1);
       }
     }
     update();

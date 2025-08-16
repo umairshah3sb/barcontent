@@ -33,7 +33,7 @@ class _Design9ItemState extends State<Design9Item> {
                 child: Container(
                   height: controller.dataContainerHeight,
                   width: double.infinity,
-                  padding: spacing(h: 20),
+                  padding: spacing(h: 7),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

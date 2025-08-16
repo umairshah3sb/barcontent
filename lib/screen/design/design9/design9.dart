@@ -121,7 +121,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                               Positioned(
                                 left: 0,
                                 right: 0,
-                                top: 15,
+                                top: designController.titlePosition,
                                 child: Center(
                                   child: Container(
                                     width: controller.titleContainerWidth,
@@ -293,10 +293,11 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(
+                    10,
+                  ),
+                ),
                 child: Text(
                   'Choose file',
                   style: GoogleFonts.manrope(
@@ -741,35 +742,24 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Flag width',
-                        fontSize: designController.flagWidth.toInt(),
-                        increase: () {
-                          designController.flagWidth++;
+                      ValueChangeSlider(
+                        value: designController.flagWidth,
+                        max: 200,
+                        title:
+                            'Flag width: ${designController.flagWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.flagWidth = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.flagWidth--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Value Width',
-                        fontSize: designController.valueWidth.toInt(),
-                        increase: () {
-                          designController.valueWidth++;
+                      ValueChangeSlider(
+                        value: designController.valueWidth,
+                        title:
+                            'Value Width: ${designController.valueWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.valueWidth = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueWidth--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -1113,19 +1103,24 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         },
                         currentColor: designController.titleBackgroundColor,
                       ),
-                      FontSizer(
-                        hintText: 'Title Container Width',
-                        fontSize: designController.titleContainerWidth.toInt(),
-                        increase: () {
-                          designController.titleContainerWidth++;
+                      ValueChangeSlider(
+                        value: designController.titleContainerWidth,
+                        title:
+                            'Title Container Width: ${designController.titleContainerWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.titleContainerWidth = value;
                           designController.update();
-
                           setState(() {});
                         },
-                        decrease: () {
-                          designController.titleContainerWidth--;
+                      ),
+                      ValueChangeSlider(
+                        value: designController.titlePosition,
+                        max: 150,
+                        title:
+                            'Title Position: ${designController.titlePosition.toInt()}',
+                        onChanged: (value) {
+                          designController.titlePosition = value;
                           designController.update();
-
                           setState(() {});
                         },
                       ),

@@ -4,6 +4,7 @@ import 'package:barcontent/screen/design/design1/design1.dart';
 import 'package:barcontent/screen/design/design10/design10.dart';
 import 'package:barcontent/screen/design/design11/design11.dart';
 import 'package:barcontent/screen/design/design12/design12.dart';
+import 'package:barcontent/screen/design/design13/design13.dart';
 import 'package:barcontent/screen/design/design2/design2.dart';
 import 'package:barcontent/screen/design/design3/design3.dart';
 import 'package:barcontent/screen/design/design4/design4.dart';
@@ -351,6 +352,29 @@ class _HomeState extends State<Home> {
                       child: InkWell(
                         onTap: () {
                           pushRoute(Design12());
+                        },
+                        child: Container(
+                          width: 200,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(10),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: borderRadius(15),
+                            child: Image.asset(
+                              'assets/img/Design5.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: spacing(h: 5, v: 5),
+                      child: InkWell(
+                        onTap: () {
+                          pushRoute(Design13());
                         },
                         child: Container(
                           width: 200,
