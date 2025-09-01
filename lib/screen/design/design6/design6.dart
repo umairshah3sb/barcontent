@@ -223,41 +223,96 @@ class _Design6State extends State<Design6> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 300,
-                  height: 50,
-                  padding: spacing(
-                    h: 14,
-                  ),
-                  decoration: BoxDecoration(
-                      color: whiteColor,
-                      boxShadow: shadow,
-                      borderRadius: borderRadius(50),
-                      border: Border.all(
-                        width: 2,
-                        color: halfBlack,
-                      )),
-                  child: TextFormField(
-                    controller: videoTimer,
-                    decoration: InputDecoration(
-                      hintText: 'Enter Animation Gap',
-                      border: InputBorder.none,
-                      hintStyle: GoogleFonts.manrope(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: halfBlack,
-                      ),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        Text('Animation Gap'),
+                        gap(h: 5),
+                        Container(
+                          width: 300,
+                          height: 50,
+                          padding: spacing(
+                            h: 14,
+                          ),
+                          decoration: BoxDecoration(
+                              color: whiteColor,
+                              boxShadow: shadow,
+                              borderRadius: borderRadius(50),
+                              border: Border.all(
+                                width: 2,
+                                color: halfBlack,
+                              )),
+                          child: TextFormField(
+                            controller: videoTimer,
+                            decoration: InputDecoration(
+                              hintText: 'Enter Animation Gap',
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.manrope(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: halfBlack,
+                              ),
+                            ),
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                            keyboardType: TextInputType.phone,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp("[0-9]")),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    style: GoogleFonts.manrope(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: halfBlack,
+                    gap(w: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Verse Image'),
+                        gap(h: 5),
+                        Container(
+                          width: 300,
+                          height: 50,
+                          padding: spacing(
+                            h: 14,
+                          ),
+                          decoration: BoxDecoration(
+                              color: whiteColor,
+                              boxShadow: shadow,
+                              borderRadius: borderRadius(50),
+                              border: Border.all(
+                                width: 2,
+                                color: halfBlack,
+                              )),
+                          child: TextFormField(
+                            controller: designController.verserImage,
+                            onChanged: (x) {
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Enter verse Image Url',
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.manrope(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: halfBlack,
+                              ),
+                            ),
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ],
                     ),
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                    ],
-                  ),
+                  ],
                 ),
                 gap(h: 10),
                 Row(
@@ -653,19 +708,14 @@ class _Design6State extends State<Design6> {
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Pic Contaner Size',
-                        fontSize: designController.picContainerSize.toInt(),
-                        increase: () {
-                          designController.picContainerSize++;
+                      ValueChangeSlider(
+                        value: designController.picContainerSize,
+                        max: 1000,
+                        title:
+                            'Pic Container Width: ${designController.picContainerSize.toInt()}',
+                        onChanged: (value) {
+                          designController.picContainerSize = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.picContainerSize--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -682,6 +732,17 @@ class _Design6State extends State<Design6> {
                           designController.picContainerRadius--;
                           designController.update();
 
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.vsImageWidth,
+                        max: 300,
+                        title:
+                            'Vs Image width: ${designController.vsImageWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.vsImageWidth = value;
+                          designController.update();
                           setState(() {});
                         },
                       ),
@@ -748,19 +809,14 @@ class _Design6State extends State<Design6> {
                         },
                         currentColor: designController.nameFontColor,
                       ),
-                      FontSizer(
-                        hintText: 'Value Text Font Size',
-                        fontSize: designController.valueFontSize.toInt(),
-                        increase: () {
-                          designController.valueFontSize++;
+                      ValueChangeSlider(
+                        value: designController.valueContainerSize,
+                        max: 200,
+                        title:
+                            'Value Text Font Size: ${designController.valueContainerSize.toInt()}',
+                        onChanged: (value) {
+                          designController.valueContainerSize = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueFontSize--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -817,18 +873,14 @@ class _Design6State extends State<Design6> {
                         },
                         currentColor: designController.valueFontColor,
                       ),
-                      FontSizer(
-                        hintText: 'Country Name Font Size',
-                        fontSize: designController.countryFlagSize.toInt(),
-                        increase: () {
-                          designController.countryFlagSize++;
+                      ValueChangeSlider(
+                        value: designController.countryFlagSize,
+                        max: 1000,
+                        title:
+                            'Country Flag Size: ${designController.countryFlagSize.toInt()}',
+                        onChanged: (value) {
+                          designController.countryFlagSize = value;
                           designController.update();
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.countryFlagSize--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),

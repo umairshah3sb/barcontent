@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:barcontent/screen/design/design6/widgets/design6_item.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 
-class Design6Controller extends GetxController {
+class Design16Controller extends GetxController {
   List<dynamic> csvData = [];
   Map<String, dynamic> dumyData = {
     'value1': '180',
@@ -26,32 +25,50 @@ class Design6Controller extends GetxController {
   bool enableScroll = false;
   bool showBackgroundGradient = false;
   double logoSize = 250;
-  double logoRadius = 10;
+  double logoRadius = 0;
   int itemsPerScreen = 4;
   int currentIndex = 0;
+  double flagBorderSize = 5;
+  Color flagBorderColor = Colors.transparent;
 
-  double valueFontSize = 18;
+  double valueFontSize = 55;
+  String valueFontFamily = 'Russo One';
   double valueContainerSize = 70;
   Color valueFontColor = halfBlack;
-  Color valueContainerLeft = HexColor('#919191');
-  Color valueContainerRight = HexColor('#919191');
+  Color valueContainerLeft = Colors.transparent;
+  Color valueContainerRight = Colors.transparent;
   Color valueContainerAnimation = Colors.blue;
-  double picContainerSize = 100;
+  double picContainerWidth = 240;
+  double picContainerHeight = 490;
+  double deviceMarginTop = 10;
+  double deviceMarginBottom = 10;
+  double picBorderSize = 5;
+  Color picBorderColor = Colors.transparent;
+
+  double correctIconBottom = 10;
+  double correctIconSize = 50;
+
+  double picVMargin = 40;
+  double picHMargin = 40;
   double vsImageWidth = 100;
-  double picContainerRadius = 8;
+  double picContainerRadius = 0;
   double dataContainerHeight = 45;
   double dataContainerSpacing = 5;
   double dataContainerWidth = 430;
 
+  String nameFontFamily = 'Russo One';
   double nameTextSize = 20;
   Color nameFontColor = halfBlack;
 
-  double titleFontSize = 40;
+  String titleFontFamily = 'Russo One';
+  double titleFontSize = 0;
   Color titleFontColor = halfBlack;
 
-  double countryNameFontSize = 40;
+  String countryFontFamily = 'Russo One';
+  double countryNameFontSize = 25;
   double countryFlagSize = 100;
   Color countryNameFontColor = halfBlack;
+  TextStyle styleText = GoogleFonts.genos();
 
   int animationGap = 3;
   Color backgroundColor = whiteColor;
@@ -60,7 +77,9 @@ class Design6Controller extends GetxController {
   );
   double backgroundImageOpacity = 5;
   double textShadowOpacity = 5;
+  double flagShadowOpacity = 1;
   Color shadowColor = halfBlack;
+  Color flagShadowColor = halfBlack;
 
   List<Widget> itemsList = [];
 
@@ -87,7 +106,7 @@ class Design6Controller extends GetxController {
     itemsList = [];
     if (csvData.isNotEmpty) {
       for (var i = 0; i < csvData.length; i++) {
-        await Future.delayed(Duration(seconds: 10));
+        await Future.delayed(Duration(seconds: 6));
         currentIndex = i;
         update();
       }

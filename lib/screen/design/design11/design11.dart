@@ -179,7 +179,9 @@ class _Design11State extends State<Design11> {
                 height: controller.dataContainerHeight,
                 child: CachedNetworkImage(
                   key: Key(getRandomString(20)),
-                  imageUrl: image.isEmpty ? 'https://bit.ly/3GUeno8' : image,
+                  imageUrl: image.isEmpty
+                      ? 'https://i.postimg.cc/qRXmDpGQ/image.png'
+                      : image,
                   fit: BoxFit.cover,
                 ),
               ),

@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'package:barcontent/screen/design/design6/widgets/design6_item.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 
-class Design6Controller extends GetxController {
+class Design15Controller extends GetxController {
   List<dynamic> csvData = [];
   Map<String, dynamic> dumyData = {
-    'value1': '180',
-    'value2': '170',
-    'name': 'Nuclear Warheads',
-    'pic':
-        'https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg',
+    'value1': '~\$30.5 trillion (1st)',
+    'value2': '~\$19.2 trillion (2nd)',
+    'name': 'GDP',
+    'pic': 'https://i.postimg.cc/4x7WVwb0/image.png',
+    'pic1': 'https://i.postimg.cc/4x7WVwb0/image.png',
+    'pic2': 'https://i.postimg.cc/4x7WVwb0/image.png',
   };
 
   TextEditingController title = TextEditingController();
@@ -22,36 +22,56 @@ class Design6Controller extends GetxController {
   TextEditingController backgroundImage = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
+  double VideoContainerSpacingH = 10;
+  double VideoContainerHeight = 600;
+  double aspectRatio = 16 / 9;
   bool isGenerating = false;
   bool enableScroll = false;
+  bool differencePic = false;
+  bool changeStyle = false;
+
   bool showBackgroundGradient = false;
   double logoSize = 250;
-  double logoRadius = 10;
+  double logoRadius = 0;
   int itemsPerScreen = 4;
   int currentIndex = 0;
+  double flagBorderSize = 5;
+  Color flagBorderColor = Colors.transparent;
 
-  double valueFontSize = 18;
+  double valueFontSize = 55;
+  double valueWidth = 200;
+  String valueFontFamily = 'Russo One';
   double valueContainerSize = 70;
   Color valueFontColor = halfBlack;
-  Color valueContainerLeft = HexColor('#919191');
-  Color valueContainerRight = HexColor('#919191');
+  Color valueContainerLeft = Colors.transparent;
+  Color valueContainerRight = Colors.transparent;
   Color valueContainerAnimation = Colors.blue;
-  double picContainerSize = 100;
+
+  double picContainerWidth = 400;
+  double picContainerHeight = 300;
+  double picBorderSize = 5;
+  Color picBorderColor = Colors.transparent;
+
+  double picVMargin = 40;
+  double picHMargin = 40;
   double vsImageWidth = 100;
-  double picContainerRadius = 8;
-  double dataContainerHeight = 45;
+  double picContainerRadius = 0;
   double dataContainerSpacing = 5;
   double dataContainerWidth = 430;
 
+  String nameFontFamily = 'Russo One';
   double nameTextSize = 20;
   Color nameFontColor = halfBlack;
 
+  String titleFontFamily = 'Russo One';
   double titleFontSize = 40;
   Color titleFontColor = halfBlack;
 
+  String countryFontFamily = 'Russo One';
   double countryNameFontSize = 40;
   double countryFlagSize = 100;
   Color countryNameFontColor = halfBlack;
+  TextStyle styleText = GoogleFonts.genos();
 
   int animationGap = 3;
   Color backgroundColor = whiteColor;
@@ -60,7 +80,9 @@ class Design6Controller extends GetxController {
   );
   double backgroundImageOpacity = 5;
   double textShadowOpacity = 5;
+  double flagShadowOpacity = 1;
   Color shadowColor = halfBlack;
+  Color flagShadowColor = halfBlack;
 
   List<Widget> itemsList = [];
 
@@ -87,7 +109,7 @@ class Design6Controller extends GetxController {
     itemsList = [];
     if (csvData.isNotEmpty) {
       for (var i = 0; i < csvData.length; i++) {
-        await Future.delayed(Duration(seconds: 10));
+        await Future.delayed(Duration(seconds: 6));
         currentIndex = i;
         update();
       }

@@ -933,10 +933,11 @@ class _Design7State extends State<Design7> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                tableItems('value1'),
                 tableItems('name'),
+                tableItems('value'),
                 tableItems('pic'),
-                tableItems('value2'),
+                tableItems('prefix'),
+                tableItems('percentage'),
               ],
             ),
             gap(h: 60),

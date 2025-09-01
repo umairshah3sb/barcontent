@@ -117,27 +117,14 @@ class _Design6ItemState extends State<Design6Item>
                           scale: _scaleAnimation!,
                           child: Container(
                             width: (4 * controller.picContainerSize),
-                            height: (3 * controller.picContainerSize),
                             margin: spacing(h: 10, v: 10),
                             decoration: BoxDecoration(
-                              borderRadius: borderRadius(controller.logoRadius),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color(0x26442A7C),
-                                  blurRadius: 28.68,
-                                  offset: Offset(0, 28.68),
-                                  spreadRadius: 0,
-                                ),
-                                BoxShadow(
-                                  color: Color(0x26442A7C),
-                                  blurRadius: 28.68,
-                                  offset: Offset(0, 28.68),
-                                  spreadRadius: 0,
-                                )
-                              ],
+                              borderRadius:
+                                  borderRadius(controller.picContainerRadius),
                             ),
                             child: ClipRRect(
-                              borderRadius: borderRadius(controller.logoRadius),
+                              borderRadius:
+                                  borderRadius(controller.picContainerRadius),
                               child: CachedNetworkImage(
                                 key: Key(getRandomString(20)),
                                 imageUrl: controller.csvData.isNotEmpty
@@ -159,7 +146,6 @@ class _Design6ItemState extends State<Design6Item>
                       bottom: 0,
                       child: Container(
                         width: controller.countryFlagSize,
-                        height: (controller.countryFlagSize * 0.75),
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           borderRadius: borderRadius(controller.logoRadius),
@@ -200,7 +186,6 @@ class _Design6ItemState extends State<Design6Item>
                       bottom: 0,
                       child: Container(
                         width: controller.countryFlagSize,
-                        height: (controller.countryFlagSize * 0.75),
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           borderRadius: borderRadius(controller.logoRadius),
@@ -366,24 +351,33 @@ class _Design6MainUIState extends State<Design6MainUI> {
         Container(
           alignment: Alignment.center,
           height: Get.height * 0.7,
-          child: Text(
-            'VS',
-            style: GoogleFonts.alfaSlabOne(
-              fontSize: designController.countryNameFontSize,
-              fontWeight: FontWeight.w800,
-              color: designController.countryNameFontColor,
-              shadows: [
-                Shadow(
-                  color: designController.shadowColor.withAlpha(
-                    (255 * (designController.textShadowOpacity / 10)).toInt(),
+          child: designController.verserImage.text.isEmpty
+              ? Text(
+                  'VS',
+                  style: GoogleFonts.alfaSlabOne(
+                    fontSize: designController.countryNameFontSize,
+                    fontWeight: FontWeight.w800,
+                    color: designController.countryNameFontColor,
+                    shadows: [
+                      Shadow(
+                        color: designController.shadowColor.withAlpha(
+                          (255 * (designController.textShadowOpacity / 10))
+                              .toInt(),
+                        ),
+                        offset: Offset.zero,
+                        blurRadius: 10,
+                      )
+                    ],
                   ),
-                  offset: Offset.zero,
-                  blurRadius: 10,
+                  textAlign: TextAlign.center,
                 )
-              ],
-            ),
-            textAlign: TextAlign.center,
-          ),
+              : SizedBox(
+                  width: designController.vsImageWidth,
+                  child: CachedNetworkImage(
+                    imageUrl: designController.verserImage.text,
+                    fit: BoxFit.cover,
+                  ),
+                ),
         ),
         Expanded(
           child: Design6Item(

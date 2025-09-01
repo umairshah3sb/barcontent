@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:barcontent/screen/design/design9/controller/design9_controller.dart';
+import 'package:barcontent/screen/design/design9/text_type_writer.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
+import 'package:barcontent/util/font_family_selector.dart';
 import 'package:barcontent/util/helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
@@ -39,40 +41,48 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
               top: 0,
               bottom: 0,
               child: Center(
-                child: AspectRatio(
-                  aspectRatio: 9 / 16,
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: Get.height,
-                        width: controller
-                            .dataContainerWidth, // You can change this value
-                        decoration: BoxDecoration(
-                          gradient: controller.backgroundGradient,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: controller.containerBorder,
+                    ),
+                  ),
+                  child: AspectRatio(
+                    aspectRatio: controller.aspectRatio,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: Get.height,
+                          width: controller
+                              .dataContainerWidth, // You can change this value
+                          decoration: BoxDecoration(
+                            gradient: controller.backgroundGradient,
+                          ),
+                          child: controller.backgroundImage.text.isNotEmpty
+                              ? Opacity(
+                                  opacity:
+                                      (controller.backgroundImageOpacity / 10),
+                                  child: Image.network(
+                                    controller.backgroundImage.text,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : gap(),
                         ),
-                        child: controller.backgroundImage.text.isNotEmpty
-                            ? Opacity(
-                                opacity:
-                                    (controller.backgroundImageOpacity / 10),
-                                child: Image.network(
-                                  controller.backgroundImage.text,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                            : gap(),
-                      ),
-                      Positioned(
-                        child: Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: controller.backgroundGradient,
+                        Positioned(
+                          child: Center(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: controller.backgroundGradient,
+                              ),
+                              height: Get.height,
+                              width: controller.dataContainerWidth,
                             ),
-                            height: Get.height,
-                            width: controller.dataContainerWidth,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -83,11 +93,12 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
               bottom: 0,
               child: Center(
                 child: AspectRatio(
-                  aspectRatio: 9 / 16,
+                  aspectRatio: controller.aspectRatio,
                   child: Container(
                     width: controller
                         .dataContainerWidth, // You can change this value
                     height: Get.height,
+
                     margin: spacing(
                       v: controller.dataContainerMarginV,
                       h: controller.dataContainerMarginH,
@@ -119,17 +130,30 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                                 ),
                               ),
                               Positioned(
-                                left: 0,
-                                right: 0,
-                                top: designController.titlePosition,
+                                left: designController.titlePositionLeft,
+                                top: designController.titlePositionTop,
                                 child: Center(
                                   child: Container(
                                     width: controller.titleContainerWidth,
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      controller.title.text,
-                                      style: controller.titleTextStyle.copyWith(
+                                    alignment: Alignment.centerLeft,
+                                    child: TextTypeWriter(
+                                      key: Key(getRandomString(20)),
+                                      text: controller.title.text,
+                                      style: GoogleFonts.getFont(
+                                        controller.titleFontFamily,
                                         color: controller.titleFontColor,
+                                        fontSize:
+                                            controller.titleTextStyle.fontSize,
+                                        fontWeight: controller
+                                            .titleTextStyle.fontWeight,
+                                        wordSpacing: controller
+                                            .titleTextStyle.wordSpacing,
+                                        decoration: controller
+                                            .titleTextStyle.decoration,
+                                        letterSpacing: controller
+                                            .titleTextStyle.letterSpacing,
+                                        height:
+                                            controller.titleTextStyle.height,
                                         shadows: [
                                           Shadow(
                                             color: controller.titleShadowColor,
@@ -138,6 +162,8 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                                           )
                                         ],
                                       ),
+                                      textAlign: controller.titleTextAlign,
+                                      typingSpeed: controller.typingSpeed,
                                     ),
                                   ),
                                 ),
@@ -913,6 +939,126 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      Text(
+                        'Aspect Ratio',
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 9 / 16;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '9/16',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 16 / 9;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '16/9',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 3 / 4;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '3/4',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 4 / 3;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '4/3',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 1 / 1;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '1/1',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ColorPickerItem(
+                        hintText: 'Border Color',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.containerBorder,
+                            onChange: (color) {
+                              designController.containerBorder = color;
+                              designController.update();
+                            },
+                          );
+                        },
+                        currentColor: designController.containerBorder,
+                      ),
                       FontSizer(
                         hintText: 'Name Text Font Size',
                         fontSize: designController.nameTextSize.toInt(),
@@ -963,19 +1109,11 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           },
                         ),
                       ),
-                      FontSizer(
-                        hintText: 'Value Text Font Size',
-                        fontSize: designController.valueFontSize.toInt(),
-                        increase: () {
-                          designController.valueFontSize++;
+                      FontFamilyDropdown(
+                        text: 'Value Font Family',
+                        onFontSelected: (font) {
+                          designController.valueFontFamily = font;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueFontSize--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -1114,15 +1252,63 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         },
                       ),
                       ValueChangeSlider(
-                        value: designController.titlePosition,
+                        value: designController.titlePositionTop,
                         max: 150,
                         title:
-                            'Title Position: ${designController.titlePosition.toInt()}',
+                            'Title Position Top: ${designController.titlePositionTop.toInt()}',
                         onChanged: (value) {
-                          designController.titlePosition = value;
+                          designController.titlePositionTop = value;
                           designController.update();
                           setState(() {});
                         },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.titlePositionLeft,
+                        max: 150,
+                        title:
+                            'Title Position Left: ${designController.titlePositionLeft.toInt()}',
+                        onChanged: (value) {
+                          designController.titlePositionLeft = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      Container(
+                        width: 300,
+                        height: 50,
+                        padding: spacing(
+                          h: 14,
+                        ),
+                        decoration: BoxDecoration(
+                          color: whiteColor,
+                          boxShadow: shadow,
+                          borderRadius: borderRadius(50),
+                          border: Border.all(
+                            width: 2,
+                            color: halfBlack,
+                          ),
+                        ),
+                        child: TextFormField(
+                          controller: videoTimer,
+                          decoration: InputDecoration(
+                            hintText: 'Typing duration',
+                            border: InputBorder.none,
+                            hintStyle: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                          ),
+                          style: GoogleFonts.manrope(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: halfBlack,
+                          ),
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                          ],
+                        ),
                       ),
                       Container(
                         width: 300,
@@ -1147,19 +1333,11 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           },
                         ),
                       ),
-                      FontSizer(
-                        hintText: 'Title Font Size',
-                        fontSize: designController.titleFontSize.toInt(),
-                        increase: () {
-                          designController.titleFontSize++;
+                      FontFamilyDropdown(
+                        text: 'Title Font Family',
+                        onFontSelected: (font) {
+                          designController.titleFontFamily = font;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.titleFontSize--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -1267,6 +1445,12 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                 if (videoTimer.text.toString().isNotEmpty) {
                   designController.animationGap =
                       int.parse(videoTimer.text.toString().trim());
+                }
+                if (designController.typingSpeedController.text.isNotEmpty) {
+                  designController.typingSpeed = int.parse(designController
+                      .typingSpeedController.text
+                      .toString()
+                      .trim());
                 }
                 designController.updateFlow();
                 // _Key.currentState!.closeDrawer();

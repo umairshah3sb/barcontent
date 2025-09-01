@@ -9,8 +9,7 @@ class Design11Controller extends GetxController {
     'value2': '170',
     'value3': '170',
     'name': 'Nuclear Warheads',
-    'pic':
-        'https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg',
+    'pic': 'https://i.postimg.cc/qRXmDpGQ/image.png',
   };
 
   TextEditingController title = TextEditingController();

@@ -8,6 +8,7 @@ class design1Controller extends GetxController {
   List<dynamic> csvData = [dumyData, dumyData, dumyData];
   bool isGenerating = false;
   bool enableScroll = false;
+  bool hideIndex = false;
   double nameFontSize = 45;
   int itemsPerScreen = 4;
   double largTextSize = 90;

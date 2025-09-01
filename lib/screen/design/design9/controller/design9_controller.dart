@@ -12,6 +12,7 @@ class Design9Controller extends GetxController {
   TextEditingController logo2 = TextEditingController();
   TextEditingController name1 = TextEditingController();
   TextEditingController name2 = TextEditingController();
+  TextEditingController typingSpeedController = TextEditingController();
   TextEditingController backgroundImage = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
@@ -19,17 +20,19 @@ class Design9Controller extends GetxController {
   bool enableScroll = false;
   bool showBackgroundGradient = false;
   double logoSize = 150;
+  double aspectRatio = 9 / 16;
   double logoContainerHeight = 150;
   double logoRadius = 0;
   int itemsPerScreen = 4;
   double flagWidth = 65;
-  TextStyle valueTextStyle = GoogleFonts.russoOne(
-    fontSize: 18,
+  TextStyle valueTextStyle = GoogleFonts.lobster(
+    fontSize: 33,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
   TextAlign valueTextAlign = TextAlign.center;
   double valueFontSize = 18;
+  String valueFontFamily = "Russo One";
   double valueContainerSize = 45;
   double valueWidth = 150;
   Color valueFontColor1 = halfBlack;
@@ -38,7 +41,7 @@ class Design9Controller extends GetxController {
   Color? valueContainerRight = null;
 
   double valueContainerRadius = 8;
-  double valueContainerSpacing = 8;
+  double valueContainerSpacing = 30;
 
   Color valueContainerAnimation = Colors.blue;
   Color? picIconColor;
@@ -51,22 +54,29 @@ class Design9Controller extends GetxController {
   double dataContainerMarginH = 10;
 
   double nameTextSize = 20;
+  String nameFontFamily = "Russo One";
+
   Color nameFontColor = halfBlack;
+  Color containerBorder = halfBlack;
 
   TextStyle titleTextStyle = GoogleFonts.russoOne(
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+  String titleFontFamily = "Russo One";
+
   TextAlign titleTextAlign = TextAlign.center;
   double titleFontSize = 20;
   double titleContainerWidth = 230;
-  double titlePosition = 0;
+  double titlePositionTop = 0;
+  double titlePositionLeft = 0;
   Color titleFontColor = Colors.yellow;
   Color titleShadowColor = halfBlack;
   Color titleBackgroundColor = Colors.red;
 
-  int animationGap = 3;
+  int animationGap = 10;
+  int typingSpeed = 50;
   Color backgroundColor = whiteColor;
   LinearGradient? backgroundGradient = null;
   double backgroundImageOpacity = 5;
@@ -105,7 +115,7 @@ class Design9Controller extends GetxController {
       }
     }
     Timer(Duration(seconds: 3), () {
-      scrollToBottom(10);
+      scrollToBottom(animationGap);
     });
     update();
   }

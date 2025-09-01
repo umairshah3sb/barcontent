@@ -136,7 +136,7 @@ class _Design1State extends State<Design1> {
                     width: width,
                     height: width * 0.8,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: getRandomColor(),
                     ),
                     child: CachedNetworkImage(
                       imageUrl: data['avatar'],
@@ -145,25 +145,27 @@ class _Design1State extends State<Design1> {
                   ),
                 ),
                 Positioned(
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: designController.indexContainerColor,
-                      borderRadius: borderRadius(50),
-                      boxShadow: shadow,
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${data['index']}',
-                        style: GoogleFonts.manrope(
-                          color: designController.indexFontColor,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w900,
+                  child: designController.hideIndex
+                      ? gap()
+                      : Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: designController.indexContainerColor,
+                            borderRadius: borderRadius(50),
+                            boxShadow: shadow,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${data['index']}',
+                              style: GoogleFonts.manrope(
+                                color: designController.indexFontColor,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 )
               ],
             ),
@@ -239,7 +241,6 @@ class _Design1State extends State<Design1> {
                   children: [
                     SizedBox(
                       width: designController.iconSize,
-                      height: designController.iconSize,
                       child: Image.network(
                         data['icon'],
                         fit: BoxFit.cover,
@@ -479,15 +480,14 @@ class _Design1State extends State<Design1> {
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Icons Size',
-                        fontSize: designController.iconSize.toInt(),
-                        increase: () {
-                          designController.iconSize++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.iconSize--;
+                      ValueChangeSlider(
+                        value: designController.iconSize,
+                        max: 1000,
+                        title:
+                            'Image Height: ${designController.iconSize.toInt()}',
+                        onChanged: (value) {
+                          designController.iconSize = value;
+                          designController.update();
                           setState(() {});
                         },
                       ),
@@ -642,6 +642,24 @@ class _Design1State extends State<Design1> {
                         },
                         currentColor: designController.indexContainerColor,
                       ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Hide Index',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.hideIndex,
+                              onChanged: (value) {
+                                designController.hideIndex = value;
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ],

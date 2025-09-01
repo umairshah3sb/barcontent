@@ -40,6 +40,10 @@ pushRoute(Widget screen) {
   );
 }
 
+pushNamedRoute(String route) {
+  Navigator.of(Get.context!).pushNamed(route);
+}
+
 pushReplacement(Widget screen) {
   Navigator.of(Get.context!).pushReplacement(
     MaterialPageRoute(builder: (context) => screen),
@@ -302,27 +306,21 @@ List<Color> generate100ColorShades() {
 }
 
 List<String> fontFamilies = [
-  'Russo+One',
-  'Bebas Neue',
-  'Futura',
-  'Oswald'
-  'Archivo Black',
+  'Russo One',
+  'Alfa Slab One',
   'Roboto',
-  'San Francisco',
-  'Helvetica',
-  'Arial',
-  'Times New Roman',
-  'Courier New',
-  'Georgia',
-  'Verdana',
-  'ABeeZee',
-  
-  'PT Sans',
-  'PT Serif',
-  'Proxima Nova',
-  'JetBrains Mono',
-  'Fira Code',
-  'Source Code Pro',
+  'Genos',
+  'Saira',
+  'Anton',
+  'Lobster',
+  'Changa One',
+  'Rowdies',
+  'Lilita One',
+  'Rubik Mono One',
+  'Oleo Script',
+  'Bebas Neue',
+  'Oswald',
+  'Archivo Black',
 ];
 
 Widget ValueChangeSlider({

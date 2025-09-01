@@ -33,14 +33,14 @@ class _Design9ItemState extends State<Design9Item> {
                 child: Container(
                   height: controller.dataContainerHeight,
                   width: double.infinity,
-                  padding: spacing(h: 7),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         width: controller.valueWidth,
                         height: controller.dataContainerHeight,
-                        padding: spacing(h: controller.valueContainerSpacing),
+                        padding:
+                            spaceOnly(right: controller.valueContainerSpacing),
                         alignment: Alignment.centerRight,
                         decoration: BoxDecoration(
                           color: widget.index.isOdd
@@ -52,13 +52,20 @@ class _Design9ItemState extends State<Design9Item> {
                         ),
                         child: AutoSizeText(
                           widget.data['value1'].toString(),
-                          style: controller.valueTextStyle.copyWith(
+                          style: GoogleFonts.getFont(
+                            controller.valueFontFamily,
                             color: widget.index.isOdd
                                 ? controller.valueFontColor1
                                 : controller.valueFontColor2,
+                            fontSize: controller.valueTextStyle.fontSize,
+                            fontWeight: controller.valueTextStyle.fontWeight,
+                            wordSpacing: controller.valueTextStyle.wordSpacing,
+                            decoration: controller.valueTextStyle.decoration,
+                            height: controller.valueTextStyle.height,
+                            letterSpacing:
+                                controller.valueTextStyle.letterSpacing,
                           ),
                           maxLines: 2,
-                          textAlign: TextAlign.justify,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -66,7 +73,9 @@ class _Design9ItemState extends State<Design9Item> {
                         width: controller.valueWidth,
                         height: controller.dataContainerHeight,
                         alignment: Alignment.centerLeft,
-                        padding: spacing(h: controller.valueContainerSpacing),
+                        padding: spaceOnly(
+                          left: controller.valueContainerSpacing,
+                        ),
                         decoration: BoxDecoration(
                           color: widget.index.isOdd
                               ? controller.valueContainerRight
@@ -77,13 +86,20 @@ class _Design9ItemState extends State<Design9Item> {
                         ),
                         child: AutoSizeText(
                           widget.data['value2'].toString(),
-                          style: controller.valueTextStyle.copyWith(
+                          style: GoogleFonts.getFont(
+                            controller.valueFontFamily,
                             color: widget.index.isOdd
                                 ? controller.valueFontColor2
                                 : controller.valueFontColor1,
+                            fontSize: controller.valueTextStyle.fontSize,
+                            fontWeight: controller.valueTextStyle.fontWeight,
+                            wordSpacing: controller.valueTextStyle.wordSpacing,
+                            decoration: controller.valueTextStyle.decoration,
+                            height: controller.valueTextStyle.height,
+                            letterSpacing:
+                                controller.valueTextStyle.letterSpacing,
                           ),
                           maxLines: 2,
-                          textAlign: TextAlign.justify,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
