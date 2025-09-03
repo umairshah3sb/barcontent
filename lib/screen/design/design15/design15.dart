@@ -757,6 +757,19 @@ class _Design15State extends State<Design15> {
                           setState(() {});
                         },
                       ),
+                      ColorPickerItem(
+                        hintText: 'Pic Container Background Color',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.picBackground,
+                            onChange: (color) {
+                              designController.picBackground = color;
+                              designController.update();
+                            },
+                          );
+                        },
+                        currentColor: designController.picBackground,
+                      ),
                       FontSizer(
                         hintText: 'Pic Container Radius',
                         fontSize: designController.picContainerRadius.toInt(),
@@ -780,6 +793,17 @@ class _Design15State extends State<Design15> {
                             'Vs Image width: ${designController.vsImageWidth.toInt()}',
                         onChanged: (value) {
                           designController.vsImageWidth = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.vsImageSpaceLeft,
+                        max: 300,
+                        title:
+                            'Vs Image spacing Left: ${designController.vsImageSpaceLeft.toInt()}',
+                        onChanged: (value) {
+                          designController.vsImageSpaceLeft = value;
                           designController.update();
                           setState(() {});
                         },

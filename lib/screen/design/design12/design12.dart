@@ -897,6 +897,8 @@ class _Design12State extends State<Design12> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
+                            paletteColors: colorList,
+                          
                           fonts: fontFamilies,
                           textStyle: designController.titleTextStyle,
                           textAlign: designController.titleTextAlign,
@@ -954,6 +956,8 @@ class _Design12State extends State<Design12> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
+                            paletteColors: colorList,
+
                           fonts: fontFamilies,
                           textStyle: designController.subTitleTextStyle,
                           textAlign: designController.subTitleTextAlign,
@@ -1021,6 +1025,8 @@ class _Design12State extends State<Design12> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
+                            paletteColors: colorList,
+
                           fonts: fontFamilies,
                           textStyle: designController.nameTextStyle,
                           textAlign: designController.nameTextAlign,
@@ -1096,6 +1102,8 @@ class _Design12State extends State<Design12> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
+                            paletteColors: colorList,
+
                           fonts: fontFamilies,
                           textStyle: designController.valueTextStyle,
                           textAlign: designController.valueTextAlign,

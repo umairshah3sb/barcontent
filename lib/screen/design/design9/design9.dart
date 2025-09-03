@@ -94,94 +94,98 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
               child: Center(
                 child: AspectRatio(
                   aspectRatio: controller.aspectRatio,
-                  child: Container(
-                    width: controller
-                        .dataContainerWidth, // You can change this value
-                    height: Get.height,
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: controller
+                            .dataContainerWidth, // You can change this value
+                        height: Get.height,
 
-                    margin: spacing(
-                      v: controller.dataContainerMarginV,
-                      h: controller.dataContainerMarginH,
-                    ),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Stack(
+                        margin: spacing(
+                          v: controller.dataContainerMarginV,
+                          h: controller.dataContainerMarginH,
+                        ),
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                height: controller.logoContainerHeight,
-                                width: controller.dataContainerWidth,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    FlagSection(
-                                      designController.logo1.text,
-                                      designController.name1.text,
-                                      isFirst: true,
-                                    ),
-                                    FlagSection(
-                                      designController.logo2.text,
-                                      designController.name2.text,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                left: designController.titlePositionLeft,
-                                top: designController.titlePositionTop,
-                                child: Center(
-                                  child: Container(
-                                    width: controller.titleContainerWidth,
-                                    alignment: Alignment.centerLeft,
-                                    child: TextTypeWriter(
-                                      key: Key(getRandomString(20)),
-                                      text: controller.title.text,
-                                      style: GoogleFonts.getFont(
-                                        controller.titleFontFamily,
-                                        color: controller.titleFontColor,
-                                        fontSize:
-                                            controller.titleTextStyle.fontSize,
-                                        fontWeight: controller
-                                            .titleTextStyle.fontWeight,
-                                        wordSpacing: controller
-                                            .titleTextStyle.wordSpacing,
-                                        decoration: controller
-                                            .titleTextStyle.decoration,
-                                        letterSpacing: controller
-                                            .titleTextStyle.letterSpacing,
-                                        height:
-                                            controller.titleTextStyle.height,
-                                        shadows: [
-                                          Shadow(
-                                            color: controller.titleShadowColor,
-                                            offset: Offset.zero,
-                                            blurRadius: 10,
-                                          )
-                                        ],
-                                      ),
-                                      textAlign: controller.titleTextAlign,
-                                      typingSpeed: controller.typingSpeed,
+                              Stack(
+                                children: [
+                                  Container(
+                                    height: controller.logoContainerHeight,
+                                    width: controller.dataContainerWidth,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        FlagSection(
+                                          designController.logo1.text,
+                                          designController.name1.text,
+                                          isFirst: true,
+                                        ),
+                                        FlagSection(
+                                          designController.logo2.text,
+                                          designController.name2.text,
+                                        ),
+                                      ],
                                     ),
                                   ),
+                                ],
+                              ),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  padding: spaceOnly(bottom: 70),
+                                  controller: controller.scrollController,
+                                  child: Column(
+                                    children: controller.itemsList,
+                                  ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              padding: spaceOnly(bottom: 70),
-                              controller: controller.scrollController,
-                              child: Column(
-                                children: controller.itemsList,
+                        ),
+                      ),
+                      Positioned(
+                        left: designController.titlePositionLeft,
+                        top: designController.titlePositionTop,
+                        child: Center(
+                          child: Container(
+                            width: controller.titleContainerWidth,
+                            alignment: Alignment.centerLeft,
+                            child: TextTypeWriter(
+                              key: Key(getRandomString(20)),
+                              text: controller.title.text,
+                              style: GoogleFonts.getFont(
+                                controller.titleFontFamily,
+                                color: controller.titleFontColor,
+                                fontSize: controller.titleTextStyle.fontSize,
+                                fontWeight:
+                                    controller.titleTextStyle.fontWeight,
+                                wordSpacing:
+                                    controller.titleTextStyle.wordSpacing,
+                                decoration:
+                                    controller.titleTextStyle.decoration,
+                                letterSpacing:
+                                    controller.titleTextStyle.letterSpacing,
+                                height: controller.titleTextStyle.height,
+                                backgroundColor:
+                                    controller.titleTextStyle.backgroundColor,
+                                shadows: [
+                                  Shadow(
+                                    color: controller.titleShadowColor,
+                                    offset: Offset.zero,
+                                    blurRadius: 10,
+                                  )
+                                ],
                               ),
+                              textAlign: controller.titleTextAlign,
+                              typingSpeed: controller.typingSpeed,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -1089,6 +1093,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.valueTextStyle,
                           textAlign: designController.valueTextAlign,
@@ -1313,6 +1318,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.titleTextStyle,
                           textAlign: designController.titleTextAlign,

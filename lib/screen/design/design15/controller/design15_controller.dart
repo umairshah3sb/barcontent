@@ -54,10 +54,14 @@ class Design15Controller extends GetxController {
 
   double picVMargin = 40;
   double picHMargin = 40;
-  double vsImageWidth = 100;
+  Color picBackground = Colors.transparent;
+
   double picContainerRadius = 0;
   double dataContainerSpacing = 5;
   double dataContainerWidth = 430;
+
+  double vsImageWidth = 100;
+  double vsImageSpaceLeft = 30;
 
   String nameFontFamily = 'Russo One';
   double nameTextSize = 20;

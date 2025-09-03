@@ -534,7 +534,7 @@ class _Design15MainUIState extends State<Design15MainUI> {
             height: designController.VideoContainerHeight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: Design15Item(
@@ -543,7 +543,7 @@ class _Design15MainUIState extends State<Design15MainUI> {
                   ),
                 ),
                 Container(
-                  alignment: Alignment.center,
+                  margin: spaceOnly(left: designController.vsImageSpaceLeft),
                   child: designController.verserImage.text.isEmpty
                       ? Text(
                           'VS',

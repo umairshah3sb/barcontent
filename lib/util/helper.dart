@@ -363,3 +363,201 @@ class NoScrollbarBehavior extends ScrollBehavior {
     return child; // Don’t wrap in a scrollbar
   }
 }
+
+final List<Color> colorList = [
+  Color(0x00000000),
+  Color(0xFF000000),
+  Color(0xFFFFFF00),
+  Color(0xFFFFA500),
+  Color(0xFF00FF00),
+  Color(0xFF0000FF),
+  Color(0xFFFFC1CC),
+  Color(0xFF800080),
+  // 1. The Carefree Life: Bright & Positive Colors (Airbnb)
+  Color(0xFFA7C7E7), // Pale Sky Blue
+  Color(0xFF8B4513), // Earthy Brown
+  Color(0xFFFF6B6B), // Wild Watermelon (Pink)
+
+  // 2. Navy Blue (Adobe)
+  Color(0xFF000080), // Navy Blue
+  Color(0xFF000000), // Black
+  Color(0xFFFF0000), // Red
+  Color(0xFF0000FF), // Blue
+
+  // 3. Orange Zest (Amazon)
+  Color(0xFFFFA500), // Orange
+  Color(0xFFFFFFFF), // White
+  Color(0xFF000000), // Black
+
+  // 4. Grey & Green – The Technology of Health (Dove)
+  Color(0xFF008000), // Green
+  Color(0xFF808080), // City Grey
+
+  // 5. Seaside Blue
+  Color(0xFF87CEEB), // Soft Blue
+  Color(0xFFF4A460), // Golden Sand
+
+  // 6. Red is for Christmas (Coca-Cola)
+  Color(0xFFFF0000), // Red
+  Color(0xFF40826D), // Viridian Green
+
+  // 7. Less is More – White Color Pallets (Dropbox)
+  Color(0xFFD3D3D3), // Grey Pale
+  Color(0xFF1E90FF), // Vivid Blue
+  Color(0xFFFFFFFF), // White
+
+  // 8. Honey Yellow
+  Color(0xFFFFC107), // Honey Yellow
+
+  // 9. Carnival Dance (Durex)
+  Color(0xFF0000FF), // Blue
+  Color(0xFF800080), // Purple
+  Color(0xFFFF1493), // Deep Pink
+  Color(0xFF00008B), // Dark Blue
+
+  // 10. Fresh New Day (Colgate)
+  Color(0xFFADD8E6), // Light Blue
+  Color(0xFF00FF00), // Green
+  Color(0xFFFFFFFF), // White
+  Color(0xFFFF0000), // Red
+
+  // 11. The Contrasting Couple (ESPN+)
+  Color(0xFFFFFF00), // Yellow
+  Color(0xFF000000), // Black
+
+  // 12. Sprouting Time (Heineken)
+  Color(0xFF008000), // Crusoe Green
+  Color(0xFFFF0000), // Red
+
+  // 13. Red Rose Bouquet
+  Color(0xFFFF0000), // Daring Red
+  Color(0xFFDDA0DD), // Plum Mauve
+  Color(0xFF000000), // Black
+
+  // 14. Cozy Little Space (IKEA)
+  Color(0xFFD3D3D3), // Light Grey
+  Color(0xFF9400D3), // Vivid Violet
+
+  // 15. Sunny Days (Lego)
+  Color(0xFFFFFF00), // Yellow
+
+  // 16. Delicate Pastels (Louis Vuitton)
+  Color(0xFFFFD1DC), // Pastel Pink
+  Color(0xFFAEC6CF), // Pastel Blue
+
+  // 17. Exotic Island
+  Color(0xFFFFFF00), // Vivid Yellow
+  Color(0xFFFF4500), // Tropical Orange
+  Color(0xFF87CEEB), // Sky Blue
+
+  // 18. Rose Sensuality (Maybelline)
+  Color(0xFF3F598E), // Mona Lisa (corrected from document's typo #3F5998E)
+  Color(0xFFB16774), // Turkish Rose
+  Color(0xFF00008B), // Dark Blue
+  Color(0xFF000000), // Black
+
+  // 19. Somewhere Over the Rainbow (Milka)
+  Color(0xFFD8BFD8), // Light Purple
+  Color(0xFF0000FF), // Blue
+  Color(0xFF008000), // Green
+  Color(0xFF808080), // Grey
+
+  // 20. Playful Colors (Purina)
+  Color(0xFFB0E0E6), // Pale Blue
+  Color(0xFFFFFFFF), // White
+  Color(0xFFFF69B4), // Pink
+
+  // 21. Primary Colors: Red, Blue, and Yellow (Google Cloud)
+  Color(0xFFFF0000), // Red
+  Color(0xFF0000FF), // Blue
+  Color(0xFFFFFF00), // Yellow
+  Color(0xFFFFFFFF), // White
+
+  // 22. Mountain Sky View: Blue Palette (Mini Auto)
+  Color(0xFF0000FF), // Blue
+  Color(0xFF00008B), // Dark Blue
+
+  // 23. Nude Pink Palette
+  Color(0xFFFFC1CC), // Nude Pink
+
+  // 24. White in Compositions
+  Color(0xFFFFFFFF), // White
+
+  // 25. Love at First Sight (Nutella)
+  Color(0xFFFF0000), // Red
+  Color(0xFF000000), // Black
+  Color(0xFFFFFFFF), // White
+  Color(0xFFD3D3D3), // Light Grey
+
+  // 26. Orange & Blue Palette
+  Color(0xFFFFA500), // Orange
+  Color(0xFF0000FF), // Blue
+
+  // 27. Summer Sea (Pampers)
+  Color(0xFF40E0D0), // Turquoise
+  Color(0xFFB0E0E6), // Pale Blue
+  Color(0xFFC2B280), // Sandy Grey
+
+  // 28. Milk & Honey (Pantene)
+  Color(0xFFEAC87C), // Marzipan
+  Color(0xFF000000), // Black
+  Color(0xFFFFFFFF), // White
+  Color(0xFFD3D3D3), // Light Grey
+
+  // 29. Blue Sea
+  Color(0xFF008B8B), // Dark Cyan
+  Color(0xFFB0C4DE), // Light Steel Blue
+
+  // 30. Shades of Desire – Shades of Red (Pizza Hut)
+  Color(0xFFFF0000), // Red
+  Color(0xFFFFFFFF), // White
+
+  // 31. Lavender Fields Under the Starry Sky (Samsung)
+  Color(0xFFE0B0FF), // Mauve
+  Color(0xFF4B0082), // Indigo
+
+  // 32. Caramel Indulgence – Shades of Brown (Snickers)
+  Color(0xFF8B4513), // Brown
+  Color(0xFFFF0000), // Red
+  Color(0xFFFFFFFF), // White
+
+  // 33. Luscious Red
+  Color(0xFFFF0000), // Luscious Red
+  Color(0xFFFFD700), // Golden Yellow
+  Color(0xFF000000), // Black
+
+  // 34. Tropical Vacation (Starbucks)
+  Color(0xFFFF4500), // Orange Persimmon
+  Color(0xFF228B22), // Leafy Green
+  Color(0xFFD3D3D3), // Pale Grey
+  Color(0xFF8B4513), // Earthy Brown
+
+  // 35. Countryside Footpaths (UPS)
+  Color(0xFF8B4513), // Raw Brown
+  Color(0xFF00008B), // Dark Blue
+  Color(0xFFB0C4DE), // Pale Bluish Grey
+
+  // 36. This Jolly Couple
+  Color(0xFFFF4500), // Crimson Orange
+  Color(0xFFFF7F50), // Coral
+  Color(0xFF0000FF), // Blue
+
+  // 37. Midnight Sky (Visa)
+  Color(0xFF191970), // Midnight Blue
+  Color(0xFFFFFF00), // Yellow
+  Color(0xFFFFFFFF), // White
+
+  // 38. Marshmallow Pastels (Tiguan)
+  Color(0xFFFFD1DC), // Pastel Pink
+  Color(0xFF4682B4), // Metallic Blue
+
+  // 39. Blue & Brown Color Palette
+  Color(0xFF0000FF), // Blue
+  Color(0xFF8B4513), // Brown
+  Color(0xFFFFFACD), // Soft Yellow
+
+  // 40. Ocean Deep Blue (Yahoo)
+  Color(0xFF00008B), // Dark Blue
+  Color(0xFF0077B6), // Mediterranean Blue
+  Color(0xFF4B0082), // Indigo
+];

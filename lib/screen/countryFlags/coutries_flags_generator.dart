@@ -51,18 +51,26 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
 
         for (var country in dataAsMap) {
           if (country['country'].toString().isNotEmpty) {
-            final selectedCountry = allCountries
-                .where((ctry) => ctry['name']
+            List selectedCountry = allCountries
+                .where((ctry) => ctry['country']
                     .toString()
                     .toLowerCase()
                     .contains(country['country'].toString().toLowerCase()))
                 .toList();
+            if (selectedCountry.isEmpty) {
+              selectedCountry = allCountries
+                  .where((ctry) => ctry['code']
+                      .toString()
+                      .toLowerCase()
+                      .contains(country['code'].toString().toLowerCase()))
+                  .toList();
+            }
             if (selectedCountry.isNotEmpty) {
               allFlags.add(
-                  'https://videocreator.codepie.com.pk/svg/${selectedCountry.first['code'].toString().toLowerCase()}.svg');
+                  'https://contentcreator-9774f.web.app/assets/assets/flags/${selectedCountry.first['code'].toString().toLowerCase()}.svg');
               csvCountries.add([
                 'country',
-                'https://videocreator.codepie.com.pk/svg/${selectedCountry.first['code'].toString().toLowerCase()}.svg',
+                'https://contentcreator-9774f.web.app/assets/assets/flags/${selectedCountry.first['code'].toString().toLowerCase()}.svg',
               ]);
             } else {
               csvCountries.add([

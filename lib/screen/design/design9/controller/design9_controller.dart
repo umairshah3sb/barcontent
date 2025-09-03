@@ -21,7 +21,7 @@ class Design9Controller extends GetxController {
   bool showBackgroundGradient = false;
   double logoSize = 150;
   double aspectRatio = 9 / 16;
-  double logoContainerHeight = 150;
+  double logoContainerHeight = 175;
   double logoRadius = 0;
   int itemsPerScreen = 4;
   double flagWidth = 65;

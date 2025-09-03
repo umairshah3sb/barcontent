@@ -53,19 +53,19 @@ class _SlideInStepsState extends State<SlideInSteps>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Container(
-          width: ((4 * designcontroller.picContainerWidth) -
-              designcontroller.picHMargin),
-          height: ((3 * designcontroller.picContainerHeight) -
-              designcontroller.picVMargin),
-          child: ClipRect(
-            child: SlideTransition(
-              position: _slideAnim,
-              child: Align(
-                alignment: Alignment.topCenter,
+    return Center(
+      child: Container(
+        width: ((designcontroller.picContainerWidth) -
+            designcontroller.picHMargin),
+        height: ((designcontroller.picContainerHeight) -
+            designcontroller.picVMargin),
+        child: ClipRect(
+          child: SlideTransition(
+            position: _slideAnim,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                color: designcontroller.picBackground,
                 child: CachedNetworkImage(
                   imageUrl: widget.pic,
                   fit: BoxFit.cover,

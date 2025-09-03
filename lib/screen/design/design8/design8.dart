@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:barcontent/screen/design/Design8/widgets/Design8_item.dart';
 import 'package:barcontent/screen/design/design8/controller/design8_controller.dart';
+import 'package:barcontent/screen/design/design8/widgets/item_3d.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
@@ -32,30 +33,38 @@ class _Design8State extends State<Design8> {
       body: SafeArea(
         child: Center(
           child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onPanUpdate: (details) {
-                    setState(() {
-                      _offset += details.delta;
-                    });
-                  },
-                  child: Transform(
-                    transform: Matrix4.identity()
-                      ..setEntry(
-                        3,
-                        2,
-                        0.0001,
+            child: true
+                ? Bar3D(
+                    country: 'Pakistan',
+                    value: '~340',
+                    color: Colors.blueGrey,
+                    flagUrl:
+                        'https://cdn.pixabay.com/photo/2022/11/18/14/27/flag-7600240_960_720.jpg',
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onPanUpdate: (details) {
+                          setState(() {
+                            _offset += details.delta;
+                          });
+                        },
+                        child: Transform(
+                          transform: Matrix4.identity()
+                            ..setEntry(
+                              3,
+                              2,
+                              0.0001,
+                            )
+                            ..rotateX((_offset.dy * pi) / 180)
+                            ..rotateY((_offset.dx * pi) / 180),
+                          alignment: Alignment.center,
+                          child: Cube3D(),
+                        ),
                       )
-                      ..rotateX((_offset.dy * pi) / 180)
-                      ..rotateY((_offset.dx * pi) / 180),
-                    alignment: Alignment.center,
-                    child: Cube3D(),
+                    ],
                   ),
-                )
-              ],
-            ),
           ),
         ),
       ),
