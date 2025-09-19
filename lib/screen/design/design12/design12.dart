@@ -5,9 +5,11 @@ import 'package:barcontent/screen/design/design12/controller/design12_controller
 import 'package:barcontent/screen/design/design12/widgets/image_slide.dart';
 import 'package:barcontent/screen/design/design12/widgets/ribbon_design.dart';
 import 'package:barcontent/screen/design/design12/widgets/text_animator.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -53,6 +55,17 @@ class _Design12State extends State<Design12> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Free Comparison Video Maker | Create Top 10, Ranking & Mobile Comparison Videos Online",
+      description:
+          "Create stunning comparison videos online for free using your CSV data. Make Top 10 rankings, country comparisons, military power, economy, sports, or mobile phone comparison videos with sliding effects. Export long or short videos instantly with no watermark—perfect for YouTube, social media, and presentations.",
+      keywords:
+          "free comparison video maker, top 10 video generator, ranking video creator online, csv to video tool, free video maker no watermark, mobile comparison video maker, phone specs vs price video creator, youtube list video maker, military comparison video generator, economy ranking video tool, sports comparison video creator, automated video maker online, free youtube video generator",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design12.png',
+      ogUrl: '${domainUrl}${AppRoutes.design12VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
@@ -897,8 +910,7 @@ class _Design12State extends State<Design12> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
-                            paletteColors: colorList,
-                          
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.titleTextStyle,
                           textAlign: designController.titleTextAlign,
@@ -956,8 +968,7 @@ class _Design12State extends State<Design12> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
-                            paletteColors: colorList,
-
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.subTitleTextStyle,
                           textAlign: designController.subTitleTextAlign,
@@ -1025,8 +1036,7 @@ class _Design12State extends State<Design12> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
-                            paletteColors: colorList,
-
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.nameTextStyle,
                           textAlign: designController.nameTextAlign,
@@ -1102,8 +1112,7 @@ class _Design12State extends State<Design12> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
-                            paletteColors: colorList,
-
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.valueTextStyle,
                           textAlign: designController.valueTextAlign,

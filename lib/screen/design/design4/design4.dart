@@ -4,9 +4,11 @@ import 'package:barcontent/screen/design/design3/controller/design3_controller.d
 import 'package:barcontent/screen/design/design3/widgets/design3_item.dart';
 import 'package:barcontent/screen/design/design4/controller/design4_controller.dart';
 import 'package:barcontent/screen/design/design4/widgets/design4_item.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -45,6 +47,17 @@ class _Design4State extends State<Design4> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Exciting Athlete & Cricketer Comparison Videos | Short & Engaging Clips",
+      description:
+          "Discover thrilling short comparison videos showcasing athletes, cricketers, and notable personalities. Watch head-to-head battles, stats, and highlights in engaging clips designed for sports fans. Explore now for the ultimate comparison experience!",
+      keywords:
+          "athlete comparison videos, cricketer comparison videos, sports comparison clips, short sports videos, athlete vs athlete, cricketer vs cricketer, sports highlights, comparison videos online, sports stats videos, engaging sports content",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design4.png',
+      ogUrl: '${domainUrl}${AppRoutes.design4VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
@@ -855,7 +868,6 @@ class _Design4State extends State<Design4> {
                         },
                         currentColor: designController.titleFontColor,
                       ),
-                 
                       Container(
                         width: Get.width * 0.2,
                         margin: spacing(v: 7),

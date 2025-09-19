@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:barcontent/screen/design/design9/controller/design9_controller.dart';
 import 'package:barcontent/screen/design/design9/text_type_writer.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/font_family_selector.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -30,6 +32,17 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Country Power Comparison Video Maker | Free Economy, Military & Global Rankings",
+      description:
+          "Create free country comparison videos with no watermark. Compare nations by military power, economy, GDP, population, technology, and global influence. Generate Top 10 lists or head-to-head sliding videos easily from CSV data—ideal for YouTube, education, and research content.",
+      keywords:
+          "country power comparison video maker, free global ranking video generator, military vs economy video creator, country head to head comparison video, strongest countries ranking video tool, gdp and population comparison video maker, free video generator no watermark, global influence ranking video, economy vs military strength video creator, country comparison video online",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design9.png',
+      ogUrl: '${domainUrl}${AppRoutes.design9VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:barcontent/screen/design/design16/controller/design16_controller.dart';
 import 'package:barcontent/screen/design/design16/widgets/design16_item.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/font_family_selector.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -43,6 +45,17 @@ class _Design16State extends State<Design16> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Mobile Comparison Video Maker | Free Phone Specs & Price Video Generator",
+      description:
+          "Create professional mobile comparison videos online for free. Compare smartphones by specs, price, features, and design with sliding video effects. No watermark, easy CSV upload, and perfect for YouTube, reviews, and tech channels.",
+      keywords:
+          "mobile comparison video maker, phone comparison video creator, smartphone vs video generator, free mobile video maker online, iphone vs samsung video creator, specs comparison video tool, budget vs flagship phone video maker, tech review video generator, phone comparison video free, create mobile comparison videos for youtube",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design16.png',
+      ogUrl: '${domainUrl}${AppRoutes.design16VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

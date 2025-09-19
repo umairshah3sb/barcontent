@@ -4,9 +4,11 @@ import 'package:barcontent/screen/design/Design6/controller/Design6_controller.d
 import 'package:barcontent/screen/design/design3/widgets/design3_item.dart';
 import 'package:barcontent/screen/design/design6/widgets/design6_item.dart';
 import 'package:barcontent/screen/design/design6/widgets/sample.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -45,6 +47,17 @@ class _Design6State extends State<Design6> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Military Comparison Video Maker | Free Country Power & Army Strength Generator",
+      description:
+          "Create free military comparison videos online with sliding effects. Compare countries by army, navy, air force, nuclear power, defense budget, and technology. Generate Top 10 rankings or head-to-head country vs country videos from CSV data—no watermark, perfect for YouTube and research.",
+      keywords:
+          "military comparison video maker, free army strength video generator, country vs country military power video, strongest military video creator, defense budget comparison video maker, air force and navy comparison video tool, nuclear power ranking video generator, free military comparison video tool no watermark, global military strength video maker, military vs economy video creator",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design6.png',
+      ogUrl: '${domainUrl}${AppRoutes.design6VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

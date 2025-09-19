@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:barcontent/screen/design/design15/controller/design15_controller.dart';
 import 'package:barcontent/screen/design/design15/widgets/design15_item.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/font_family_selector.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -42,6 +44,17 @@ class _Design15State extends State<Design15> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Dynamic Long Animated Country & Military Comparison Videos | In-Depth Insights",
+      description:
+          "Watch engaging long-form animated comparison videos exploring countries and their militaries. Dive deep into detailed stats, historical contexts, and strategic showdowns with stunning animations. Perfect for fans of geopolitics and military history!",
+      keywords:
+          "long animated comparison videos, country comparison animations, military comparison animations, animated geopolitical videos, in-depth country comparisons, military strength animations, long-form military videos, animated country stats, military history animations, engaging animated content",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design15.png',
+      ogUrl: '${domainUrl}${AppRoutes.design15VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

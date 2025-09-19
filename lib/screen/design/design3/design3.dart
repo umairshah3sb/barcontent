@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:auto_scroll_row/auto_scroll_row.dart';
 import 'package:barcontent/screen/design/design3/controller/design3_controller.dart';
 import 'package:barcontent/screen/design/design3/widgets/design3_item.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -42,6 +44,17 @@ class _Design3State extends State<Design3> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Ultimate Country vs Country Military Comparisons | Short Epic Videos",
+      description:
+          "Explore captivating short comparison videos between countries and their militaries. Dive into stats, strengths, histories, and head-to-head analyses in engaging clips for history buffs and strategy enthusiasts. Discover global power dynamics today!",
+      keywords:
+          "country comparison videos, military comparison videos, global power comparisons, country vs country, military strength clips, short military videos, geopolitical comparisons, military stats videos, country highlights, engaging military content",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design3.png',
+      ogUrl: '${domainUrl}${AppRoutes.design3VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

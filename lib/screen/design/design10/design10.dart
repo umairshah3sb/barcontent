@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:barcontent/screen/design/design10/controller/design10_controller.dart';
 import 'package:barcontent/screen/design/design10/widgets/design10_item.dart';
+import 'package:barcontent/util/app_routes.dart';
 
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -43,6 +45,17 @@ class _Design10State extends State<Design10> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Free Country Comparison Video Generator | Military, Economy & Population Rankings",
+      description:
+          "Generate country comparison videos online for free with smooth sliding effects. Compare nations by economy, military strength, population, GDP, sports, or technology. Create Top 10 global ranking videos or detailed country vs country comparisons with no watermark—perfect for YouTube, education, and research.",
+      keywords:
+          "free country comparison video maker, economy ranking video generator, military strength comparison video, country vs country video creator, gdp comparison video maker, strongest countries video tool, population ranking video generator, global comparison video creator, free video maker no watermark, world power comparison video",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design10.png',
+      ogUrl: '${domainUrl}${AppRoutes.design10VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

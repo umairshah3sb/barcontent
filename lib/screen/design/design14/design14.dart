@@ -5,9 +5,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcontent/screen/design/design13/widgets/design13_item.dart';
 import 'package:barcontent/screen/design/design13/widgets/design13_text_animator.dart';
 import 'package:barcontent/screen/design/design14/controller/design14_controller.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -53,6 +55,17 @@ class _Design14State extends State<Design14> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "Mobile Specs Comparison Video Generator | Free Phone vs Phone Video Maker",
+      description:
+          "Generate mobile specs comparison videos online for free. Compare smartphones by processor, camera, battery, display, and price with smooth sliding effects. Create iPhone vs Samsung, budget vs flagship, or any phone comparison videos with no watermark—perfect for YouTube and tech reviews.",
+      keywords:
+          "mobile specs comparison video maker, smartphone specs video generator, free phone comparison video tool, iphone vs samsung video creator, mobile phone specs vs video, budget vs flagship phone video maker, camera comparison video generator, mobile features comparison video, phone vs phone video creator, create smartphone comparison videos online",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design14.png',
+      ogUrl: '${domainUrl}${AppRoutes.design14VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
@@ -693,8 +706,7 @@ class _Design14State extends State<Design14> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
-                            paletteColors: colorList,
-
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.titleTextStyle,
                           textAlign: designController.titleTextAlign,
@@ -752,8 +764,7 @@ class _Design14State extends State<Design14> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
-                            paletteColors: colorList,
-
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.subTitleTextStyle,
                           textAlign: designController.subTitleTextAlign,
@@ -832,8 +843,7 @@ class _Design14State extends State<Design14> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
-                            paletteColors: colorList,
-
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.nameTextStyle,
                           textAlign: designController.nameTextAlign,
@@ -1033,8 +1043,7 @@ class _Design14State extends State<Design14> {
                       Container(
                         width: 300,
                         child: TextStyleEditor(
-                            paletteColors: colorList,
-
+                          paletteColors: colorList,
                           fonts: fontFamilies,
                           textStyle: designController.valueTextStyle,
                           textAlign: designController.valueTextAlign,
