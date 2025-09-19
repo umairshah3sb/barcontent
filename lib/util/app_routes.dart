@@ -1,4 +1,5 @@
 import 'package:barcontent/screen/countryFlags/coutries_flags_generator.dart';
+import 'package:barcontent/screen/design/design17/design17.dart';
 
 import 'package:barcontent/screen/home/home.dart';
 import 'package:barcontent/screen/image_test/image_test.dart';
@@ -9,22 +10,23 @@ class AppRoutes {
   static const String home = '/';
   static const flagGenerator = '/flag-generator';
   static const imageGenerator = '/image-tester';
-  static const design1VideoGenerator = '/design1-video-generator';
-  static const design2VideoGenerator = '/design2-video-generator';
-  static const design3VideoGenerator = '/design3-video-generator';
-  static const design4VideoGenerator = '/design4-video-generator';
-  static const design5VideoGenerator = '/design5-video-generator';
-  static const design6VideoGenerator = '/design6-video-generator';
-  static const design7VideoGenerator = '/design7-video-generator';
-  static const design8VideoGenerator = '/design8-video-generator';
-  static const design9VideoGenerator = '/design9-video-generator';
-  static const design10VideoGenerator = '/design10-video-generator';
-  static const design11VideoGenerator = '/design11-video-generator';
-  static const design12VideoGenerator = '/design12-video-generator';
-  static const design13VideoGenerator = '/design13-video-generator';
-  static const design14VideoGenerator = '/design14-video-generator';
-  static const design15VideoGenerator = '/design15-video-generator';
-  static const design16VideoGenerator = '/design16-video-generator';
+  static const design1VideoGenerator = 'data-comparison-video-generator';
+  static const design2VideoGenerator = 'data-comparison-video-generator-2';
+  static const design3VideoGenerator = 'comparison-short-video-generator-1';
+  static const design4VideoGenerator = 'comparison-short-video-generator-2';
+  static const design5VideoGenerator = 'comparison-short-video-generator-free';
+  static const design6VideoGenerator = 'comparison-video-generator';
+  static const design7VideoGenerator = '3d-bar-comparison-video-generator';
+  static const design8VideoGenerator = '3d-bar-video-generator';
+  static const design9VideoGenerator = 'make-short-video-generator';
+  static const design10VideoGenerator = 'make-comparison-video';
+  static const design11VideoGenerator = 'create-short-comparison-video';
+  static const design12VideoGenerator = 'create-mobile-comparison-video';
+  static const design13VideoGenerator = 'create-mobile-specification-video';
+  static const design14VideoGenerator = 'create-short-mobile-specification';
+  static const design15VideoGenerator = 'create-data-comparison-video';
+  static const design16VideoGenerator = 'phone-comparison-video-creator';
+  static const design17VideoGenerator ='make-data-comparison-video';
 
   // Route map
   static Map<String, WidgetBuilder> routes = {
@@ -47,5 +49,6 @@ class AppRoutes {
     design14VideoGenerator: (context) => Design14(),
     design15VideoGenerator: (context) => Design15(),
     design16VideoGenerator: (context) => Design16(),
+    design17VideoGenerator: (context) => Design17(),
   };
 }

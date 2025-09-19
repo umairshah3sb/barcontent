@@ -4,9 +4,11 @@ import 'dart:typed_data';
 import 'package:auto_scroll_row/auto_scroll_row.dart';
 import 'package:auto_scroll_slider/auto_scroll_slider.dart';
 import 'package:barcontent/screen/design/design1/controller/design1_controller.dart';
+import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -29,6 +31,17 @@ class _Design1State extends State<Design1> {
 
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title:
+          "CSV to Video Generator | Free Sliding Comparison Video Maker Online",
+      description:
+          "Turn your CSV data into stunning comparison videos online for free. Create ranking videos, list videos, and sliding content videos with smooth transitions. No watermark, no limits—perfect for YouTube, social media, and presentations.",
+      keywords:
+          "csv to video maker, free video generator online, comparison video creator, sliding ranking video maker, top 10 video generator, csv data to video tool, free video editing tool no watermark, create list videos online, automated video maker free, youtube ranking video creator",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design1.png',
+      ogUrl: '${domainUrl}${AppRoutes.design1VideoGenerator}',
+    );
     return Scaffold(
       drawer: drawerWidget(),
       key: scaffoldKey,

@@ -101,49 +101,197 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                             .dataContainerWidth, // You can change this value
                         height: Get.height,
 
-                        margin: spacing(
-                          v: controller.dataContainerMarginV,
-                          h: controller.dataContainerMarginH,
+                        margin: spaceOnly(
+                          top: controller.dataContainerMarginTop,
+                          bottom: controller.dataContainerMarginBottom,
+                          left: controller.dataContainerMarginH,
+                          right: controller.dataContainerMarginH,
                         ),
                         child: Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Stack(
-                                children: [
-                                  Container(
-                                    height: controller.logoContainerHeight,
-                                    width: controller.dataContainerWidth,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                          child: controller.template == 0
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Stack(
                                       children: [
-                                        FlagSection(
-                                          designController.logo1.text,
-                                          designController.name1.text,
-                                          isFirst: true,
-                                        ),
-                                        FlagSection(
-                                          designController.logo2.text,
-                                          designController.name2.text,
+                                        Container(
+                                          height:
+                                              controller.logoContainerHeight,
+                                          width: controller.dataContainerWidth,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              FlagSection(
+                                                designController.logo1.text,
+                                                designController.name1.text,
+                                                isFirst: true,
+                                              ),
+                                              FlagSection(
+                                                designController.logo2.text,
+                                                designController.name2.text,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  padding: spaceOnly(bottom: 70),
-                                  controller: controller.scrollController,
-                                  child: Column(
-                                    children: controller.itemsList,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                                    Expanded(
+                                      child: SingleChildScrollView(
+                                        padding: spaceOnly(
+                                            bottom: controller.secrollPadding),
+                                        controller: controller.scrollController,
+                                        child: Column(
+                                          children: controller.itemsList,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : controller.template == 1
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height:
+                                              controller.logoContainerHeight,
+                                          width: controller.dataContainerWidth,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              gap(
+                                                w: controller.picContainerWidth,
+                                              ),
+                                              FlagSection(
+                                                designController.logo1.text,
+                                                designController.name1.text,
+                                                isFirst: true,
+                                              ),
+                                              FlagSection(
+                                                designController.logo2.text,
+                                                designController.name2.text,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: SingleChildScrollView(
+                                            padding: spaceOnly(
+                                                bottom:
+                                                    controller.secrollPadding),
+                                            controller:
+                                                controller.scrollController,
+                                            child: Column(
+                                              children: controller.itemsList,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              gap(
+                                                w: controller.picContainerWidth,
+                                              ),
+                                              Flag(
+                                                designController.name1.text,
+                                              ),
+                                              Flag(
+                                                designController.name2.text,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        gap(
+                                            h: designController
+                                                .flagBottomSpacing),
+                                        Expanded(
+                                          child: SingleChildScrollView(
+                                            padding: spaceOnly(
+                                                bottom:
+                                                    controller.secrollPadding),
+                                            controller:
+                                                controller.scrollController,
+                                            child: Column(
+                                              children: controller.itemsList,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: controller.UserPicHeght,
+                                          width: controller.dataContainerWidth,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              gap(
+                                                w: controller.picContainerWidth,
+                                              ),
+                                              designController.logo1.text
+                                                      .toString()
+                                                      .isEmpty
+                                                  ? gap()
+                                                  : SizedBox(
+                                                      width: designController
+                                                          .UserPicWidth,
+                                                      height: designController
+                                                          .UserPicHeght,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            borderRadius(
+                                                                designController
+                                                                    .logoRadius),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl:
+                                                              designController
+                                                                  .logo1.text,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                              designController.logo2.text
+                                                      .toString()
+                                                      .isEmpty
+                                                  ? gap()
+                                                  : SizedBox(
+                                                      width: designController
+                                                          .UserPicWidth,
+                                                      height: designController
+                                                          .UserPicHeght,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            borderRadius(
+                                                                designController
+                                                                    .logoRadius),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl:
+                                                              designController
+                                                                  .logo2.text,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                         ),
                       ),
                       Positioned(
@@ -153,38 +301,110 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           child: Container(
                             width: controller.titleContainerWidth,
                             alignment: Alignment.centerLeft,
-                            child: TextTypeWriter(
-                              key: Key(getRandomString(20)),
-                              text: controller.title.text,
-                              style: GoogleFonts.getFont(
-                                controller.titleFontFamily,
-                                color: controller.titleFontColor,
-                                fontSize: controller.titleTextStyle.fontSize,
-                                fontWeight:
-                                    controller.titleTextStyle.fontWeight,
-                                wordSpacing:
-                                    controller.titleTextStyle.wordSpacing,
-                                decoration:
-                                    controller.titleTextStyle.decoration,
-                                letterSpacing:
-                                    controller.titleTextStyle.letterSpacing,
-                                height: controller.titleTextStyle.height,
-                                backgroundColor:
-                                    controller.titleTextStyle.backgroundColor,
-                                shadows: [
-                                  Shadow(
-                                    color: controller.titleShadowColor,
-                                    offset: Offset.zero,
-                                    blurRadius: 10,
+                            child: designController.typeTitle
+                                ? TextTypeWriter(
+                                    key: Key(getRandomString(20)),
+                                    text: controller.title.text,
+                                    style: GoogleFonts.getFont(
+                                      controller.titleFontFamily,
+                                      color: controller.titleFontColor,
+                                      fontSize:
+                                          controller.titleTextStyle.fontSize,
+                                      fontWeight:
+                                          controller.titleTextStyle.fontWeight,
+                                      wordSpacing:
+                                          controller.titleTextStyle.wordSpacing,
+                                      decoration:
+                                          controller.titleTextStyle.decoration,
+                                      letterSpacing: controller
+                                          .titleTextStyle.letterSpacing,
+                                      height: controller.titleTextStyle.height,
+                                      backgroundColor: controller
+                                          .titleTextStyle.backgroundColor,
+                                      shadows: [
+                                        Shadow(
+                                          color: controller.titleShadowColor,
+                                          offset: Offset.zero,
+                                          blurRadius: 10,
+                                        )
+                                      ],
+                                    ),
+                                    textAlign: controller.titleTextAlign,
+                                    typingSpeed: controller.typingSpeed,
                                   )
-                                ],
-                              ),
-                              textAlign: controller.titleTextAlign,
-                              typingSpeed: controller.typingSpeed,
-                            ),
+                                : Text(
+                                    controller.title.text,
+                                    style: GoogleFonts.getFont(
+                                      controller.titleFontFamily,
+                                      color: controller.titleFontColor,
+                                      fontSize:
+                                          controller.titleTextStyle.fontSize,
+                                      fontWeight:
+                                          controller.titleTextStyle.fontWeight,
+                                      wordSpacing:
+                                          controller.titleTextStyle.wordSpacing,
+                                      decoration:
+                                          controller.titleTextStyle.decoration,
+                                      letterSpacing: controller
+                                          .titleTextStyle.letterSpacing,
+                                      height: controller.titleTextStyle.height,
+                                      backgroundColor: controller
+                                          .titleTextStyle.backgroundColor,
+                                      shadows: [
+                                        Shadow(
+                                          color: controller.titleShadowColor,
+                                          offset: Offset.zero,
+                                          blurRadius: 10,
+                                        )
+                                      ],
+                                    ),
+                                    textAlign: controller.titleTextAlign,
+                                  ),
                           ),
                         ),
-                      )
+                      ),
+                      Positioned(
+                        left: designController.title2PositionLeft,
+                        top: designController.title2PositionTop,
+                        child: designController.showTitle2
+                            ? Center(
+                                child: Container(
+                                  width: controller.title2ContainerWidth,
+                                  alignment: Alignment.centerLeft,
+                                  child: TextTypeWriter(
+                                    key: Key(getRandomString(20)),
+                                    text: controller.title2.text,
+                                    style: GoogleFonts.getFont(
+                                      controller.title2FontFamily,
+                                      color: controller.title2FontColor,
+                                      fontSize:
+                                          controller.title2TextStyle.fontSize,
+                                      fontWeight:
+                                          controller.title2TextStyle.fontWeight,
+                                      wordSpacing: controller
+                                          .title2TextStyle.wordSpacing,
+                                      decoration:
+                                          controller.title2TextStyle.decoration,
+                                      letterSpacing: controller
+                                          .title2TextStyle.letterSpacing,
+                                      height: controller.title2TextStyle.height,
+                                      backgroundColor: controller
+                                          .title2TextStyle.backgroundColor,
+                                      shadows: [
+                                        Shadow(
+                                          color: controller.title2ShadowColor,
+                                          offset: Offset.zero,
+                                          blurRadius: 10,
+                                        )
+                                      ],
+                                    ),
+                                    textAlign: controller.title2TextAlign,
+                                    typingSpeed: controller.typingSpeed,
+                                  ),
+                                ),
+                              )
+                            : gap(),
+                      ),
                     ],
                   ),
                 ),
@@ -224,8 +444,8 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
     return Stack(
       children: [
         SizedBox(
-          width: designController.logoSize,
-          height: designController.logoSize,
+          width: designController.UserPicWidth,
+          height: designController.UserPicHeght,
           child: ClipRRect(
             borderRadius: borderRadius(designController.logoRadius),
             child: CachedNetworkImage(
@@ -270,6 +490,22 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                 ),
               )
       ],
+    );
+  }
+
+  Widget Flag(String flag) {
+    return Container(
+      width: designController.flagWidth,
+      margin: spaceOnly(right: designController.flagRightSpacing),
+      child: ClipRRect(
+        borderRadius: borderRadius(designController.logoRadius),
+        child: CachedNetworkImage(
+          imageUrl: flag.isNotEmpty
+              ? flag
+              : 'https://cdn.pixabay.com/animation/2022/08/07/20/19/20-19-52-205_512.gif',
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 
@@ -740,35 +976,25 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Logo Size',
-                        fontSize: designController.logoSize.toInt(),
-                        increase: () {
-                          designController.logoSize++;
+                      ValueChangeSlider(
+                        value: designController.UserPicWidth,
+                        max: 250,
+                        title:
+                            'User Pic Width: ${designController.UserPicWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.UserPicWidth = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.logoSize--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Logo Container Height',
-                        fontSize: designController.logoContainerHeight.toInt(),
-                        increase: () {
-                          designController.logoContainerHeight++;
+                      ValueChangeSlider(
+                        value: designController.UserPicHeght,
+                        max: 250,
+                        title:
+                            'User Pic Height: ${designController.UserPicHeght.toInt()}',
+                        onChanged: (value) {
+                          designController.UserPicHeght = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.logoContainerHeight--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -784,6 +1010,85 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         },
                       ),
                       ValueChangeSlider(
+                        value: designController.flagBottomSpacing,
+                        max: 200,
+                        title:
+                            'Flag bottom spacing: ${designController.flagBottomSpacing.toInt()}',
+                        onChanged: (value) {
+                          designController.flagBottomSpacing = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      designController.template == 2
+                          ? ValueChangeSlider(
+                              value: designController.flagRightSpacing,
+                              max: 200,
+                              title:
+                                  'Flag Spacing Right: ${designController.flagRightSpacing.toInt()}',
+                              onChanged: (value) {
+                                designController.flagRightSpacing = value;
+                                designController.update();
+                                setState(() {});
+                              },
+                            )
+                          : gap(),
+                      ValueChangeSlider(
+                        value: designController.dataContainerHeight,
+                        max: 250,
+                        title:
+                            'Data Container Height: ${designController.dataContainerHeight.toInt()}',
+                        onChanged: (value) {
+                          designController.dataContainerHeight = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.dataContainerWidth,
+                        max: 2300,
+                        title:
+                            'Main Container Width: ${designController.dataContainerWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.dataContainerWidth = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.dataContainerMarginTop,
+                        max: 250,
+                        title:
+                            'Data Container Spacing Top: ${designController.dataContainerMarginTop.toInt()}',
+                        onChanged: (value) {
+                          designController.dataContainerMarginTop = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.dataContainerMarginBottom,
+                        max: 250,
+                        title:
+                            'Data Container Spacing Bottom: ${designController.dataContainerMarginBottom.toInt()}',
+                        onChanged: (value) {
+                          designController.dataContainerMarginBottom = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.dataContainerMarginH,
+                        max: 100,
+                        title:
+                            'Data Container Horizontal: ${designController.dataContainerMarginH.toInt()}',
+                        onChanged: (value) {
+                          designController.dataContainerMarginH = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
                         value: designController.valueWidth,
                         title:
                             'Value Width: ${designController.valueWidth.toInt()}',
@@ -793,24 +1098,19 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Data Container Size',
-                        fontSize: designController.valueContainerSize.toInt(),
-                        increase: () {
-                          designController.valueContainerSize++;
+                      ValueChangeSlider(
+                        value: designController.valueContainerSize,
+                        max: 250,
+                        title:
+                            'Value Container Size: ${designController.valueContainerSize.toInt()}',
+                        onChanged: (value) {
+                          designController.valueContainerSize = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueContainerSize--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
                       FontSizer(
-                        hintText: 'Data Container Spacing',
+                        hintText: 'Value Container Spacing',
                         fontSize: designController.dataContainerSpacing.toInt(),
                         increase: () {
                           designController.dataContainerSpacing++;
@@ -825,99 +1125,36 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Data Container Height',
-                        fontSize: designController.dataContainerHeight.toInt(),
-                        increase: () {
-                          designController.dataContainerHeight++;
+                      ValueChangeSlider(
+                        value: designController.picContainerHeight,
+                        max: 500,
+                        title:
+                            'Pic Contaner Height: ${designController.picContainerHeight.toInt()}',
+                        onChanged: (value) {
+                          designController.picContainerHeight = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.dataContainerHeight--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Data Container Width',
-                        fontSize: designController.dataContainerWidth.toInt(),
-                        increase: () {
-                          designController.dataContainerWidth++;
+                      ValueChangeSlider(
+                        value: designController.picContainerWidth,
+                        max: 500,
+                        title:
+                            'Pic Contaner Width: ${designController.picContainerWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.picContainerWidth = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.dataContainerWidth--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
-                      FontSizer(
-                        hintText: 'Data Container vertical',
-                        fontSize: designController.dataContainerMarginV.toInt(),
-                        increase: () {
-                          designController.dataContainerMarginV++;
+                      ValueChangeSlider(
+                        value: designController.picContainerRadius,
+                        max: 250,
+                        title:
+                            'Pic Container Radius: ${designController.picContainerRadius.toInt()}',
+                        onChanged: (value) {
+                          designController.picContainerRadius = value;
                           designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.dataContainerMarginV--;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                      ),
-                      FontSizer(
-                        hintText: 'Data Container Horizontal',
-                        fontSize: designController.dataContainerMarginH.toInt(),
-                        increase: () {
-                          designController.dataContainerMarginH++;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.dataContainerMarginH--;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                      ),
-                      FontSizer(
-                        hintText: 'Pic Contaner Size',
-                        fontSize: designController.picContainerSize.toInt(),
-                        increase: () {
-                          designController.picContainerSize++;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.picContainerSize--;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                      ),
-                      FontSizer(
-                        hintText: 'Pic Container Radius',
-                        fontSize: designController.picContainerRadius.toInt(),
-                        increase: () {
-                          designController.picContainerRadius++;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.picContainerRadius--;
-                          designController.update();
-
                           setState(() {});
                         },
                       ),
@@ -936,6 +1173,114 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         currentColor:
                             designController.picIconColor ?? Colors.black,
                       ),
+                      Container(
+                        width: 300,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Enable Scroll',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.enableScroll,
+                              onChanged: (value) {
+                                designController.enableScroll = value;
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      ValueChangeSlider(
+                        value: designController.secrollPadding,
+                        max: 150,
+                        title:
+                            'Scroll Padding: ${designController.secrollPadding.toInt()}',
+                        onChanged: (value) {
+                          designController.secrollPadding = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              designController.template = 0;
+                              designController.update();
+                              setState(() {});
+                            },
+                            child: Container(
+                              padding: spacing(h: 10, v: 5),
+                              margin: spacing(h: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 2,
+                                  color: designController.template == 0
+                                      ? Colors.blue
+                                      : halfBlack,
+                                ),
+                                boxShadow: shadow,
+                                borderRadius: borderRadius(10),
+                              ),
+                              child: Text('Template 1'),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.template = 1;
+                              designController.update();
+                              setState(() {});
+                            },
+                            child: Container(
+                              padding: spacing(h: 10, v: 5),
+                              margin: spacing(h: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 2,
+                                  color: designController.template == 1
+                                      ? Colors.blue
+                                      : halfBlack,
+                                ),
+                                boxShadow: shadow,
+                                borderRadius: borderRadius(10),
+                              ),
+                              child: Text('Template 2'),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.template = 2;
+                              designController.flagWidth = 90;
+                              designController.dataContainerSpacing = 1;
+                              designController.picContainerWidth = 80;
+                              designController.UserPicHeght = 98;
+                              designController.UserPicWidth = 98;
+                              designController.valueTextStyle
+                                  .copyWith(fontSize: 27);
+                              designController.dataContainerMarginTop = 100;
+                              designController.dataContainerMarginBottom = 70;
+                              designController.update();
+                              setState(() {});
+                            },
+                            child: Container(
+                              padding: spacing(h: 10, v: 5),
+                              margin: spacing(h: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 2,
+                                  color: designController.template == 2
+                                      ? Colors.blue
+                                      : halfBlack,
+                                ),
+                                boxShadow: shadow,
+                                borderRadius: borderRadius(10),
+                              ),
+                              child: Text('Template 3'),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                   gap(w: 40),
@@ -1280,43 +1625,6 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                       ),
                       Container(
                         width: 300,
-                        height: 50,
-                        padding: spacing(
-                          h: 14,
-                        ),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          boxShadow: shadow,
-                          borderRadius: borderRadius(50),
-                          border: Border.all(
-                            width: 2,
-                            color: halfBlack,
-                          ),
-                        ),
-                        child: TextFormField(
-                          controller: videoTimer,
-                          decoration: InputDecoration(
-                            hintText: 'Typing duration',
-                            border: InputBorder.none,
-                            hintStyle: GoogleFonts.manrope(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: halfBlack,
-                            ),
-                          ),
-                          style: GoogleFonts.manrope(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: halfBlack,
-                          ),
-                          keyboardType: TextInputType.phone,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 300,
                         child: TextStyleEditor(
                           paletteColors: colorList,
                           fonts: fontFamilies,
@@ -1337,6 +1645,50 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           onCpasLockTaggle: (caps) {
                             // Uppercase or lowercase letters
                           },
+                        ),
+                      ),
+                      gap(h: 10),
+                      Container(
+                        width: 300,
+                        height: 50,
+                        padding: spacing(
+                          h: 14,
+                        ),
+                        decoration: BoxDecoration(
+                          color: whiteColor,
+                          boxShadow: shadow,
+                          borderRadius: borderRadius(50),
+                          border: Border.all(
+                            width: 2,
+                            color: halfBlack,
+                          ),
+                        ),
+                        child: TextFormField(
+                          controller: designController.typingSpeedController,
+                          decoration: InputDecoration(
+                            hintText: 'Typing duration',
+                            border: InputBorder.none,
+                            hintStyle: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            designController.typingSpeed =
+                                int.parse(value.toString());
+                            designController.update();
+                            setState(() {});
+                          },
+                          style: GoogleFonts.manrope(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: halfBlack,
+                          ),
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                          ],
                         ),
                       ),
                       FontFamilyDropdown(
@@ -1372,6 +1724,139 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           );
                         },
                         currentColor: designController.titleShadowColor,
+                      ),
+                      ValueChangeSlider(
+                        value: designController.title2ContainerWidth,
+                        title:
+                            'Title2 Container Width: ${designController.title2ContainerWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.title2ContainerWidth = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.title2PositionTop,
+                        max: 150,
+                        title:
+                            'Title2 Position Top: ${designController.title2PositionTop.toInt()}',
+                        onChanged: (value) {
+                          designController.title2PositionTop = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        value: designController.title2PositionLeft,
+                        max: 150,
+                        title:
+                            'Title2 Position Left: ${designController.title2PositionLeft.toInt()}',
+                        onChanged: (value) {
+                          designController.title2PositionLeft = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      Container(
+                        width: 300,
+                        child: TextStyleEditor(
+                          paletteColors: colorList,
+                          fonts: fontFamilies,
+                          textStyle: designController.title2TextStyle,
+                          textAlign: designController.title2TextAlign,
+                          onTextAlignEdited: (align) {
+                            setState(() {
+                              designController.title2TextAlign = align;
+                            });
+                            designController.update();
+                          },
+                          onTextStyleEdited: (style) {
+                            setState(() {
+                              designController.title2TextStyle = style;
+                            });
+                            designController.update();
+                          },
+                          onCpasLockTaggle: (caps) {
+                            // Uppercase or lowercase letters
+                          },
+                        ),
+                      ),
+                      FontFamilyDropdown(
+                        text: 'Title2 Font Family',
+                        onFontSelected: (font) {
+                          designController.title2FontFamily = font;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      gap(h: 10),
+                      Container(
+                        width: 300,
+                        height: 50,
+                        padding: spacing(
+                          h: 14,
+                        ),
+                        decoration: BoxDecoration(
+                          color: whiteColor,
+                          boxShadow: shadow,
+                          borderRadius: borderRadius(50),
+                          border: Border.all(
+                            width: 2,
+                            color: halfBlack,
+                          ),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Title2 delay',
+                            border: InputBorder.none,
+                            hintStyle: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: halfBlack,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            designController.title2Delay =
+                                int.parse(value.toString());
+                            designController.update();
+                            setState(() {});
+                          },
+                          style: GoogleFonts.manrope(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: halfBlack,
+                          ),
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                          ],
+                        ),
+                      ),
+                      ColorPickerItem(
+                        hintText: 'Title2 Text Color',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.title2FontColor,
+                            onChange: (color) {
+                              designController.title2FontColor = color;
+                              designController.update();
+                            },
+                          );
+                        },
+                        currentColor: designController.title2FontColor,
+                      ),
+                      ColorPickerItem(
+                        hintText: 'Title2 Shadow Color',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.title2ShadowColor,
+                            onChange: (color) {
+                              designController.title2ShadowColor = color;
+                              designController.update();
+                            },
+                          );
+                        },
+                        currentColor: designController.title2ShadowColor,
                       ),
                       Container(
                         width: Get.width * 0.2,

@@ -2,55 +2,56 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:auto_scroll_row/auto_scroll_row.dart';
-import 'package:auto_scroll_slider/auto_scroll_slider.dart';
-import 'package:barcontent/screen/design/design1/controller/design1_controller.dart';
-import 'package:barcontent/screen/design/design2/controller/design2_controller.dart';
-import 'package:barcontent/screen/design/design2/widget/design2_item.dart';
+import 'package:barcontent/screen/design/design17/controller/design17_controller.dart';
+import 'package:barcontent/screen/design/design17/widget/design17_item.dart';
 import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
+import 'package:barcontent/util/font_family_selector.dart';
 import 'package:barcontent/util/helper.dart';
 import 'package:barcontent/util/meta_data_helper.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
+import 'package:text_style_editor/text_style_editor.dart';
 
-class Design2 extends StatefulWidget {
-  const Design2({super.key});
+class Design17 extends StatefulWidget {
+  const Design17({super.key});
 
   @override
-  State<Design2> createState() => _Design2State();
+  State<Design17> createState() => _Design17State();
 }
 
-class _Design2State extends State<Design2> {
+class _Design17State extends State<Design17> {
   final GlobalKey<ScaffoldState> _Key = GlobalKey<ScaffoldState>();
-  final design2Controller designController = Get.put(design2Controller());
+  final Design17Controller designController = Get.put(Design17Controller());
   TextEditingController videoTimer = TextEditingController();
   TextEditingController backgroundImage = TextEditingController();
 
   ScrollController scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     MetaHelper.setMetaData(
       title:
-          "Free Comparison Video Maker | Create Sliding Content Videos Online from CSV",
+          "Free Top 10 Video Maker | Create YouTube Comparison & Ranking Videos Online",
       description:
-          "Create professional sliding comparison videos online for free using your CSV data. Generate long or short videos with smooth left-to-right transitions, no watermark, and easy export. Perfect for data, rankings, lists, and comparisons",
+          "Easily create Top 10 and comparison videos for YouTube using your CSV data. Make sliding ranking videos with smooth transitions, free and without watermark. Perfect for military power, economy, sports, tech, and trending list videos.",
       keywords:
-          "free comparison video maker, create sliding videos online, csv to video generator, data comparison video creator, free video maker no watermark, automated video generator, top 10 list video creator, ranking video maker, free online video editor, create long and short videos",
+          "top 10 video maker for youtube, free ranking video creator, comparison video generator online, youtube list video maker, csv to ranking video, top 10 countries video maker, military power comparison video tool, economy ranking video creator, free youtube video maker no watermark, automated comparison video generator",
       author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design2.png',
-      ogUrl: '${domainUrl}${AppRoutes.design2VideoGenerator}',
+      ogImage: '${domainUrl}assets/assets/img/Design17.png',
+      ogUrl: '${domainUrl}${AppRoutes.design17VideoGenerator}',
     );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<design2Controller>(builder: (controller) {
+      body: GetBuilder<Design17Controller>(builder: (controller) {
         return Stack(
           children: [
             Container(
@@ -66,49 +67,57 @@ class _Design2State extends State<Design2> {
                     : null,
               ),
               child: Center(
-                child: controller.isGenerating
-                    ? controller.isAnimate
-                        ? Row(
-                            children: controller.animatedItem,
-                          )
-                        : AutoScrollRow(
-                            reverse: false,
-                            enableUserScroll: false,
-                            scrollDuration: Duration(
-                              seconds: controller.videoDuration,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 2),
+                  ),
+                  child: AspectRatio(
+                    aspectRatio: designController.aspectRatio,
+                    child: controller.isGenerating
+                        ? controller.isAnimate
+                            ? Row(
+                                children: controller.animatedItem,
+                              )
+                            : AutoScrollRow(
+                                reverse: false,
+                                enableUserScroll: false,
+                                scrollDuration: Duration(
+                                  seconds: controller.videoDuration,
+                                ),
+                                children: List.generate(
+                                    ((controller.csvData.length + 1)), (i) {
+                                  if (i == controller.csvData.length) {
+                                    return Container(
+                                      width: Get.width * 1.5,
+                                    );
+                                  }
+                                  return controller.csvData[(i)]['index']
+                                          .toString()
+                                          .isNotEmpty
+                                      ? Design17Item(
+                                          data: controller.csvData[(i)],
+                                        )
+                                      : gap();
+                                }),
+                              )
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List.generate(
+                                  (controller.csvData.length), (i) {
+                                return controller.csvData[(i)]['index']
+                                        .toString()
+                                        .isNotEmpty
+                                    ? Design17Item(
+                                        data: controller.csvData[(i)],
+                                      )
+                                    : gap();
+                              }),
                             ),
-                            children: List.generate(
-                                ((controller.csvData.length + 1)), (i) {
-                              if (i == controller.csvData.length) {
-                                return Container(
-                                  width: Get.width * 1.5,
-                                );
-                              }
-                              return controller.csvData[(i)]['index']
-                                      .toString()
-                                      .isNotEmpty
-                                  ? Design2Item(
-                                      data: controller.csvData[(i)],
-                                    )
-                                  : gap();
-                            }),
-                          )
-                    : SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:
-                              List.generate((controller.csvData.length), (i) {
-                            return controller.csvData[(i)]['index']
-                                    .toString()
-                                    .isNotEmpty
-                                ? Design2Item(
-                                    data: controller.csvData[(i)],
-                                  )
-                                : gap();
-                          }),
-                        ),
-                      ),
+                          ),
+                  ),
+                ),
               ),
             ),
             controller.isGenerating
@@ -119,7 +128,6 @@ class _Design2State extends State<Design2> {
                     child: InkWell(
                       onTap: () {
                         _Key.currentState!.openDrawer();
-
                         setState(() {});
                       },
                       child: Container(
@@ -296,20 +304,136 @@ class _Design2State extends State<Design2> {
                 boxShadow: shadow,
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      FontSizer(
-                        hintText: 'Items per screen',
-                        fontSize: designController.itemsPerScreen,
+                      Text(
+                        'Aspect Ratio',
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 9 / 16;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '9/16',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 16 / 9;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '16/9',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 3 / 4;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '3/4',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 4 / 3;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '4/3',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 1 / 1;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '1/1',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ValueChangeSlider(
+                        max: 2000,
+                        value: designController.itemsWidth,
+                        title:
+                            'Item Width: ${designController.itemsWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.itemsWidth = value;
+                          designController.update();
+                          setState(() {});
+                        },
                         increase: () {
-                          designController.itemsPerScreen++;
+                          designController.itemsWidth++;
                           setState(() {});
                         },
                         decrease: () {
-                          designController.itemsPerScreen--;
+                          designController.itemsWidth--;
                           setState(() {});
                         },
                       ),
@@ -358,13 +482,34 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
-                        max: 200,
-                        value: designController.nameFontSize,
-                        title:
-                            'Name Font Size: ${designController.nameFontSize.toInt()}',
-                        onChanged: (value) {
-                          designController.nameFontSize = value;
+                      Container(
+                        width: 300,
+                        child: TextStyleEditor(
+                          paletteColors: colorList,
+                          fonts: fontFamilies,
+                          textStyle: designController.nameStyle,
+                          textAlign: designController.nameTextAlign,
+                          onTextAlignEdited: (align) {
+                            setState(() {
+                              designController.nameTextAlign = align;
+                            });
+                            designController.update();
+                          },
+                          onTextStyleEdited: (style) {
+                            setState(() {
+                              designController.nameStyle = style;
+                            });
+                            designController.update();
+                          },
+                          onCpasLockTaggle: (caps) {
+                            // Uppercase or lowercase letters
+                          },
+                        ),
+                      ),
+                      FontFamilyDropdown(
+                        text: 'Name Font Family',
+                        onFontSelected: (font) {
+                          designController.nameFontFamily = font;
                           designController.update();
                           setState(() {});
                         },
@@ -376,39 +521,6 @@ class _Design2State extends State<Design2> {
                             'Name Countainer Height: ${designController.nameContainerHeight.toInt()}',
                         onChanged: (value) {
                           designController.nameContainerHeight = value;
-                          designController.update();
-                          setState(() {});
-                        },
-                      ),
-                      ValueChangeSlider(
-                        max: 200,
-                        value: designController.largTextSize,
-                        title:
-                            'Large Text Font Size: ${designController.largTextSize.toInt()}',
-                        onChanged: (value) {
-                          designController.largTextSize = value;
-                          designController.update();
-                          setState(() {});
-                        },
-                      ),
-                      ValueChangeSlider(
-                        max: 300,
-                        value: designController.largContainerHeight,
-                        title:
-                            'Large Text Container Height: ${designController.largContainerHeight.toInt()}',
-                        onChanged: (value) {
-                          designController.largContainerHeight = value;
-                          designController.update();
-                          setState(() {});
-                        },
-                      ),
-                      ValueChangeSlider(
-                        max: 300,
-                        value: designController.smallTextSize,
-                        title:
-                            'Small Text Font Size: ${designController.smallTextSize.toInt()}',
-                        onChanged: (value) {
-                          designController.smallTextSize = value;
                           designController.update();
                           setState(() {});
                         },
@@ -469,46 +581,40 @@ class _Design2State extends State<Design2> {
                         },
                       ),
                       ValueChangeSlider(
-                        max: 500,
-                        value: designController.pic2Width,
+                        max: 1000,
+                        value: designController.iconSize,
                         title:
-                            'Pic2 Width: ${designController.pic2Width.toInt()}',
+                            'Item Size: ${designController.iconSize.toInt()}',
                         onChanged: (value) {
-                          designController.pic2Width = value;
+                          designController.iconSize = value;
                           designController.update();
+                          setState(() {});
+                        },
+                        increase: () {
+                          designController.iconSize++;
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.iconSize--;
                           setState(() {});
                         },
                       ),
                       ValueChangeSlider(
-                        max: 500,
-                        value: designController.pic2Height,
+                        max: 200,
+                        value: designController.iconSpace,
                         title:
-                            'Pic2 Height: ${designController.pic2Height.toInt()}',
+                            'Item Width: ${designController.iconSpace.toInt()}',
                         onChanged: (value) {
-                          designController.pic2Height = value;
+                          designController.iconSpace = value;
                           designController.update();
                           setState(() {});
                         },
-                      ),
-                      ValueChangeSlider(
-                        max: 500,
-                        value: designController.pic2Radius,
-                        title:
-                            'Pic2 Radius: ${designController.pic2Radius.toInt()}',
-                        onChanged: (value) {
-                          designController.pic2Radius = value;
-                          designController.update();
+                        increase: () {
+                          designController.iconSpace++;
                           setState(() {});
                         },
-                      ),
-                      ValueChangeSlider(
-                        max: 500,
-                        value: designController.pic2Border,
-                        title:
-                            'Pic2 Border: ${designController.pic2Border.toInt()}',
-                        onChanged: (value) {
-                          designController.pic2Border = value;
-                          designController.update();
+                        decrease: () {
+                          designController.iconSpace--;
                           setState(() {});
                         },
                       ),
@@ -591,17 +697,80 @@ class _Design2State extends State<Design2> {
                         },
                         currentColor: designController.nameFontColor,
                       ),
+                      Container(
+                        width: 300,
+                        child: TextStyleEditor(
+                          paletteColors: colorList,
+                          fonts: fontFamilies,
+                          textStyle: designController.taglineStyle,
+                          textAlign: designController.tagTextAlign,
+                          onTextAlignEdited: (align) {
+                            setState(() {
+                              designController.tagTextAlign = align;
+                            });
+                            designController.update();
+                          },
+                          onTextStyleEdited: (style) {
+                            setState(() {
+                              designController.taglineStyle = style;
+                            });
+                            designController.update();
+                          },
+                          onCpasLockTaggle: (caps) {
+                            // Uppercase or lowercase letters
+                          },
+                        ),
+                      ),
+                      FontFamilyDropdown(
+                        text: 'Tagline Font Family',
+                        onFontSelected: (font) {
+                          designController.taglineFontFamily = font;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
+                        max: 300,
+                        value: designController.taglineContainerHeight,
+                        title:
+                            'Tagline Container Height: ${designController.taglineContainerHeight.toInt()}',
+                        onChanged: (value) {
+                          designController.taglineContainerHeight = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                        increase: () {
+                          designController.itemsWidth++;
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.itemsWidth--;
+                          setState(() {});
+                        },
+                      ),
                       ColorPickerItem(
-                        hintText: 'Large Text Container',
+                        hintText: 'Tagline Container Color',
                         pickerTap: () {
                           colorPicker(
-                            currentColor: designController.LargeTextContainer,
+                            currentColor: designController.taglineTextContainer,
                             onChange: (color) {
-                              designController.LargeTextContainer = color;
+                              designController.taglineTextContainer = color;
                             },
                           );
                         },
-                        currentColor: designController.LargeTextContainer,
+                        currentColor: designController.taglineTextContainer,
+                      ),
+                      ColorPickerItem(
+                        hintText: 'Tagline Text Color',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.taglineFontColor,
+                            onChange: (color) {
+                              designController.taglineFontColor = color;
+                            },
+                          );
+                        },
+                        currentColor: designController.taglineFontColor,
                       ),
                       ColorPickerItem(
                         hintText: 'Large Text Color',
@@ -615,6 +784,38 @@ class _Design2State extends State<Design2> {
                         },
                         currentColor: designController.largeFontColor,
                       ),
+                      Container(
+                        width: 300,
+                        child: TextStyleEditor(
+                          paletteColors: colorList,
+                          fonts: fontFamilies,
+                          textStyle: designController.largeStyle,
+                          textAlign: designController.largeTextAlign,
+                          onTextAlignEdited: (align) {
+                            setState(() {
+                              designController.largeTextAlign = align;
+                            });
+                            designController.update();
+                          },
+                          onTextStyleEdited: (style) {
+                            setState(() {
+                              designController.largeStyle = style;
+                            });
+                            designController.update();
+                          },
+                          onCpasLockTaggle: (caps) {
+                            // Uppercase or lowercase letters
+                          },
+                        ),
+                      ),
+                      FontFamilyDropdown(
+                        text: 'largeText Font Family',
+                        onFontSelected: (font) {
+                          designController.largeFontFamily = font;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
                       ColorPickerItem(
                         hintText: 'Small Text Color',
                         pickerTap: () {
@@ -626,6 +827,38 @@ class _Design2State extends State<Design2> {
                           );
                         },
                         currentColor: designController.smallFontColor,
+                      ),
+                      Container(
+                        width: 300,
+                        child: TextStyleEditor(
+                          paletteColors: colorList,
+                          fonts: fontFamilies,
+                          textStyle: designController.smallStyle,
+                          textAlign: designController.smallTextAlign,
+                          onTextAlignEdited: (align) {
+                            setState(() {
+                              designController.smallTextAlign = align;
+                            });
+                            designController.update();
+                          },
+                          onTextStyleEdited: (style) {
+                            setState(() {
+                              designController.smallStyle = style;
+                            });
+                            designController.update();
+                          },
+                          onCpasLockTaggle: (caps) {
+                            // Uppercase or lowercase letters
+                          },
+                        ),
+                      ),
+                      FontFamilyDropdown(
+                        text: 'SmallText Font Family',
+                        onFontSelected: (font) {
+                          designController.smallFontFamily = font;
+                          designController.update();
+                          setState(() {});
+                        },
                       ),
                       ColorPickerItem(
                         hintText: 'Index Text Color',
@@ -676,28 +909,16 @@ class _Design2State extends State<Design2> {
                         currentColor: designController.pic1BorderColor,
                       ),
                       ColorPickerItem(
-                        hintText: 'Pic2 Border Color',
+                        hintText: 'Bottom Container Color',
                         pickerTap: () {
                           colorPicker(
-                            currentColor: designController.pic2BorderColor,
+                            currentColor: designController.bottomContainerColor,
                             onChange: (color) {
-                              designController.pic2BorderColor = color;
+                              designController.bottomContainerColor = color;
                             },
                           );
                         },
-                        currentColor: designController.pic2BorderColor,
-                      ),
-                      ColorPickerItem(
-                        hintText: 'Pic2 Container Color',
-                        pickerTap: () {
-                          colorPicker(
-                            currentColor: designController.pic2ContainerColor,
-                            onChange: (color) {
-                              designController.pic2ContainerColor = color;
-                            },
-                          );
-                        },
-                        currentColor: designController.pic2ContainerColor,
+                        currentColor: designController.bottomContainerColor,
                       ),
                       ColorPickerItem(
                         hintText: 'Animation Container Color',
@@ -724,8 +945,9 @@ class _Design2State extends State<Design2> {
                       int.parse(videoTimer.text.toString().trim());
                 }
                 _Key.currentState!.closeDrawer();
-                designController.updateFlow();
                 setState(() {});
+
+                designController.updateFlow();
               },
               child: Container(
                 padding: spacing(h: 15, v: 7),
@@ -749,11 +971,11 @@ class _Design2State extends State<Design2> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 tableItems('index'),
+                tableItems('pic'),
                 tableItems('name'),
-                tableItems('pic1'),
-                tableItems('pic2'),
-                tableItems('smallText'),
+                tableItems('tagline'),
                 tableItems('largeText'),
+                tableItems('smallText'),
                 tableItems('icon'),
               ],
             ),

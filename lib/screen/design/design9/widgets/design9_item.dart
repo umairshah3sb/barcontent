@@ -116,7 +116,8 @@ class _Design9ItemState extends State<Design9Item> {
             top: 0,
             child: Center(
               child: Container(
-                height: controller.picContainerSize,
+                height: controller.picContainerHeight,
+                width: controller.picContainerWidth,
                 decoration: BoxDecoration(
                   borderRadius: borderRadius(
                     controller.picContainerRadius,
@@ -136,6 +137,129 @@ class _Design9ItemState extends State<Design9Item> {
             ),
           ),
         ],
+      );
+    });
+  }
+}
+
+class Design9Item2 extends StatefulWidget {
+  Map<String, dynamic> data;
+  int index = 0;
+  Design9Item2({
+    Key? key,
+    required this.data,
+    required this.index,
+  }) : super(key: key);
+
+  @override
+  State<Design9Item2> createState() => _Design9Item2State();
+}
+
+class _Design9Item2State extends State<Design9Item2> {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<Design9Controller>(builder: (controller) {
+      return Container(
+        width: controller.dataContainerWidth,
+        margin: spacing(v: controller.dataContainerSpacing),
+        child: SizedBox(
+          height: controller.valueContainerSize,
+          child: Center(
+            child: Container(
+              height: controller.dataContainerHeight,
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: controller.picContainerHeight,
+                    width: controller.picContainerWidth,
+                    decoration: BoxDecoration(
+                      borderRadius: borderRadius(
+                        controller.picContainerRadius,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: borderRadius(
+                        controller.picContainerRadius,
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.data['pic'],
+                        color: controller.picIconColor,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: controller.valueWidth,
+                    height: controller.dataContainerHeight,
+                    padding: spaceOnly(right: controller.valueContainerSpacing),
+                    decoration: BoxDecoration(
+                      color: widget.index.isOdd
+                          ? controller.valueContainerLeft
+                          : controller.valueContainerRight,
+                      borderRadius: borderRadius(
+                        controller.valueContainerRadius,
+                      ),
+                    ),
+                    child: AutoSizeText(
+                      widget.data['value1'].toString(),
+                      style: GoogleFonts.getFont(
+                        controller.valueFontFamily,
+                        color: widget.index.isOdd
+                            ? controller.valueFontColor1
+                            : controller.valueFontColor2,
+                        fontSize: controller.valueTextStyle.fontSize,
+                        fontWeight: controller.valueTextStyle.fontWeight,
+                        wordSpacing: controller.valueTextStyle.wordSpacing,
+                        decoration: controller.valueTextStyle.decoration,
+                        height: controller.valueTextStyle.height,
+                        letterSpacing: controller.valueTextStyle.letterSpacing,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: controller.valueTextAlign,
+                    ),
+                  ),
+                  Container(
+                    width: controller.valueWidth,
+                    height: controller.dataContainerHeight,
+                    padding: spaceOnly(
+                      left: controller.valueContainerSpacing,
+                    ),
+                    decoration: BoxDecoration(
+                      color: widget.index.isOdd
+                          ? controller.valueContainerRight
+                          : controller.valueContainerLeft,
+                      borderRadius: borderRadius(
+                        controller.valueContainerRadius,
+                      ),
+                    ),
+                    child: AutoSizeText(
+                      widget.data['value2'].toString(),
+                      style: GoogleFonts.getFont(
+                        controller.valueFontFamily,
+                        color: widget.index.isOdd
+                            ? controller.valueFontColor2
+                            : controller.valueFontColor1,
+                        fontSize: controller.valueTextStyle.fontSize,
+                        fontWeight: controller.valueTextStyle.fontWeight,
+                        wordSpacing: controller.valueTextStyle.wordSpacing,
+                        decoration: controller.valueTextStyle.decoration,
+                        height: controller.valueTextStyle.height,
+                        letterSpacing: controller.valueTextStyle.letterSpacing,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: controller.valueTextAlign,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       );
     });
   }

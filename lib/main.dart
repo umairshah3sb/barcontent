@@ -9,9 +9,11 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setUrlStrategy(PathUrlStrategy());
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    // This will print the widget tree and the stack trace
+  };
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

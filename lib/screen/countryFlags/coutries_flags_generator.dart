@@ -52,7 +52,7 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
         for (var country in dataAsMap) {
           if (country['country'].toString().isNotEmpty) {
             List selectedCountry = allCountries
-                .where((ctry) => ctry['country']
+                .where((ctry) => ctry['name']
                     .toString()
                     .toLowerCase()
                     .contains(country['country'].toString().toLowerCase()))
@@ -82,7 +82,6 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
         }
       }
     }
-    print(allFlags);
     setState(() {});
   }
 
@@ -135,25 +134,54 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () {
-                  pickAndReadCsv();
-                },
-                child: Container(
-                  padding: spacing(h: 30, v: 8),
-                  decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(10),
-                  ),
-                  child: Text(
-                    'Import',
-                    style: GoogleFonts.manrope(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: whiteColor,
+              Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      pickAndReadCsv();
+                    },
+                    child: Container(
+                      padding: spacing(h: 30, v: 8),
+                      decoration: BoxDecoration(
+                        color: darkBlue,
+                        borderRadius: borderRadius(10),
+                      ),
+                      child: Text(
+                        'Import',
+                        style: GoogleFonts.manrope(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: whiteColor,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  gap(h: 30),
+                  csvCountries.isNotEmpty
+                      ? InkWell(
+                          onTap: () {
+                            generateCountriesFlags();
+                          },
+                          child: Container(
+                            padding: spacing(h: 30, v: 8),
+                            decoration: BoxDecoration(
+                              color: darkBlue,
+                              borderRadius: borderRadius(10),
+                            ),
+                            child: Text(
+                              'Generate Countries Flags',
+                              style: GoogleFonts.manrope(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: whiteColor,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Center(
+                          child: Text('No Flag Found'),
+                        ),
+                ],
               ),
               gap(h: 15),
               Text(
@@ -169,46 +197,21 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
                 width: Get.width * 0.5,
                 child: allFlags.isEmpty
                     ? gap()
-                    : Column(
-                        children: [
-                          Wrap(
-                            children: allFlags.map((flg) {
-                              return ClipRRect(
-                                borderRadius: borderRadius(15),
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  margin: spacing(h: 3, v: 5),
-                                  child: CachedNetworkImage(
-                                    imageUrl: flg,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                          gap(h: 30),
-                          InkWell(
-                            onTap: () {
-                              generateCountriesFlags();
-                            },
+                    : Wrap(
+                        children: allFlags.map((flg) {
+                          return ClipRRect(
+                            borderRadius: borderRadius(15),
                             child: Container(
-                              padding: spacing(h: 30, v: 8),
-                              decoration: BoxDecoration(
-                                color: darkBlue,
-                                borderRadius: borderRadius(10),
-                              ),
-                              child: Text(
-                                'Generate Countries Flags',
-                                style: GoogleFonts.manrope(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: whiteColor,
-                                ),
+                              width: 50,
+                              height: 50,
+                              margin: spacing(h: 3, v: 5),
+                              child: CachedNetworkImage(
+                                imageUrl: flg,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                        ],
+                          );
+                        }).toList(),
                       ),
               ),
             ],

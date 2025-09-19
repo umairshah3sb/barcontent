@@ -1,11 +1,11 @@
 {
-    "name": "barcontent",
-    "short_name": "Create comparison video in a minute",
+    "name": "contentcreator",
+    "short_name": "Create comparison video in a minute - CSV to Video",
     "start_url": "https://contentcreator-9774f.web.app",
     "display": "standalone",
     "background_color": "#FFFFFF",
     "theme_color": "#FFFFFF",
-    "description": "A new Flutter project.",
+    "description": "Create comparison videos from CSV to video without watermark. Generate country comparison, phone specs comparison, bar chart race, and sliding comparison videos in minutes with our free online tool.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

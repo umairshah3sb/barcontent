@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://contentcreator-9774f.web.app/sitemap.xml
