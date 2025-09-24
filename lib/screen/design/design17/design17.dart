@@ -10,6 +10,7 @@ import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/font_family_selector.dart';
 import 'package:barcontent/util/helper.dart';
 import 'package:barcontent/util/meta_data_helper.dart';
+import 'package:barcontent/util/tools/shadow_generator.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -58,18 +59,17 @@ class _Design17State extends State<Design17> {
               key: Key(getRandomString(20)),
               width: Get.width,
               height: Get.height,
-              decoration: BoxDecoration(
-                image: backgroundImage.text.isNotEmpty
-                    ? DecorationImage(
-                        image: NetworkImage(backgroundImage.text),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-              ),
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(
+                    color: designController.backgroundColor,
                     border: Border.all(width: 2),
+                    image: backgroundImage.text.isNotEmpty
+                        ? DecorationImage(
+                            image: NetworkImage(backgroundImage.text),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
                   child: AspectRatio(
                     aspectRatio: designController.aspectRatio,
@@ -580,11 +580,19 @@ class _Design17State extends State<Design17> {
                           setState(() {});
                         },
                       ),
+                      ShadowGeneratorScreen(
+                        text: 'Icon shadow',
+                        onApply: (shadow) {
+                          designController.iconShadow = shadow;
+                          designController.update();
+                          setState(() {});
+                        },
+                      ),
                       ValueChangeSlider(
                         max: 1000,
                         value: designController.iconSize,
                         title:
-                            'Item Size: ${designController.iconSize.toInt()}',
+                            'Icon Size: ${designController.iconSize.toInt()}',
                         onChanged: (value) {
                           designController.iconSize = value;
                           designController.update();
@@ -600,10 +608,29 @@ class _Design17State extends State<Design17> {
                         },
                       ),
                       ValueChangeSlider(
+                        max: 1000,
+                        value: designController.iconRadius,
+                        title:
+                            'Icon Radius: ${designController.iconRadius.toInt()}',
+                        onChanged: (value) {
+                          designController.iconRadius = value;
+                          designController.update();
+                          setState(() {});
+                        },
+                        increase: () {
+                          designController.iconRadius++;
+                          setState(() {});
+                        },
+                        decrease: () {
+                          designController.iconRadius--;
+                          setState(() {});
+                        },
+                      ),
+                      ValueChangeSlider(
                         max: 200,
                         value: designController.iconSpace,
                         title:
-                            'Item Width: ${designController.iconSpace.toInt()}',
+                            'Icon bottom Space: ${designController.iconSpace.toInt()}',
                         onChanged: (value) {
                           designController.iconSpace = value;
                           designController.update();
@@ -653,7 +680,49 @@ class _Design17State extends State<Design17> {
                             )
                           ],
                         ),
-                      )
+                      ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Reverse Data',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.reverseData,
+                              onChanged: (value) {
+                                List<dynamic> csvData =
+                                    designController.csvData;
+                                designController.csvData =
+                                    csvData.reversed.toList();
+                                designController.reverseData = value;
+                                designController.update();
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Random Data',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.reverseData,
+                              onChanged: (value) {
+                                designController.csvData.shuffle(Random());
+                                designController.update();
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   gap(w: 40),
@@ -740,11 +809,11 @@ class _Design17State extends State<Design17> {
                           setState(() {});
                         },
                         increase: () {
-                          designController.itemsWidth++;
+                          designController.taglineContainerHeight++;
                           setState(() {});
                         },
                         decrease: () {
-                          designController.itemsWidth--;
+                          designController.taglineContainerHeight--;
                           setState(() {});
                         },
                       ),
@@ -919,6 +988,18 @@ class _Design17State extends State<Design17> {
                           );
                         },
                         currentColor: designController.bottomContainerColor,
+                      ),
+                      ColorPickerItem(
+                        hintText: 'Background Color',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.backgroundColor,
+                            onChange: (color) {
+                              designController.backgroundColor = color;
+                            },
+                          );
+                        },
+                        currentColor: designController.backgroundColor,
                       ),
                       ColorPickerItem(
                         hintText: 'Animation Container Color',

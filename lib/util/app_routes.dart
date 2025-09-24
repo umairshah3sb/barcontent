@@ -4,6 +4,7 @@ import 'package:barcontent/screen/design/design17/design17.dart';
 import 'package:barcontent/screen/home/home.dart';
 import 'package:barcontent/screen/image_test/image_test.dart';
 import 'package:barcontent/util/exporter.dart';
+import 'package:barcontent/util/tools/shadow_generator.dart';
 
 class AppRoutes {
   // Static route keys
@@ -26,7 +27,7 @@ class AppRoutes {
   static const design14VideoGenerator = 'create-short-mobile-specification';
   static const design15VideoGenerator = 'create-data-comparison-video';
   static const design16VideoGenerator = 'phone-comparison-video-creator';
-  static const design17VideoGenerator ='make-data-comparison-video';
+  static const design17VideoGenerator = 'make-data-comparison-video';
 
   // Route map
   static Map<String, WidgetBuilder> routes = {

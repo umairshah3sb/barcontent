@@ -38,10 +38,6 @@ class _SlideUpRevealState extends State<SlideUpReveal> {
 
   @override
   Widget build(BuildContext context) {
-    double width = ((MediaQuery.of(context).size.width *
-            (1 / designController.itemsPerScreen)) -
-        8);
-
     return widget.isAnimate
         ? ClipRRect(
             borderRadius: BorderRadius.circular(12), // optional rounded corners
@@ -59,7 +55,8 @@ class _SlideUpRevealState extends State<SlideUpReveal> {
                   height: MediaQuery.of(context).size.height,
                   child: Center(
                     child: Container(
-                      width: (width - (designController.itemMarginH * 2)),
+                      width: (designController.itemsWidth -
+                          (designController.itemMarginH * 2)),
                       height: (Get.height - (designController.itemMarginV * 2)),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(

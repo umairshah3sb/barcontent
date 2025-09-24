@@ -21,6 +21,7 @@ class Design17Controller extends GetxController {
   bool enableScroll = false;
   bool isAnimate = false;
   bool hideIndex = false;
+  bool reverseData = false;
   bool enableRandomColor = true;
   double itemsWidth = 316;
   int spaceBetween = 4;
@@ -34,6 +35,7 @@ class Design17Controller extends GetxController {
   double pic1Height = 250;
   double pic1ContainerHeight = 250;
   double iconSize = 190;
+  double iconRadius = 0;
   double iconSpace = 20;
   double pic1Radius = 10;
   double pic1Border = 5;
@@ -44,9 +46,11 @@ class Design17Controller extends GetxController {
   Color indexFontColor = halfBlack;
   Color itemBackGroundColor = Colors.transparent;
   Color bottomContainerColor = halfBlack;
+  Color backgroundColor = halfBlack;
   Color animationContainerColor = halfBlack;
   double largTextSize = 45;
   Color picBackgroundColor = Colors.yellow;
+  List<BoxShadow>? iconShadow;
 
 //largeText
   String largeFontFamily = 'Russo One';

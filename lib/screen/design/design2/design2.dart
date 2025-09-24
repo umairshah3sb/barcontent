@@ -66,24 +66,41 @@ class _Design2State extends State<Design2> {
                     : null,
               ),
               child: Center(
-                child: controller.isGenerating
-                    ? controller.isAnimate
-                        ? Row(
-                            children: controller.animatedItem,
-                          )
-                        : AutoScrollRow(
-                            reverse: false,
-                            enableUserScroll: false,
-                            scrollDuration: Duration(
-                              seconds: controller.videoDuration,
-                            ),
-                            children: List.generate(
-                                ((controller.csvData.length + 1)), (i) {
-                              if (i == controller.csvData.length) {
-                                return Container(
-                                  width: Get.width * 1.5,
-                                );
-                              }
+                child: AspectRatio(
+                  aspectRatio: designController.aspectRatio,
+                  child: controller.isGenerating
+                      ? controller.isAnimate
+                          ? Row(
+                              children: controller.animatedItem,
+                            )
+                          : AutoScrollRow(
+                              reverse: false,
+                              enableUserScroll: false,
+                              scrollDuration: Duration(
+                                seconds: controller.videoDuration,
+                              ),
+                              children: List.generate(
+                                  ((controller.csvData.length + 1)), (i) {
+                                if (i == controller.csvData.length) {
+                                  return Container(
+                                    width: Get.width * 1.5,
+                                  );
+                                }
+                                return controller.csvData[(i)]['index']
+                                        .toString()
+                                        .isNotEmpty
+                                    ? Design2Item(
+                                        data: controller.csvData[(i)],
+                                      )
+                                    : gap();
+                              }),
+                            )
+                      : SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children:
+                                List.generate((controller.csvData.length), (i) {
                               return controller.csvData[(i)]['index']
                                       .toString()
                                       .isNotEmpty
@@ -92,23 +109,9 @@ class _Design2State extends State<Design2> {
                                     )
                                   : gap();
                             }),
-                          )
-                    : SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:
-                              List.generate((controller.csvData.length), (i) {
-                            return controller.csvData[(i)]['index']
-                                    .toString()
-                                    .isNotEmpty
-                                ? Design2Item(
-                                    data: controller.csvData[(i)],
-                                  )
-                                : gap();
-                          }),
+                          ),
                         ),
-                      ),
+                ),
               ),
             ),
             controller.isGenerating
@@ -301,15 +304,129 @@ class _Design2State extends State<Design2> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      FontSizer(
-                        hintText: 'Items per screen',
-                        fontSize: designController.itemsPerScreen,
+                      Text(
+                        'Aspect Ratio',
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 9 / 16;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '9/16',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 16 / 9;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '16/9',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 3 / 4;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '3/4',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 4 / 3;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '4/3',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              designController.aspectRatio = 1 / 1;
+                              designController.update();
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: halfBlack),
+                                borderRadius: borderRadius(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '1/1',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ValueChangeSlider(
+                        max: 2000,
+                        value: designController.itemsWidth,
+                        title:
+                            'Item Width: ${designController.itemsWidth.toInt()}',
+                        onChanged: (value) {
+                          designController.itemsWidth = value;
+                          designController.update();
+                          setState(() {});
+                        },
                         increase: () {
-                          designController.itemsPerScreen++;
+                          designController.itemsWidth++;
                           setState(() {});
                         },
                         decrease: () {
-                          designController.itemsPerScreen--;
+                          designController.itemsWidth--;
                           setState(() {});
                         },
                       ),
@@ -524,6 +641,48 @@ class _Design2State extends State<Design2> {
                               value: designController.hideIndex,
                               onChanged: (value) {
                                 designController.hideIndex = value;
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Reverse Data',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.reverseData,
+                              onChanged: (value) {
+                                List<dynamic> csvData =
+                                    designController.csvData;
+                                designController.csvData =
+                                    csvData.reversed.toList();
+                                designController.reverseData = value;
+                                designController.update();
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Random Data',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.reverseData,
+                              onChanged: (value) {
+                                designController.csvData.shuffle(Random());
+                                designController.update();
                                 setState(() {});
                               },
                             )

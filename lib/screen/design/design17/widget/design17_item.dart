@@ -84,10 +84,18 @@ class _Design17ItemState extends State<Design17Item> {
                           borderRadius:
                               borderRadius(designController.pic1Radius),
                           child: CachedNetworkImage(
+                            key: Key(getRandomString(20)),
                             imageUrl: widget.data['pic'],
                             fit: BoxFit.cover,
+                            errorWidget: (c, url, obj) {
+                              return Image.network(
+                                widget.data['pic'],
+                                fit: BoxFit.cover,
+                              );
+                            },
                           ),
                         ),
+                        
                       ),
                     ),
                   ),
@@ -124,8 +132,18 @@ class _Design17ItemState extends State<Design17Item> {
                 height: designController.nameContainerHeight,
                 padding: spacing(h: 10),
                 decoration: BoxDecoration(
-                  color: designController.nameContainerColor,
                   boxShadow: shadow,
+                  gradient: LinearGradient(
+                    colors: [
+                      designController.nameContainerColor.withAlpha(100),
+                      designController.nameContainerColor.withAlpha(200),
+                      designController.nameContainerColor,
+                      designController.nameContainerColor.withAlpha(200),
+                      designController.nameContainerColor.withAlpha(100),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
                 child: Center(
                   child: AutoSizeText(
@@ -154,8 +172,18 @@ class _Design17ItemState extends State<Design17Item> {
                 height: designController.taglineContainerHeight,
                 padding: spacing(h: 10),
                 decoration: BoxDecoration(
-                  color: designController.taglineTextContainer,
                   boxShadow: shadow,
+                  gradient: LinearGradient(
+                    colors: [
+                      designController.taglineTextContainer.withAlpha(100),
+                      designController.taglineTextContainer.withAlpha(200),
+                      designController.taglineTextContainer,
+                      designController.taglineTextContainer.withAlpha(200),
+                      designController.taglineTextContainer.withAlpha(100),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
                 child: Center(
                   child: AutoSizeText(
@@ -199,15 +227,27 @@ class _Design17ItemState extends State<Design17Item> {
                           left: designController.iconSpace,
                           right: designController.iconSpace,
                         ),
-                        child: Image.network(
-                          widget.data['icon'],
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              borderRadius(designController.iconRadius),
+                          boxShadow: designController.iconShadow,
+                        ),
+                        child: CachedNetworkImage(
+                          key: Key(getRandomString(20)),
+                          imageUrl: widget.data['icon'],
                           fit: BoxFit.cover,
+                          errorWidget: (c, url, obj) {
+                            return Image.network(
+                              widget.data['icon'],
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
                       ),
                       gap(w: 5),
                       Text.rich(
                         TextSpan(
-                          text: widget.data['largeText'].toString(),
+                          text: '${widget.data['largeText'].toString()} ',
                           style: GoogleFonts.getFont(
                             designController.largeFontFamily,
                             color: designController.largeFontColor,
@@ -224,7 +264,7 @@ class _Design17ItemState extends State<Design17Item> {
                           ),
                           children: [
                             TextSpan(
-                              text: ' ${widget.data['smallText']}',
+                              text: ' ${widget.data['smallText']} ',
                               style: GoogleFonts.getFont(
                                 designController.smallFontFamily,
                                 color: designController.smallFontColor,

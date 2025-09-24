@@ -11,12 +11,13 @@ class design2Controller extends GetxController {
   List<Widget> animatedItem = [];
   bool isGenerating = false;
   bool enableScroll = false;
+  bool reverseData = true;
   bool isAnimate = false;
   bool hideIndex = false;
   bool enableRandomColor = true;
   double nameFontSize = 45;
   double nameContainerHeight = 45;
-  int itemsPerScreen = 4;
+  double itemsWidth = 316;
   int spaceBetween = 4;
   double itemMarginH = 4;
   double itemMarginV = 4;
@@ -52,6 +53,7 @@ class design2Controller extends GetxController {
   Color largeFontColor = Colors.yellow;
   Color picBackgroundColor = Colors.yellow;
   Color smallFontColor = whiteColor;
+  double aspectRatio = 16 / 9;
 
   updateFlow() async {
     animatedItem = [];

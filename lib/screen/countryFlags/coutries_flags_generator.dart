@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:html' as html;
-
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/constants.dart';
 import 'package:barcontent/util/helper.dart';
@@ -22,6 +25,29 @@ class CountriesFlagGenerator extends StatefulWidget {
 class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
   List<List<String>> csvCountries = [];
   List<String> allFlags = [];
+  bool isLoading = false;
+
+  Future<void> loadAndFormatCountries() async {
+    // Option 1: From remote URL (your provided link)
+    isLoading = true;
+    setState(() {});
+    print('---------------_Getting Flags_-----------------');
+    final String response =
+        await rootBundle.loadString('assets/flags/countries.json');
+    final data = json.decode(response);
+
+    List<dynamic> allCountriesList = data.entries
+        .map((entry) =>
+            {'name': entry.value.toString(), 'code': entry.key.toString()})
+        .toList();
+
+    // Optional: Sort alphabetically by name
+    allCountriesList.sort((a, b) => a['name']!.compareTo(b['name']!));
+    allCountries = allCountriesList;
+    isLoading = false;
+    setState(() {});
+  }
+
   Future<void> pickAndReadCsv() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -48,29 +74,34 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
 
         csvCountries = [];
         allFlags = [];
-
+        print(dataAsMap);
         for (var country in dataAsMap) {
           if (country['country'].toString().isNotEmpty) {
             List selectedCountry = allCountries
                 .where((ctry) => ctry['name']
                     .toString()
                     .toLowerCase()
-                    .contains(country['country'].toString().toLowerCase()))
+                    .trim()
+                    .contains(
+                        country['country'].toString().toLowerCase().trim()))
                 .toList();
             if (selectedCountry.isEmpty) {
               selectedCountry = allCountries
-                  .where((ctry) => ctry['code']
+                  .where((cty) => cty['code']
                       .toString()
                       .toLowerCase()
-                      .contains(country['code'].toString().toLowerCase()))
+                      .trim()
+                      .contains(
+                          country['code'].toString().toLowerCase().trim()))
                   .toList();
             }
+            print('-----------------------> ${selectedCountry}');
             if (selectedCountry.isNotEmpty) {
               allFlags.add(
-                  'https://contentcreator-9774f.web.app/assets/assets/flags/${selectedCountry.first['code'].toString().toLowerCase()}.svg');
+                  '${domainUrl}assets/assets/flags/${selectedCountry.first['code'].toString().toLowerCase()}.svg');
               csvCountries.add([
                 'country',
-                'https://contentcreator-9774f.web.app/assets/assets/flags/${selectedCountry.first['code'].toString().toLowerCase()}.svg',
+                '${domainUrl}assets/assets/flags/${selectedCountry.first['code'].toString().toLowerCase()}.svg',
               ]);
             } else {
               csvCountries.add([
@@ -96,17 +127,11 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
     for (var row in data) {
       csvData.writeln(row.join(','));
     }
-
-    // Create a Blob from the CSV data
     final blob = html.Blob([csvData.toString()]);
-
-    // Create a URL for the Blob
     final url = html.Url.createObjectUrlFromBlob(blob);
-
-    // Create an anchor element with download attributes
     final anchor = html.AnchorElement(href: url)
       ..target = 'blank'
-      ..download = 'data.csv'; // Set the file name (e.g., 'data.csv')
+      ..download = 'flags_data.csv'; // Set the file name (e.g., 'data.csv')
 
     // Trigger the download
     anchor.click();
@@ -117,6 +142,7 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
 
   @override
   void initState() {
+    loadAndFormatCountries();
     super.initState();
   }
 
@@ -126,41 +152,24 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
         body: Container(
       width: Get.width,
       height: Get.height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      pickAndReadCsv();
-                    },
-                    child: Container(
-                      padding: spacing(h: 30, v: 8),
-                      decoration: BoxDecoration(
-                        color: darkBlue,
-                        borderRadius: borderRadius(10),
-                      ),
-                      child: Text(
-                        'Import',
-                        style: GoogleFonts.manrope(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: whiteColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  gap(h: 30),
-                  csvCountries.isNotEmpty
-                      ? InkWell(
+      child: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+              color: halfBlack,
+            ))
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        InkWell(
                           onTap: () {
-                            generateCountriesFlags();
+                            pickAndReadCsv();
                           },
                           child: Container(
                             padding: spacing(h: 30, v: 8),
@@ -169,7 +178,7 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
                               borderRadius: borderRadius(10),
                             ),
                             child: Text(
-                              'Generate Countries Flags',
+                              'Import',
                               style: GoogleFonts.manrope(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -177,47 +186,69 @@ class _CountriesFlagGeneratorState extends State<CountriesFlagGenerator> {
                               ),
                             ),
                           ),
-                        )
-                      : Center(
-                          child: Text('No Flag Found'),
                         ),
-                ],
-              ),
-              gap(h: 15),
-              Text(
-                'All Countries: ${csvCountries.length.toString()}',
-                style: GoogleFonts.manrope(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: halfBlack,
-                ),
-              ),
-              gap(w: 30),
-              Container(
-                width: Get.width * 0.5,
-                child: allFlags.isEmpty
-                    ? gap()
-                    : Wrap(
-                        children: allFlags.map((flg) {
-                          return ClipRRect(
-                            borderRadius: borderRadius(15),
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              margin: spacing(h: 3, v: 5),
-                              child: CachedNetworkImage(
-                                imageUrl: flg,
-                                fit: BoxFit.cover,
+                        gap(h: 30),
+                        csvCountries.isNotEmpty
+                            ? InkWell(
+                                onTap: () {
+                                  generateCountriesFlags();
+                                },
+                                child: Container(
+                                  padding: spacing(h: 30, v: 8),
+                                  decoration: BoxDecoration(
+                                    color: darkBlue,
+                                    borderRadius: borderRadius(10),
+                                  ),
+                                  child: Text(
+                                    'Generate Countries Flags',
+                                    style: GoogleFonts.manrope(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: whiteColor,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Center(
+                                child: Text('No Flag Found'),
                               ),
-                            ),
-                          );
-                        }).toList(),
+                      ],
+                    ),
+                    gap(h: 15),
+                    Text(
+                      'All Countries: ${csvCountries.length.toString()}',
+                      style: GoogleFonts.manrope(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: halfBlack,
                       ),
-              ),
-            ],
-          ),
-        ],
-      ),
+                    ),
+                    gap(w: 30),
+                    Container(
+                      width: Get.width * 0.5,
+                      child: allFlags.isEmpty
+                          ? gap()
+                          : Wrap(
+                              children: allFlags.map((flg) {
+                                return ClipRRect(
+                                  borderRadius: borderRadius(15),
+                                  child: Container(
+                                    width: 50,
+                                    height: 50,
+                                    margin: spacing(h: 3, v: 5),
+                                    child: CachedNetworkImage(
+                                      imageUrl: flg,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
     ));
   }
 }

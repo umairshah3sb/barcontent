@@ -26,10 +26,6 @@ class _Design2ItemState extends State<Design2Item> {
   design2Controller designController = Get.put(design2Controller());
   @override
   Widget build(BuildContext context) {
-    double width = ((MediaQuery.of(context).size.width *
-            (1 / designController.itemsPerScreen)) -
-        8);
-
     return SlideUpReveal(
       isAnimate: designController.isAnimate &&
           designController.currentIndex == widget.index,
@@ -52,7 +48,7 @@ class _Design2ItemState extends State<Design2Item> {
               Stack(
                 children: [
                   Container(
-                    width: width,
+                    width: designController.itemsWidth,
                     height: designController.pic1ContainerHeight,
                     decoration: BoxDecoration(
                       color: designController.enableRandomColor
@@ -87,8 +83,15 @@ class _Design2ItemState extends State<Design2Item> {
                           borderRadius:
                               borderRadius(designController.pic1Radius),
                           child: CachedNetworkImage(
+                            key: Key(getRandomString(20)),
                             imageUrl: widget.data['pic1'],
                             fit: BoxFit.cover,
+                            errorWidget: (c, url, obj) {
+                              return Image.network(
+                                widget.data['pic1'],
+                                fit: BoxFit.cover,
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -123,7 +126,7 @@ class _Design2ItemState extends State<Design2Item> {
                 height: designController.spaceBetween.toDouble(),
               ),
               Container(
-                width: width,
+                width: designController.itemsWidth,
                 height: designController.nameContainerHeight,
                 padding: spacing(h: 10),
                 decoration: BoxDecoration(
@@ -160,7 +163,7 @@ class _Design2ItemState extends State<Design2Item> {
                 height: (designController.itemMarginH * 2),
               ),
               Container(
-                width: width,
+                width: designController.itemsWidth,
                 height: designController.largContainerHeight,
                 decoration: BoxDecoration(
                   color: designController.LargeTextContainer,
@@ -198,7 +201,7 @@ class _Design2ItemState extends State<Design2Item> {
               ),
               Expanded(
                 child: Container(
-                  width: width,
+                  width: designController.itemsWidth,
                   decoration: BoxDecoration(
                     color: designController.pic2ContainerColor,
                   ),

@@ -103,6 +103,7 @@ class Design9Controller extends GetxController {
   double secrollPadding = 10;
   Color backgroundColor = whiteColor;
   LinearGradient? backgroundGradient = null;
+  
   double backgroundImageOpacity = 5;
 
   List<Widget> itemsList = [];

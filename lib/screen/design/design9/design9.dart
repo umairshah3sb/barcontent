@@ -70,6 +70,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           width: controller
                               .dataContainerWidth, // You can change this value
                           decoration: BoxDecoration(
+                            color: designController.backgroundColor,
                             gradient: controller.backgroundGradient,
                           ),
                           child: controller.backgroundImage.text.isNotEmpty
@@ -1269,10 +1270,28 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                               designController.picContainerWidth = 80;
                               designController.UserPicHeght = 98;
                               designController.UserPicWidth = 98;
-                              designController.valueTextStyle
-                                  .copyWith(fontSize: 27);
-                              designController.dataContainerMarginTop = 100;
-                              designController.dataContainerMarginBottom = 70;
+                              designController.titlePositionTop = 38;
+                              designController.titlePositionLeft = 146;
+                              designController.titleContainerWidth = 250;
+                              designController.titleTextStyle
+                                  .copyWith(backgroundColor: Colors.black);
+                              designController.title2PositionTop = 84;
+                              designController.title2PositionLeft = 150;
+                              designController.title2ContainerWidth = 250;
+                              designController.title2FontColor = Colors.black;
+                              designController.valueWidth = 90;
+                              designController.dataContainerMarginH = 50;
+                              designController.valueTextStyle =
+                                  GoogleFonts.lobster(
+                                fontSize: 27,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              );
+                              designController.title2ShadowColor = Colors.white;
+                              designController.valueTextAlign = TextAlign.left;
+                              designController.dataContainerMarginTop = 125;
+                              designController.dataContainerMarginBottom = 36;
+                              designController.backgroundImageOpacity = 2;
                               designController.update();
                               setState(() {});
                             },
@@ -1870,6 +1889,19 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           );
                         },
                         currentColor: designController.title2ShadowColor,
+                      ),
+                      ColorPickerItem(
+                        hintText: 'Background Color',
+                        pickerTap: () {
+                          colorPicker(
+                            currentColor: designController.backgroundColor,
+                            onChange: (color) {
+                              designController.backgroundColor = color;
+                              designController.update();
+                            },
+                          );
+                        },
+                        currentColor: designController.backgroundColor,
                       ),
                       Container(
                         width: Get.width * 0.2,

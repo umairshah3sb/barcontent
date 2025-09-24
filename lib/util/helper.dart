@@ -5,9 +5,11 @@ import 'package:barcontent/util/exporter.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:math' as math;
 
-
-String domainUrl = 'https://contentcreator-9774f.web.app/';
+String domainUrl = true
+    ? 'https://videocreator.novabuildr.com/'
+    : 'https://contentcreator-9774f.web.app/';
 Widget gap({double h = 0, double w = 0}) {
   return SizedBox(
     width: w,
@@ -98,8 +100,6 @@ List<BoxShadow> shadow = [
     spreadRadius: 0,
   )
 ];
-
-
 
 Map<String, dynamic> dumyData = {
   'index': '1',
@@ -455,4 +455,197 @@ final List<Color> colorList = [
   Color(0xFFFFFACD), // Soft Yellow
   Color(0xFF0077B6), // Mediterranean Blue
   Color(0xFFFF7F50), // Coral
+];
+
+// List of 32 color palettes with their corresponding gradients
+// Each gradient uses a 147° angle as specified
+const double gradientAngle =
+    147 * math.pi / 180; // Convert 147 degrees to radians
+
+List<LinearGradient> colorPalettes = [
+  // 1. Orange, green, purple, orange
+  LinearGradient(
+    colors: [
+      Color(0xFFFF6200),
+      Color(0xFF00FF00),
+      Color(0xFF800080),
+      Color(0xFFFF6200)
+    ],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 2. Blue, pink, orange
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFFFFC1CC), Color(0xFFFF6200)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 3. Blue, green, purple
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFF00FF00), Color(0xFF800080)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 4. Blue, orange
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFFFF6200)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 5. Green
+  LinearGradient(
+    colors: [Color(0xFF00FF00), Color(0xFF006400)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 6. Skin, pastel, pink
+  LinearGradient(
+    colors: [Color(0xFFF5CBA7), Color(0xFFFFE4E1), Color(0xFFFFC1CC)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 7. Blue, purple, pink
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFF800080), Color(0xFFFFC1CC)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 8. Green
+  LinearGradient(
+    colors: [Color(0xFF00FF00), Color(0xFF228B22)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 9. Green, orange, red, blue
+  LinearGradient(
+    colors: [
+      Color(0xFF00FF00),
+      Color(0xFFFF6200),
+      Color(0xFFFF0000),
+      Color(0xFF0000FF)
+    ],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 10. Grey
+  LinearGradient(
+    colors: [Color(0xFF808080), Color(0xFFD3D3D3)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 11. Blue, yellow, green, orange
+  LinearGradient(
+    colors: [
+      Color(0xFF0000FF),
+      Color(0xFFFFFF00),
+      Color(0xFF00FF00),
+      Color(0xFFFF6200)
+    ],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 12. Black, blue, pink
+  LinearGradient(
+    colors: [Color(0xFF000000), Color(0xFF0000FF), Color(0xFFFFC1CC)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 13. Green, purple, pink, orange
+  LinearGradient(
+    colors: [
+      Color(0xFF00FF00),
+      Color(0xFF800080),
+      Color(0xFFFFC1CC),
+      Color(0xFFFF6200)
+    ],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 14. Orange, purple, blue
+  LinearGradient(
+    colors: [Color(0xFFFF6200), Color(0xFF800080), Color(0xFF0000FF)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 15. Blue, purple, pink
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFF800080), Color(0xFFFFC1CC)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 16. Orange, yellow, blue
+  LinearGradient(
+    colors: [Color(0xFFFF6200), Color(0xFFFFFF00), Color(0xFF0000FF)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 17. Blue, orange, green
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFFFF6200), Color(0xFF00FF00)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 18. Green, blue
+  LinearGradient(
+    colors: [Color(0xFF00FF00), Color(0xFF0000FF)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 19. Pink, purple, blue
+  LinearGradient(
+    colors: [Color(0xFFFFC1CC), Color(0xFF800080), Color(0xFF0000FF)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 20. Blue
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFF4682B4)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 21. Purple, pink
+  LinearGradient(
+    colors: [Color(0xFF800080), Color(0xFFFFC1CC)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 22. Green, yellow, orange
+  LinearGradient(
+    colors: [Color(0xFF00FF00), Color(0xFFFFFF00), Color(0xFFFF6200)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 23. Orange, yellow, pink
+  LinearGradient(
+    colors: [Color(0xFFFF6200), Color(0xFFFFFF00), Color(0xFFFFC1CC)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 24. Blue, green
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFF00FF00)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 25. Brown, blue
+  LinearGradient(
+    colors: [Color(0xFF8B4513), Color(0xFF0000FF)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 26. Green, maroon, orange
+  LinearGradient(
+    colors: [Color(0xFF00FF00), Color(0xFF800000), Color(0xFFFF6200)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 27. Blue, red, orange
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFFFF0000), Color(0xFFFF6200)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 28. Blue, red, orange
+  LinearGradient(
+    colors: [Color(0xFF0000FF), Color(0xFFFF0000), Color(0xFFFF6200)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 29. Grey
+  LinearGradient(
+    colors: [Color(0xFF808080), Color(0xFFA9A9A9)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 30. Pastel blue, purple, pink
+  LinearGradient(
+    colors: [Color(0xFFADD8E6), Color(0xFFDDA0DD), Color(0xFFFFC1CC)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 31. Pink, orange, green
+  LinearGradient(
+    colors: [Color(0xFFFFC1CC), Color(0xFFFF6200), Color(0xFF00FF00)],
+    transform: GradientRotation(gradientAngle),
+  ),
+  // 32. Green, yellow, red, purple
+  LinearGradient(
+    colors: [
+      Color(0xFF00FF00),
+      Color(0xFFFFFF00),
+      Color(0xFFFF0000),
+      Color(0xFF800080)
+    ],
+    transform: GradientRotation(gradientAngle),
+  ),
 ];

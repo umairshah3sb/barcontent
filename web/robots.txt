@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://contentcreator-9774f.web.app/sitemap.xml
+Sitemap: https://videocreator.novabuildr.com/sitemap.xml
