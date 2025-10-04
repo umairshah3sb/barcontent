@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:barcontent/screen/design/design17/widget/design17_item.dart';
+import 'package:barcontent/screen/design/design17/widget/design17_item1.dart';
+import 'package:barcontent/screen/design/design17/widget/design17_item2.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
@@ -16,19 +17,29 @@ class Design17Controller extends GetxController {
   double aspectRatio = 16 / 9;
 
   int currentIndex = 0;
+  int template = 0;
   List<Widget> animatedItem = [];
   bool isGenerating = false;
   bool enableScroll = false;
   bool isAnimate = false;
   bool hideIndex = false;
   bool reverseData = false;
+  bool randomData = false;
   bool enableRandomColor = true;
+  bool enableTagline = true;
   double itemsWidth = 316;
   int spaceBetween = 4;
   double itemMarginH = 4;
   double itemMarginV = 4;
   double initialItems = 4;
   double itemBorderRadius = 0;
+
+  double diamondWidth = 360;
+  double diamondHeight = 250;
+  double diamondContainerHeight = 250;
+  double diamondRadius = 10;
+  double diamondBorder = 5;
+  Color diamondBorderColor = Colors.transparent;
 
   double smallTextSize = 30;
   double pic1Width = 360;
@@ -51,6 +62,7 @@ class Design17Controller extends GetxController {
   double largTextSize = 45;
   Color picBackgroundColor = Colors.yellow;
   List<BoxShadow>? iconShadow;
+  List<BoxShadow>? picShadow;
 
 //largeText
   String largeFontFamily = 'Russo One';
@@ -111,10 +123,17 @@ class Design17Controller extends GetxController {
     update();
     for (var i = 0; i < initialItems; i++) {
       currentIndex = i;
-      animatedItem.add(Design17Item(
-        index: i,
-        data: csvData[i],
-      ));
+      if (template == 0) {
+        animatedItem.add(Design17Item1(
+          index: i,
+          data: csvData[i],
+        ));
+      } else if (template == 1) {
+        animatedItem.add(Design17Item2(
+          index: i,
+          data: csvData[i],
+        ));
+      }
       await Future.delayed(
         Duration(seconds: 4),
       );

@@ -7,6 +7,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:math' as math;
 
+Color diamondColor = Colors.red;
+Color diamondColorWithShade = Colors.red.shade900;
 String domainUrl = true
     ? 'https://videocreator.novabuildr.com/'
     : 'https://contentcreator-9774f.web.app/';
@@ -15,6 +17,12 @@ Widget gap({double h = 0, double w = 0}) {
     width: w,
     height: h,
   );
+}
+
+Color darken(Color color, [double amount = .1]) {
+  final hsl = HSLColor.fromColor(color);
+  final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+  return hslDark.toColor();
 }
 
 BorderRadius borderRadius(double radius) {
@@ -463,189 +471,412 @@ const double gradientAngle =
     147 * math.pi / 180; // Convert 147 degrees to radians
 
 List<LinearGradient> colorPalettes = [
-  // 1. Orange, green, purple, orange
+  // Warm Flame: #ff9a9e → #fad0c4
+  LinearGradient(
+    colors: [Color(0xFFff9a9e), Color(0xFFfad0c4)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Night Fade: #a18cd1 → #fbc2eb
+  LinearGradient(
+    colors: [Color(0xFFa18cd1), Color(0xFFfbc2eb)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Spring Warmth: #fad0c4 → #ffd1ff
+  LinearGradient(
+    colors: [Color(0xFFfad0c4), Color(0xFFffd1ff)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  ),
+  // Juicy Peach: #ffecd2 → #fcb69f
+  LinearGradient(
+    colors: [Color(0xFFffecd2), Color(0xFFfcb69f)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Young Passion: Many colors
   LinearGradient(
     colors: [
-      Color(0xFFFF6200),
-      Color(0xFF00FF00),
-      Color(0xFF800080),
-      Color(0xFFFF6200)
+      Color(0xFFff8177),
+      Color(0xFFff867a),
+      Color(0xFFff8c7f),
+      Color(0xFFf99185),
+      Color(0xFFcf556c),
+      Color(0xFFb12a5b)
     ],
-    transform: GradientRotation(gradientAngle),
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 2. Blue, pink, orange
+  // Lady Lips: #ff9a9e → #fecfef
   LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFFFFC1CC), Color(0xFFFF6200)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFFff9a9e), Color(0xFFfecfef)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
   ),
-  // 3. Blue, green, purple
+  // Sunny Morning: #f6d365 → #fda085
   LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFF00FF00), Color(0xFF800080)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFFf6d365), Color(0xFFfda085)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 4. Blue, orange
+  // Rainy Ashville: #fbc2eb → #a6c1ee
   LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFFFF6200)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFFfbc2eb), Color(0xFFa6c1ee)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
   ),
-  // 5. Green
+  // Frozen Dreams: #fdcbf1 → #e6dee9
   LinearGradient(
-    colors: [Color(0xFF00FF00), Color(0xFF006400)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFFfdcbf1), Color(0xFFe6dee9)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
   ),
-  // 6. Skin, pastel, pink
+  // Winter Neva: #a1c4fd → #c2e9fb
   LinearGradient(
-    colors: [Color(0xFFF5CBA7), Color(0xFFFFE4E1), Color(0xFFFFC1CC)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFFa1c4fd), Color(0xFFc2e9fb)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
   ),
-  // 7. Blue, purple, pink
+  // Dusty Grass: #d4fc79 → #96e6a1
   LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFF800080), Color(0xFFFFC1CC)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFFd4fc79), Color(0xFF96e6a1)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 8. Green
+  // Tempting Azure: #84fab0 → #8fd3f4
   LinearGradient(
-    colors: [Color(0xFF00FF00), Color(0xFF228B22)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFF84fab0), Color(0xFF8fd3f4)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 9. Green, orange, red, blue
+  // Heavy Rain: #cfd9df → #e2ebf0
+  LinearGradient(
+    colors: [Color(0xFFcfd9df), Color(0xFFe2ebf0)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Amy Crisp: #a6c0fe → #f68084
+  LinearGradient(
+    colors: [Color(0xFFa6c0fe), Color(0xFFf68084)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Mean Fruit: #fccb90 → #d57eeb
+  LinearGradient(
+    colors: [Color(0xFFfccb90), Color(0xFFd57eeb)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  ),
+  // Deep Blue: #e0c3fc → #8ec5fc
+  LinearGradient(
+    colors: [Color(0xFFe0c3fc), Color(0xFF8ec5fc)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Ripe Malinka: #f093fb → #f5576c
+  LinearGradient(
+    colors: [Color(0xFFf093fb), Color(0xFFf5576c)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Cloudy Knoxville: #fdfbfb → #ebedee
+  LinearGradient(
+    colors: [Color(0xFFfdfbfb), Color(0xFFebedee)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Malibu Beach: #4facfe → #00f2fe
+  LinearGradient(
+    colors: [Color(0xFF4facfe), Color(0xFF00f2fe)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  ),
+  // New Life: #43e97b → #38f9d7
+  LinearGradient(
+    colors: [Color(0xFF43e97b), Color(0xFF38f9d7)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // True Sunset: #fa709a → #fee140
+  LinearGradient(
+    colors: [Color(0xFFfa709a), Color(0xFFfee140)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Morpheus Den: #30cfd0 → #330867
+  LinearGradient(
+    colors: [Color(0xFF30cfd0), Color(0xFF330867)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Rare Wind: #a8edea → #fed6e3
+  LinearGradient(
+    colors: [Color(0xFFa8edea), Color(0xFFfed6e3)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  ),
+  // Near Moon: #5ee7df → #b490ca
+  LinearGradient(
+    colors: [Color(0xFF5ee7df), Color(0xFFb490ca)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Wild Apple: #d299c2 → #fef9d7
+  LinearGradient(
+    colors: [Color(0xFFd299c2), Color(0xFFfef9d7)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Saint Petersburg: #f5f7fa → #c3cfe2
+  LinearGradient(
+    colors: [Color(0xFFf5f7fa), Color(0xFFc3cfe2)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Arielle's Smile: Many colors
+  LinearGradient(
+    colors: [Color(0xFF16d9e3), Color(0xFF30c7ec), Color(0xFF46aef7)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Plum Plate: #667eea → #764ba2
+  LinearGradient(
+    colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Everlasting Sky: #fdfcfb → #e2d1c3
+  LinearGradient(
+    colors: [Color(0xFFfdfcfb), Color(0xFFe2d1c3)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Happy Fisher: #89f7fe → #66a6ff
+  LinearGradient(
+    colors: [Color(0xFF89f7fe), Color(0xFF66a6ff)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  ),
+  // Blessing: #fddb92 → #d1fdff
+  LinearGradient(
+    colors: [Color(0xFFfddb92), Color(0xFFd1fdff)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Sharpeye Eagle: #9890e3 → #b1f4cf
+  LinearGradient(
+    colors: [Color(0xFF9890e3), Color(0xFFb1f4cf)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Ladoga Bottom: #ebc0fd → #d9ded8
+  LinearGradient(
+    colors: [Color(0xFFebc0fd), Color(0xFFd9ded8)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Lemon Gate: #96fbc4 → #f9f586
+  LinearGradient(
+    colors: [Color(0xFF96fbc4), Color(0xFFf9f586)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Itmeo Branding: #2af598 → #009efd
+  LinearGradient(
+    colors: [Color(0xFF2af598), Color(0xFF009efd)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Zeus Miracle: #cd9cf2 → #f6f3ff
+  LinearGradient(
+    colors: [Color(0xFFcd9cf2), Color(0xFFf6f3ff)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Old Hat: Many colors
   LinearGradient(
     colors: [
-      Color(0xFF00FF00),
-      Color(0xFFFF6200),
-      Color(0xFFFF0000),
-      Color(0xFF0000FF)
+      Color(0xFFf093fb),
+      Color(0xFFf5576c),
+      Color(0xFFde6262),
+      Color(0xFFffb88c)
     ],
-    transform: GradientRotation(gradientAngle),
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 10. Grey
-  LinearGradient(
-    colors: [Color(0xFF808080), Color(0xFFD3D3D3)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 11. Blue, yellow, green, orange
+  // Star Wine: Many colors
   LinearGradient(
     colors: [
-      Color(0xFF0000FF),
-      Color(0xFFFFFF00),
-      Color(0xFF00FF00),
-      Color(0xFFFF6200)
+      Color(0xFFe0c3fc),
+      Color(0xFF8ec5fc),
+      Color(0xFFa1c4fd),
+      Color(0xFFc2e9fb)
     ],
-    transform: GradientRotation(gradientAngle),
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 12. Black, blue, pink
+  // Deep Blue: #6a11cb → #2575fc
   LinearGradient(
-    colors: [Color(0xFF000000), Color(0xFF0000FF), Color(0xFFFFC1CC)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFF6a11cb), Color(0xFF2575fc)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 13. Green, purple, pink, orange
+  // Coup de Grace: Many colors
   LinearGradient(
     colors: [
-      Color(0xFF00FF00),
-      Color(0xFF800080),
-      Color(0xFFFFC1CC),
-      Color(0xFFFF6200)
+      Color(0xFF43e97b),
+      Color(0xFF38f9d7),
+      Color(0xFF4facfe),
+      Color(0xFF00f2fe)
     ],
-    transform: GradientRotation(gradientAngle),
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 14. Orange, purple, blue
+  // Happy Acid: #37ecba → #72afd3
   LinearGradient(
-    colors: [Color(0xFFFF6200), Color(0xFF800080), Color(0xFF0000FF)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFF37ecba), Color(0xFF72afd3)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
-  // 15. Blue, purple, pink
+  // Awesome Pine: #ebbba7 → #cfc7f8
   LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFF800080), Color(0xFFFFC1CC)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFFebbba7), Color(0xFFcfc7f8)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
   ),
-  // 16. Orange, yellow, blue
+  // New York: #fff1eb → #ace0f9
   LinearGradient(
-    colors: [Color(0xFFFF6200), Color(0xFFFFFF00), Color(0xFF0000FF)],
-    transform: GradientRotation(gradientAngle),
+    colors: [Color(0xFFfff1eb), Color(0xFFace0f9)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
   ),
-  // 17. Blue, orange, green
-  LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFFFF6200), Color(0xFF00FF00)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 18. Green, blue
-  LinearGradient(
-    colors: [Color(0xFF00FF00), Color(0xFF0000FF)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 19. Pink, purple, blue
-  LinearGradient(
-    colors: [Color(0xFFFFC1CC), Color(0xFF800080), Color(0xFF0000FF)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 20. Blue
-  LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFF4682B4)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 21. Purple, pink
-  LinearGradient(
-    colors: [Color(0xFF800080), Color(0xFFFFC1CC)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 22. Green, yellow, orange
-  LinearGradient(
-    colors: [Color(0xFF00FF00), Color(0xFFFFFF00), Color(0xFFFF6200)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 23. Orange, yellow, pink
-  LinearGradient(
-    colors: [Color(0xFFFF6200), Color(0xFFFFFF00), Color(0xFFFFC1CC)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 24. Blue, green
-  LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFF00FF00)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 25. Brown, blue
-  LinearGradient(
-    colors: [Color(0xFF8B4513), Color(0xFF0000FF)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 26. Green, maroon, orange
-  LinearGradient(
-    colors: [Color(0xFF00FF00), Color(0xFF800000), Color(0xFFFF6200)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 27. Blue, red, orange
-  LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFFFF0000), Color(0xFFFF6200)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 28. Blue, red, orange
-  LinearGradient(
-    colors: [Color(0xFF0000FF), Color(0xFFFF0000), Color(0xFFFF6200)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 29. Grey
-  LinearGradient(
-    colors: [Color(0xFF808080), Color(0xFFA9A9A9)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 30. Pastel blue, purple, pink
-  LinearGradient(
-    colors: [Color(0xFFADD8E6), Color(0xFFDDA0DD), Color(0xFFFFC1CC)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 31. Pink, orange, green
-  LinearGradient(
-    colors: [Color(0xFFFFC1CC), Color(0xFFFF6200), Color(0xFF00FF00)],
-    transform: GradientRotation(gradientAngle),
-  ),
-  // 32. Green, yellow, red, purple
+  // Shy Rainbow: Many colors
   LinearGradient(
     colors: [
-      Color(0xFF00FF00),
-      Color(0xFFFFFF00),
-      Color(0xFFFF0000),
-      Color(0xFF800080)
+      Color(0xFFfa709a),
+      Color(0xFFfee140),
+      Color(0xFFf6d365),
+      Color(0xFFfda085)
     ],
-    transform: GradientRotation(gradientAngle),
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Loon Crest: Many colors
+  LinearGradient(
+    colors: [
+      Color(0xFFfbc2eb),
+      Color(0xFFa6c1ee),
+      Color(0xFF84fab0),
+      Color(0xFF8fd3f4)
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Mixed Hopes: #c471f5 → #fa71cd
+  LinearGradient(
+    colors: [Color(0xFFc471f5), Color(0xFFfa71cd)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Fly High: #48c6ef → #6f86d6
+  LinearGradient(
+    colors: [Color(0xFF48c6ef), Color(0xFF6f86d6)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Strong Bliss: Many colors
+  LinearGradient(
+    colors: [
+      Color(0xFF30cfd0),
+      Color(0xFF330867),
+      Color(0xFF5ee7df),
+      Color(0xFFb490ca)
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Fresh Milk: #feada6 → #f5efef
+  LinearGradient(
+    colors: [Color(0xFFfeada6), Color(0xFFf5efef)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Snow Again: #e6e9f0 → #eef1f5
+  LinearGradient(
+    colors: [Color(0xFFe6e9f0), Color(0xFFeef1f5)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // February Ink: #accbee → #e7f0fd
+  LinearGradient(
+    colors: [Color(0xFFaccbee), Color(0xFFe7f0fd)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  ),
+  // Kind Steel: #e9defa → #fbfcdb
+  LinearGradient(
+    colors: [Color(0xFFe9defa), Color(0xFFfbfcdb)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Soft Grass: #c1dfc4 → #deecdd
+  LinearGradient(
+    colors: [Color(0xFFc1dfc4), Color(0xFFdeecdd)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Grown Early: #0ba360 → #3cba92
+  LinearGradient(
+    colors: [Color(0xFF0ba360), Color(0xFF3cba92)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Sharp Blues: #00c6fb → #005bea
+  LinearGradient(
+    colors: [Color(0xFF00c6fb), Color(0xFF005bea)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Shady Water: #74ebd5 → #9face6
+  LinearGradient(
+    colors: [Color(0xFF74ebd5), Color(0xFF9face6)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Dirty Beauty: #6a85b6 → #bac8e0
+  LinearGradient(
+    colors: [Color(0xFF6a85b6), Color(0xFFbac8e0)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  ),
+  // Great Whale: #a3bded → #6991c7
+  LinearGradient(
+    colors: [Color(0xFFa3bded), Color(0xFF6991c7)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Teen Notebook: #9795f0 → #fbc8d4
+  LinearGradient(
+    colors: [Color(0xFF9795f0), Color(0xFFfbc8d4)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  // Polite Rumors: #a7a6cb → #8989ba
+  LinearGradient(
+    colors: [Color(0xFFa7a6cb), Color(0xFF8989ba)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+  // Sweet Period: Many colors
+  LinearGradient(
+    colors: [
+      Color(0xFFf093fb),
+      Color(0xFFf5576c),
+      Color(0xFFde6262),
+      Color(0xFFffb88c)
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   ),
 ];

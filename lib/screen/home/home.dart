@@ -3,7 +3,7 @@ import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/footer.dart';
 import 'package:barcontent/util/helper.dart';
-import 'package:flutter/material.dart';
+import 'package:barcontent/util/meta_data_helper.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,6 +15,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    MetaHelper.setMetaData(
+      title: "Create Comparison Video - CSV to Video - No Water Mark",
+      description:
+          "Create comparison videos from CSV to video without watermark. Generate country comparison, phone specs comparison, bar chart race, and sliding comparison videos in minutes with our free online tool.",
+      keywords:
+          "free comparison video maker, create sliding videos online, csv to video generator, data comparison video creator, free video maker no watermark, automated video generator, top 10 list video creator, ranking video maker, free online video editor, create long and short videos",
+      author: "Umair Shah",
+      ogImage: '${domainUrl}assets/assets/img/Design17.png',
+      ogUrl: '${domainUrl}${AppRoutes.design17VideoGenerator}',
+    );
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -466,6 +476,29 @@ class _HomeState extends State<Home> {
                               borderRadius: borderRadius(15),
                               child: Image.asset(
                                 'assets/img/Design2.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: spacing(h: 5, v: 5),
+                        child: InkWell(
+                          onTap: () {
+                            pushNamedRoute(AppRoutes.design18VideoGenerator);
+                          },
+                          child: Container(
+                            width: 200,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              boxShadow: shadow,
+                              borderRadius: borderRadius(10),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: borderRadius(15),
+                              child: Image.asset(
+                                'assets/img/Design7.png',
                                 fit: BoxFit.cover,
                               ),
                             ),

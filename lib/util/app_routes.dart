@@ -1,5 +1,7 @@
 import 'package:barcontent/screen/countryFlags/coutries_flags_generator.dart';
 import 'package:barcontent/screen/design/design17/design17.dart';
+import 'package:barcontent/screen/design/design18/design18.dart';
+import 'package:barcontent/screen/design/design18/widgets/bar_design.dart';
 
 import 'package:barcontent/screen/home/home.dart';
 import 'package:barcontent/screen/image_test/image_test.dart';
@@ -28,6 +30,7 @@ class AppRoutes {
   static const design15VideoGenerator = 'create-data-comparison-video';
   static const design16VideoGenerator = 'phone-comparison-video-creator';
   static const design17VideoGenerator = 'make-data-comparison-video';
+  static const design18VideoGenerator = 'make-3d-data-comparison-video';
 
   // Route map
   static Map<String, WidgetBuilder> routes = {
@@ -51,5 +54,6 @@ class AppRoutes {
     design15VideoGenerator: (context) => Design15(),
     design16VideoGenerator: (context) => Design16(),
     design17VideoGenerator: (context) => Design17(),
+    design18VideoGenerator: (context) => Design18(),
   };
 }

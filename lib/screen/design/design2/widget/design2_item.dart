@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:barcontent/screen/design/design2/controller/design2_controller.dart';
 import 'package:barcontent/screen/design/design2/widget/reveal_animation.dart';
 import 'package:barcontent/util/helper.dart';
+import 'dart:math' as math;
 
 class Design2Item extends StatefulWidget {
   Map<String, dynamic> data;
@@ -24,6 +25,8 @@ class Design2Item extends StatefulWidget {
 
 class _Design2ItemState extends State<Design2Item> {
   design2Controller designController = Get.put(design2Controller());
+  final math.Random random = math.Random();
+
   @override
   Widget build(BuildContext context) {
     return SlideUpReveal(
@@ -54,18 +57,8 @@ class _Design2ItemState extends State<Design2Item> {
                       color: designController.enableRandomColor
                           ? getRandomColor()
                           : designController.picBackgroundColor,
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          designController.enableRandomColor
-                              ? getRandomColor()
-                              : designController.picBackgroundColor,
-                          designController.enableRandomColor
-                              ? getRandomColor()
-                              : designController.picBackgroundColor,
-                        ],
-                      ),
+                      gradient:
+                          colorPalettes[random.nextInt(colorPalettes.length)],
                     ),
                     child: Center(
                       child: Container(

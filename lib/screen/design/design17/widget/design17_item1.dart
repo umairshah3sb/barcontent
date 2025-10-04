@@ -3,16 +3,17 @@ import 'package:barcontent/screen/design/design17/controller/design17_controller
 import 'package:barcontent/screen/design/design17/widget/reveal17_animation.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'dart:math' as math;
 import 'package:barcontent/util/helper.dart';
 
-class Design17Item extends StatefulWidget {
+class Design17Item1 extends StatefulWidget {
   Map<String, dynamic> data;
   bool isAnimate;
   int index;
-  Design17Item({
+  Design17Item1({
     Key? key,
     required this.data,
     this.isAnimate = false,
@@ -20,10 +21,12 @@ class Design17Item extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<Design17Item> createState() => _Design17ItemState();
+  State<Design17Item1> createState() => _Design17Item1State();
 }
 
-class _Design17ItemState extends State<Design17Item> {
+class _Design17Item1State extends State<Design17Item1> {
+  final math.Random random = math.Random();
+
   Design17Controller designController = Get.put(Design17Controller());
   @override
   Widget build(BuildContext context) {
@@ -52,21 +55,10 @@ class _Design17ItemState extends State<Design17Item> {
                     width: designController.itemsWidth,
                     height: designController.pic1ContainerHeight,
                     decoration: BoxDecoration(
-                      color: designController.enableRandomColor
-                          ? getRandomColor()
-                          : designController.picBackgroundColor,
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          designController.enableRandomColor
-                              ? getRandomColor()
-                              : designController.picBackgroundColor,
-                          designController.enableRandomColor
-                              ? getRandomColor()
-                              : designController.picBackgroundColor,
-                        ],
-                      ),
+                      color: designController.picBackgroundColor,
+                      gradient: designController.enableRandomColor
+                          ? colorPalettes[random.nextInt(colorPalettes.length)]
+                          : null,
                     ),
                     child: Center(
                       child: Container(
@@ -79,6 +71,7 @@ class _Design17ItemState extends State<Design17Item> {
                             width: designController.pic1Border,
                             color: designController.pic1BorderColor,
                           ),
+                          boxShadow: designController.picShadow,
                         ),
                         child: ClipRRect(
                           borderRadius:
@@ -95,7 +88,6 @@ class _Design17ItemState extends State<Design17Item> {
                             },
                           ),
                         ),
-                        
                       ),
                     ),
                   ),
@@ -237,10 +229,17 @@ class _Design17ItemState extends State<Design17Item> {
                           imageUrl: widget.data['icon'],
                           fit: BoxFit.cover,
                           errorWidget: (c, url, obj) {
-                            return Image.network(
-                              widget.data['icon'],
-                              fit: BoxFit.cover,
-                            );
+                            return widget.data['icon']
+                                    .toString()
+                                    .contains('.svg')
+                                ? SvgPicture.network(
+                                    widget.data['icon'],
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    widget.data['icon'],
+                                    fit: BoxFit.cover,
+                                  );
                           },
                         ),
                       ),
