@@ -55,7 +55,7 @@ class _Design17Item1State extends State<Design17Item1> {
                     width: designController.itemsWidth,
                     height: designController.pic1ContainerHeight,
                     decoration: BoxDecoration(
-                      color: designController.picBackgroundColor,
+                      color: getColorForIndex(widget.index),
                       gradient: designController.enableRandomColor
                           ? colorPalettes[random.nextInt(colorPalettes.length)]
                           : null,
@@ -124,18 +124,21 @@ class _Design17Item1State extends State<Design17Item1> {
                 height: designController.nameContainerHeight,
                 padding: spacing(h: 10),
                 decoration: BoxDecoration(
+                  color: designController.nameContainerColor,
                   boxShadow: shadow,
-                  gradient: LinearGradient(
-                    colors: [
-                      designController.nameContainerColor.withAlpha(100),
-                      designController.nameContainerColor.withAlpha(200),
-                      designController.nameContainerColor,
-                      designController.nameContainerColor.withAlpha(200),
-                      designController.nameContainerColor.withAlpha(100),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
+                  gradient: designController.nameGradient
+                      ? LinearGradient(
+                          colors: [
+                            designController.nameContainerColor.withAlpha(100),
+                            designController.nameContainerColor.withAlpha(200),
+                            designController.nameContainerColor,
+                            designController.nameContainerColor.withAlpha(200),
+                            designController.nameContainerColor.withAlpha(100),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        )
+                      : null,
                 ),
                 child: Center(
                   child: AutoSizeText(
@@ -164,18 +167,25 @@ class _Design17Item1State extends State<Design17Item1> {
                 height: designController.taglineContainerHeight,
                 padding: spacing(h: 10),
                 decoration: BoxDecoration(
+                  color: designController.taglineTextContainer,
                   boxShadow: shadow,
-                  gradient: LinearGradient(
-                    colors: [
-                      designController.taglineTextContainer.withAlpha(100),
-                      designController.taglineTextContainer.withAlpha(200),
-                      designController.taglineTextContainer,
-                      designController.taglineTextContainer.withAlpha(200),
-                      designController.taglineTextContainer.withAlpha(100),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
+                  gradient: designController.taglineGradient
+                      ? LinearGradient(
+                          colors: [
+                            designController.taglineTextContainer
+                                .withAlpha(100),
+                            designController.taglineTextContainer
+                                .withAlpha(200),
+                            designController.taglineTextContainer,
+                            designController.taglineTextContainer
+                                .withAlpha(200),
+                            designController.taglineTextContainer
+                                .withAlpha(100),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        )
+                      : null,
                 ),
                 child: Center(
                   child: AutoSizeText(

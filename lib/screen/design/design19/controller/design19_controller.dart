@@ -1,9 +1,7 @@
-
-
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 
-class Design18Controller extends GetxController {
+class Design19Controller extends GetxController {
   List<dynamic> csvData = [];
   Map<String, dynamic> dumyData = {
     'value1': '180',
@@ -85,10 +83,9 @@ class Design18Controller extends GetxController {
     }
   }
 
-  // updateFlow() async {
-  //   await Future.delayed(Duration(seconds: 5));
-  //   isGenerating = true;
-  //   update();
-
-  // }
+  updateFlow() async {
+    await Future.delayed(Duration(seconds: 5));
+    isGenerating = true;
+    update();
+  }
 }

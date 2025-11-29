@@ -118,21 +118,24 @@ class _Design17Item2State extends State<Design17Item2> {
                       padding: spacing(h: 10),
                       decoration: BoxDecoration(
                         boxShadow: shadow,
-                        gradient: LinearGradient(
-                          colors: [
-                            designController.taglineTextContainer
-                                .withAlpha(100),
-                            designController.taglineTextContainer
-                                .withAlpha(200),
-                            designController.taglineTextContainer,
-                            designController.taglineTextContainer
-                                .withAlpha(200),
-                            designController.taglineTextContainer
-                                .withAlpha(100),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
+                        color: designController.taglineTextContainer,
+                        gradient: designController.taglineGradient
+                            ? LinearGradient(
+                                colors: [
+                                  designController.taglineTextContainer
+                                      .withAlpha(100),
+                                  designController.taglineTextContainer
+                                      .withAlpha(200),
+                                  designController.taglineTextContainer,
+                                  designController.taglineTextContainer
+                                      .withAlpha(200),
+                                  designController.taglineTextContainer
+                                      .withAlpha(100),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              )
+                            : null,
                       ),
                       child: Center(
                         child: AutoSizeText(
@@ -167,17 +170,20 @@ class _Design17Item2State extends State<Design17Item2> {
                 padding: spacing(h: 10),
                 decoration: BoxDecoration(
                   boxShadow: shadow,
-                  gradient: LinearGradient(
-                    colors: [
-                      designController.nameContainerColor.withAlpha(100),
-                      designController.nameContainerColor.withAlpha(150),
-                      designController.nameContainerColor.withAlpha(220),
-                      designController.nameContainerColor.withAlpha(150),
-                      designController.nameContainerColor.withAlpha(100),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
+                  color: designController.nameContainerColor,
+                  gradient: designController.nameGradient
+                      ? LinearGradient(
+                          colors: [
+                            designController.nameContainerColor.withAlpha(100),
+                            designController.nameContainerColor.withAlpha(150),
+                            designController.nameContainerColor,
+                            designController.nameContainerColor.withAlpha(150),
+                            designController.nameContainerColor.withAlpha(100),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        )
+                      : null,
                 ),
                 child: Center(
                   child: AutoSizeText(
@@ -206,12 +212,12 @@ class _Design17Item2State extends State<Design17Item2> {
                   width: designController.itemsWidth,
                   height: designController.pic1ContainerHeight,
                   decoration: BoxDecoration(
-                    color: designController.picBackgroundColor,
+                    color: getColorForIndex(widget.index),
                     gradient: designController.enableRandomColor
                         ? colorPalettes[random.nextInt(colorPalettes.length)]
                         : null,
                   ),
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment.center,
                   child: Container(
                     width: designController.pic1Width,
                     height: designController.pic1Height,
@@ -268,40 +274,71 @@ class _HexagonQuestionMarkState extends State<HexagonQuestionMark> {
       size: const Size(400, 400),
       painter: HexagonPainter(),
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              '${widget.data['largeText'].toString()} ',
-              style: GoogleFonts.getFont(
-                designController.largeFontFamily,
-                color: designController.largeFontColor,
-                fontSize: designController.largeStyle.fontSize,
-                fontWeight: designController.largeStyle.fontWeight,
-                wordSpacing: designController.largeStyle.wordSpacing,
-                decoration: designController.largeStyle.decoration,
-                height: designController.largeStyle.height,
-                backgroundColor: designController.largeStyle.backgroundColor,
-                letterSpacing: designController.largeStyle.letterSpacing,
+        child: designController.diamondPic
+            ? Container(
+                width: designController.iconSize,
+                margin: spaceOnly(
+                  bottom: designController.iconSpace,
+                  left: designController.iconSpace,
+                  right: designController.iconSpace,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius(designController.iconRadius),
+                  boxShadow: designController.iconShadow,
+                ),
+                child: CachedNetworkImage(
+                  key: Key(getRandomString(20)),
+                  imageUrl: widget.data['icon'],
+                  fit: BoxFit.cover,
+                  errorWidget: (c, url, obj) {
+                    return widget.data['icon'].toString().contains('.svg')
+                        ? SvgPicture.network(
+                            widget.data['icon'],
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            widget.data['icon'],
+                            fit: BoxFit.cover,
+                          );
+                  },
+                ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '${widget.data['largeText'].toString()} ',
+                    style: GoogleFonts.getFont(
+                      designController.largeFontFamily,
+                      color: designController.largeFontColor,
+                      fontSize: designController.largeStyle.fontSize,
+                      fontWeight: designController.largeStyle.fontWeight,
+                      wordSpacing: designController.largeStyle.wordSpacing,
+                      decoration: designController.largeStyle.decoration,
+                      height: designController.largeStyle.height,
+                      backgroundColor:
+                          designController.largeStyle.backgroundColor,
+                      letterSpacing: designController.largeStyle.letterSpacing,
+                    ),
+                  ),
+                  Text(
+                    '${widget.data['smallText']}',
+                    style: GoogleFonts.getFont(
+                      designController.smallFontFamily,
+                      color: designController.smallFontColor,
+                      fontSize: designController.smallStyle.fontSize,
+                      fontWeight: designController.smallStyle.fontWeight,
+                      wordSpacing: designController.smallStyle.wordSpacing,
+                      decoration: designController.smallStyle.decoration,
+                      height: designController.smallStyle.height,
+                      backgroundColor:
+                          designController.smallStyle.backgroundColor,
+                      letterSpacing: designController.smallStyle.letterSpacing,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Text(
-              '${widget.data['smallText']}',
-              style: GoogleFonts.getFont(
-                designController.smallFontFamily,
-                color: designController.smallFontColor,
-                fontSize: designController.smallStyle.fontSize,
-                fontWeight: designController.smallStyle.fontWeight,
-                wordSpacing: designController.smallStyle.wordSpacing,
-                decoration: designController.smallStyle.decoration,
-                height: designController.smallStyle.height,
-                backgroundColor: designController.smallStyle.backgroundColor,
-                letterSpacing: designController.smallStyle.letterSpacing,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

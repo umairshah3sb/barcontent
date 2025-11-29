@@ -15,7 +15,6 @@ class Design17Controller extends GetxController {
   ];
 
   double aspectRatio = 16 / 9;
-
   int currentIndex = 0;
   int template = 0;
   List<Widget> animatedItem = [];
@@ -26,6 +25,9 @@ class Design17Controller extends GetxController {
   bool reverseData = false;
   bool randomData = false;
   bool enableRandomColor = true;
+  bool taglineGradient = true;
+  bool diamondPic = false;
+  bool nameGradient = true;
   bool enableTagline = true;
   double itemsWidth = 316;
   int spaceBetween = 4;
@@ -88,7 +90,7 @@ class Design17Controller extends GetxController {
 
 //Name
   String nameFontFamily = 'Russo One';
-  double nameContainerHeight = 45;
+  double nameContainerHeight = 65;
   Color nameFontColor = halfBlack;
   TextAlign nameTextAlign = TextAlign.center;
   TextStyle nameStyle = GoogleFonts.manrope(
@@ -98,10 +100,10 @@ class Design17Controller extends GetxController {
   );
 
 //tagline
-  double taglineContainerHeight = 90;
+  double taglineContainerHeight = 65;
   String taglineFontFamily = 'Russo One';
-  Color taglineFontColor = Colors.yellow;
-  Color taglineTextContainer = Colors.black;
+  Color taglineFontColor = Colors.black;
+  Color taglineTextContainer = const Color.fromARGB(60, 212, 212, 212);
   TextAlign tagTextAlign = TextAlign.center;
   TextStyle taglineStyle = GoogleFonts.manrope(
     color: Colors.black,

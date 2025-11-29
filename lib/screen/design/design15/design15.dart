@@ -7,6 +7,7 @@ import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/font_family_selector.dart';
 import 'package:barcontent/util/helper.dart';
 import 'package:barcontent/util/meta_data_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +26,7 @@ class _Design15State extends State<Design15> {
   final Design15Controller designController = Get.put(Design15Controller());
   TextEditingController videoTimer = TextEditingController();
   double containerSize = 360;
+  bool cacheImages = false;
   final ScrollController _scrollController = ScrollController();
 
   void _scrollToBottom() {
@@ -876,6 +878,24 @@ class _Design15State extends State<Design15> {
                         child: Row(
                           children: [
                             Text(
+                              'No Pic',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.noPic,
+                              onChanged: (value) {
+                                designController.noPic = value;
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
                               'Change Style',
                             ),
                             Spacer(),
@@ -1358,33 +1378,62 @@ class _Design15State extends State<Design15> {
                 ],
               ),
             ),
-            InkWell(
-              onTap: () {
-                designController.isGenerating = true;
-                if (videoTimer.text.toString().isNotEmpty) {
-                  designController.animationGap =
-                      int.parse(videoTimer.text.toString().trim());
-                }
-                designController.updateFlow();
-                // _Key.currentState!.closeDrawer();
-                setState(() {});
-              },
-              child: Container(
-                padding: spacing(h: 15, v: 7),
-                decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
-                child: Text(
-                  'Generate',
-                  style: GoogleFonts.manrope(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800,
-                    color: whiteColor,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    designController.isGenerating = true;
+                    if (videoTimer.text.toString().isNotEmpty) {
+                      designController.animationGap =
+                          int.parse(videoTimer.text.toString().trim());
+                    }
+                    designController.updateFlow();
+                    // _Key.currentState!.closeDrawer();
+                    setState(() {});
+                  },
+                  child: Container(
+                    padding: spacing(h: 15, v: 7),
+                    decoration: BoxDecoration(
+                        color: darkBlue,
+                        borderRadius: borderRadius(
+                          10,
+                        )),
+                    child: Text(
+                      'Generate',
+                      style: GoogleFonts.manrope(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: whiteColor,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                gap(w: 70),
+                InkWell(
+                  onTap: () {
+                    cacheImages = !cacheImages;
+                    setState(() {});
+                  },
+                  child: Container(
+                    padding: spacing(h: 15, v: 7),
+                    decoration: BoxDecoration(
+                        color: darkBlue,
+                        borderRadius: borderRadius(
+                          10,
+                        )),
+                    child: Text(
+                      'Cache Images',
+                      style: GoogleFonts.manrope(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: whiteColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             gap(h: 15),
             Row(
@@ -1402,6 +1451,49 @@ class _Design15State extends State<Design15> {
             Text(
                 '*  When you turn on difference pic button then you much have pic1 and pic2 value, pic can be empty in that case'),
             gap(h: 60),
+            cacheImages
+                ? Container(
+                    height: Get.height * 0.5,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: List.generate(
+                          designController.csvData.length,
+                          (index) {
+                            return Row(
+                              children: [
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: CachedNetworkImage(
+                                    imageUrl: designController.differencePic
+                                        ? designController.csvData[index]
+                                            ['pic1']
+                                        : designController.csvData[index]
+                                            ['pic'],
+                                  ),
+                                ),
+                                gap(w: 10),
+                                Text('=========================='),
+                                gap(w: 10),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: CachedNetworkImage(
+                                    imageUrl: designController.differencePic
+                                        ? designController.csvData[index]
+                                            ['pic2']
+                                        : designController.csvData[index]
+                                            ['pic'],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  )
+                : gap(),
           ],
         ),
       ),

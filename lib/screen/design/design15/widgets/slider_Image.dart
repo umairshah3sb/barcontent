@@ -73,6 +73,26 @@ class _SlideInStepsState extends State<SlideInSteps>
                       designcontroller.picHMargin),
                   height: ((3 * designcontroller.picContainerHeight) -
                       designcontroller.picVMargin),
+                  errorWidget: (context, url, error) {
+                    return Image.network(
+                      widget.pic,
+                      fit: BoxFit.cover,
+                      width: ((4 * designcontroller.picContainerWidth) -
+                          designcontroller.picHMargin),
+                      height: ((3 * designcontroller.picContainerHeight) -
+                          designcontroller.picVMargin),
+                    );
+                  },
+                  placeholder: (context, url) {
+                    return Image.network(
+                      widget.pic,
+                      fit: BoxFit.cover,
+                      width: ((4 * designcontroller.picContainerWidth) -
+                          designcontroller.picHMargin),
+                      height: ((3 * designcontroller.picContainerHeight) -
+                          designcontroller.picVMargin),
+                    );
+                  },
                 ),
               ),
             ),

@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.10.1
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -39,15 +39,15 @@ dependencies:
   flutter_svg: ^2.0.17
   google_fonts: ^6.2.1
   get_storage: ^2.1.1
-  fluttertoast: ^8.2.11
-  file_picker: ^8.3.3
+  fluttertoast: ^9.0.0
+  file_picker: ^10.3.7
   auto_scroll_row: ^0.0.2
   csv: ^6.0.0
   auto_scroll_slider: ^1.0.1
   scroll_loop_auto_scroll: ^0.0.5
   cached_network_image: ^3.4.1
   path_provider: ^2.1.5
-  permission_handler: ^11.3.1
+  permission_handler: ^12.0.1
   flutter_colorpicker: ^1.1.0
   flutter_gradient_picker: ^1.0.0
   typewritertext: ^3.0.9

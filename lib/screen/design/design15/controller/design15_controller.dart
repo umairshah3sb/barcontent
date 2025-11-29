@@ -28,6 +28,7 @@ class Design15Controller extends GetxController {
   bool isGenerating = false;
   bool enableScroll = false;
   bool differencePic = false;
+  bool noPic = false;
   bool changeStyle = false;
 
   bool showBackgroundGradient = false;

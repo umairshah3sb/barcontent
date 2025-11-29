@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'package:auto_scroll_row/auto_scroll_row.dart';
-import 'package:barcontent/screen/design/design18/controller/design18_controller.dart';
-import 'package:barcontent/screen/design/design18/widgets/design18_item.dart';
-import 'package:barcontent/screen/design/design7/controller/design7_controller.dart';
-import 'package:barcontent/screen/design/design7/widgets/design7_item.dart';
+import 'package:barcontent/screen/design/design19/controller/design19_controller.dart';
+import 'package:barcontent/screen/design/design19/widgets/design19_bar1.dart';
 import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
@@ -17,16 +14,16 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gradient_picker/flutter_gradient_picker.dart';
 import 'package:text_style_editor/text_style_editor.dart';
 
-class Design18 extends StatefulWidget {
-  const Design18({super.key});
+class Design19 extends StatefulWidget {
+  const Design19({super.key});
 
   @override
-  State<Design18> createState() => _Design18State();
+  State<Design19> createState() => _Design19State();
 }
 
-class _Design18State extends State<Design18> {
+class _Design19State extends State<Design19> {
   final GlobalKey<ScaffoldState> _Key = GlobalKey<ScaffoldState>();
-  final Design18Controller designController = Get.put(Design18Controller());
+  final Design19Controller designController = Get.put(Design19Controller());
   TextEditingController videoTimer = TextEditingController();
   double containerSize = 360;
   @override
@@ -40,13 +37,13 @@ class _Design18State extends State<Design18> {
           "3d data bar video maker, free animated chart generator, blender style bar chart race video, csv to 3d animation video, 3d ranking video creator, animated bar chart comparison video tool, data visualization video maker free, economy growth 3d bar video, population ranking 3d chart generator, free 3d data video tool no watermark",
       author: "Umair Shah",
       ogImage: '${domainUrl}assets/assets/img/Design7.png',
-      ogUrl: '${domainUrl}${AppRoutes.design18VideoGenerator}',
+      ogUrl: '${domainUrl}${AppRoutes.design19VideoGenerator}',
     );
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
       body: SafeArea(
-        child: GetBuilder<Design18Controller>(builder: (controller) {
+        child: GetBuilder<Design19Controller>(builder: (controller) {
           return Stack(
             key: Key(getRandomString(30)),
             children: [
@@ -83,92 +80,7 @@ class _Design18State extends State<Design18> {
                 child: Center(
                   child: AspectRatio(
                     aspectRatio: 16 / 9,
-                    child: controller.csvData.isEmpty
-                        ? gap()
-                        : controller.isGenerating
-                            ? AutoScrollRow(
-                                reverse: false,
-                                enableUserScroll: true,
-                                scrollDuration: Duration(
-                                  seconds: controller.animationGap,
-                                ),
-                                children: List.generate(
-                                    ((controller.csvData.length + 1)), (i) {
-                                  if (i == controller.csvData.length) {
-                                    return Container(
-                                      width: Get.width * 1.5,
-                                    );
-                                  }
-                                  return controller.csvData[(i)]['index']
-                                          .toString()
-                                          .isNotEmpty
-                                      ? Design18Item(
-                                          data: controller.csvData[i],
-                                          value: (controller.maxValue *
-                                                          controller.csvData[i]
-                                                              ['percentage'] /
-                                                          100 -
-                                                      controller
-                                                          .picContainerWidth) <
-                                                  50
-                                              ? 50
-                                              : (controller.maxValue *
-                                                      controller.csvData[i]
-                                                          ['percentage'] /
-                                                      100) -
-                                                  controller.picContainerWidth,
-                                          maxValue: controller.maxValue,
-                                          color: controller.barColor,
-                                          maxBarAreaHeight:
-                                              controller.maxBarAreaHeight,
-                                          depth: controller.barDepth,
-                                          barWidth: controller.barWidth,
-                                          isLastBar: true,
-                                        )
-                                      : gap();
-                                }),
-                              )
-                            : AutoScrollRow(
-                                reverse: false,
-                                enableUserScroll: true,
-                                scrollDuration: Duration(
-                                  seconds: controller.animationGap,
-                                ),
-                                children: List.generate(((10)), (i) {
-                                  int length = (controller.csvData.length - 1);
-                                  return controller.csvData[(length - i)]
-                                              ['index']
-                                          .toString()
-                                          .isNotEmpty
-                                      ? Design18Item(
-                                          data:
-                                              controller.csvData[(length - i)],
-                                          value: (controller.maxValue *
-                                                          controller.csvData[
-                                                                  (length - i)]
-                                                              ['percentage'] /
-                                                          100 -
-                                                      controller
-                                                          .picContainerWidth) <
-                                                  50
-                                              ? 50
-                                              : (controller.maxValue *
-                                                      controller.csvData[
-                                                              (length - i)]
-                                                          ['percentage'] /
-                                                      100) -
-                                                  controller.picContainerWidth,
-                                          maxValue: controller.maxValue,
-                                          color: controller.barColor,
-                                          maxBarAreaHeight:
-                                              controller.maxBarAreaHeight,
-                                          depth: controller.barDepth,
-                                          barWidth: controller.barWidth,
-                                          isLastBar: true,
-                                        )
-                                      : gap();
-                                }),
-                              ),
+                    child: DemoChartRow(),
                   ),
                 ),
               ),

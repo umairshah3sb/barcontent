@@ -173,8 +173,8 @@ class ThreeDBarPainter extends CustomPainter {
 
       canvas.drawLine(startPoint, endPoint, linePaint);
     }
-
-    canvas.restore();
+    // canvas.save();
+    // canvas.restore();
   }
 
   @override
@@ -293,51 +293,105 @@ class _Design18ItemState extends State<Design18Item> {
             // 3. Label/Title on the bar
             // Positioned above the bar's base, centered horizontally.
             Positioned(
-              left:
-                  yDepth, // Start label slightly in from the left side projection
+              // Start label slightly in from the left side projection
               bottom: 0.0 + 5.0, // Above reflection (30.0) + 5px margin
-              child: Container(
-                width: widget.barWidth,
-                height: barHeight,
-                alignment: Alignment.topCenter,
-                // Use a gradient background for the text for better visibility/style
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0.1),
-                      Colors.black.withOpacity(0.0),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
+              child: Center(
+                child: Container(
+                  width: widget.barWidth,
+                  height: barHeight,
+                  alignment: Alignment.topCenter,
+                  // Use a gradient background for the text for better visibility/style
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.black.withOpacity(0.1),
+                        Colors.black.withOpacity(0.0),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ),
                   ),
-                ),
-                child: Padding(
-                    padding: spaceOnly(top: controller.nameTopSpacing),
-                    child: SizedBox(
-                      width: controller.nameContainerWidth,
-                      child: AutoSizeText(
-                        widget.data['name'].toString(),
-                        textAlign: controller.nameTextAlign,
-                        style: GoogleFonts.getFont(
-                          controller.nameFontFamily,
-                          color: controller.nameFontColor,
-                          fontSize: controller.nameStyle.fontSize,
-                          fontWeight: controller.nameStyle.fontWeight,
-                          wordSpacing: controller.nameStyle.wordSpacing,
-                          decoration: controller.nameStyle.decoration,
-                          height: controller.nameStyle.height,
-                          backgroundColor: controller.nameStyle.backgroundColor,
-                          letterSpacing: controller.nameStyle.letterSpacing,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black.withOpacity(0.6),
-                              blurRadius: 3,
-                              offset: const Offset(1, 1),
-                            ),
-                          ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: controller.nameContainerWidth,
+                        margin: spaceOnly(top: controller.nameTopSpacing),
+                        padding: spacing(
+                            h: controller.nameContainerPadding,
+                            v: controller.nameContainerPadding),
+                        decoration: BoxDecoration(
+                          color: controller.nameBGColor,
+                          borderRadius: borderRadius(
+                            controller.nameContainerRadius,
+                          ),
+                        ),
+                        child: AutoSizeText(
+                          widget.data['name'].toString(),
+                          textAlign: controller.nameTextAlign,
+                          style: GoogleFonts.getFont(
+                            controller.nameFontFamily,
+                            color: controller.nameFontColor,
+                            fontSize: controller.nameStyle.fontSize,
+                            fontWeight: controller.nameStyle.fontWeight,
+                            wordSpacing: controller.nameStyle.wordSpacing,
+                            decoration: controller.nameStyle.decoration,
+                            height: controller.nameStyle.height,
+                            backgroundColor:
+                                controller.nameStyle.backgroundColor,
+                            letterSpacing: controller.nameStyle.letterSpacing,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black.withOpacity(0.6),
+                                blurRadius: 3,
+                                offset: const Offset(1, 1),
+                              ),
+                            ],
+                          ),
+                          maxLines: 1,
                         ),
                       ),
-                    )),
+                      Container(
+                        width: controller.valueContainerWidth,
+                        margin: spaceOnly(top: controller.valueTopSpacing),
+                        padding: spacing(
+                            h: controller.valueContainerPadding,
+                            v: controller.valueContainerPadding),
+                        decoration: BoxDecoration(
+                          color: controller.valueBGColor,
+                          borderRadius: borderRadius(
+                            controller.valueContainerRadius,
+                          ),
+                        ),
+                        child: AutoSizeText(
+                          '${widget.data['largeText'].toString()} ${widget.data['smallText'].toString()}',
+                          textAlign: controller.valueTextAlign,
+                          style: GoogleFonts.getFont(
+                            controller.valueFontFamily,
+                            color: controller.valueFontColor,
+                            fontSize: controller.valueStyle.fontSize,
+                            fontWeight: controller.valueStyle.fontWeight,
+                            wordSpacing: controller.valueStyle.wordSpacing,
+                            decoration: controller.valueStyle.decoration,
+                            height: controller.valueStyle.height,
+                            backgroundColor:
+                                controller.valueStyle.backgroundColor,
+                            letterSpacing: controller.valueStyle.letterSpacing,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black.withOpacity(0.6),
+                                blurRadius: 3,
+                                offset: const Offset(1, 1),
+                              ),
+                            ],
+                          ),
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

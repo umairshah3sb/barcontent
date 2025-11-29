@@ -9,9 +9,8 @@ import 'dart:math' as math;
 
 Color diamondColor = Colors.red;
 Color diamondColorWithShade = Colors.red.shade900;
-String domainUrl = true
-    ? 'https://videocreator.novabuildr.com/'
-    : 'https://contentcreator-9774f.web.app/';
+String domainUrl =
+    true ? 'https://novabuildr.com/' : 'https://contentcreator-9774f.web.app/';
 Widget gap({double h = 0, double w = 0}) {
   return SizedBox(
     width: w,
@@ -880,3 +879,20 @@ List<LinearGradient> colorPalettes = [
     end: Alignment.bottomRight,
   ),
 ];
+
+const List<Color> BrightColors = [
+  Color(0xFF44F707), // Green
+  Color(0xFF740081), // DarkPinK
+  Color(0xFFFED60A), // Yellow
+  Color(0xFFFB0007), // Red
+  Color(0xFF3700FF), // Blue
+  Color(0xFFFB13F3), // Pink
+  Color(0xFFF9A704), // DarkPinK
+  Color(0xFF033f63), // DarkPinK
+  Color(0xFF8ec186), // DarkPinK
+  Colors.deepOrange,
+];
+
+Color getColorForIndex(int index) {
+  return BrightColors[index % 10];
+}

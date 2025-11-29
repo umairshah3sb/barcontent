@@ -101,9 +101,11 @@ class _Design17State extends State<Design17> {
                                       ? designController.template == 0
                                           ? Design17Item1(
                                               data: controller.csvData[(i)],
+                                              index: i,
                                             )
                                           : Design17Item2(
                                               data: controller.csvData[(i)],
+                                              index: i,
                                             )
                                       : gap();
                                 }),
@@ -119,9 +121,12 @@ class _Design17State extends State<Design17> {
                                         .isNotEmpty
                                     ? designController.template == 0
                                         ? Design17Item1(
-                                            data: controller.csvData[(i)])
+                                            data: controller.csvData[(i)],
+                                            index: i,
+                                          )
                                         : Design17Item2(
                                             data: controller.csvData[(i)],
+                                            index: i,
                                           )
                                     : gap();
                               }),
@@ -746,9 +751,7 @@ class _Design17State extends State<Design17> {
                                 ),
                               ],
                             ),
-                      designController.template == 1
-                          ? gap()
-                          : Column(
+                       Column(
                               children: [
                                 ShadowGeneratorScreen(
                                   text: 'Icon shadow',
@@ -829,6 +832,60 @@ class _Design17State extends State<Design17> {
                               value: designController.hideIndex,
                               onChanged: (value) {
                                 designController.hideIndex = value;
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Diamond Pic',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.diamondPic,
+                              onChanged: (value) {
+                                designController.diamondPic = value;
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Tagline Gradient',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.taglineGradient,
+                              onChanged: (value) {
+                                designController.taglineGradient = value;
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: Get.width * 0.2,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Name Gradient',
+                            ),
+                            Spacer(),
+                            Switch(
+                              value: designController.nameGradient,
+                              onChanged: (value) {
+                                designController.nameGradient = value;
                                 setState(() {});
                               },
                             )

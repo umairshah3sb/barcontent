@@ -446,33 +446,35 @@ class _Design15ItemState extends State<Design15Item>
                       right: 0,
                       bottom: 0,
                       top: 0,
-                      child: Center(
-                        child: Container(
-                          width: ((controller.picContainerWidth) -
-                              controller.picHMargin),
-                          height: ((controller.picContainerHeight) -
-                              controller.picVMargin),
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                borderRadius(controller.picContainerRadius),
-                            border: Border.all(
-                                color: controller.picBorderColor,
-                                width: controller.picBorderSize),
-                          ),
-                          child: SlideInSteps(
-                            key: Key(getRandomString(20)),
-                            pic: controller.csvData.isNotEmpty
-                                ? widget.isFirst
-                                    ? controller.differencePic
-                                        ? widget.itemData['pic1']
-                                        : widget.itemData['pic']
-                                    : controller.differencePic
-                                        ? widget.itemData['pic2']
-                                        : widget.itemData['pic']
-                                : widget.itemData['pic'].toString(),
-                          ),
-                        ),
-                      ),
+                      child: controller.noPic
+                          ? gap()
+                          : Center(
+                              child: Container(
+                                width: ((controller.picContainerWidth) -
+                                    controller.picHMargin),
+                                height: ((controller.picContainerHeight) -
+                                    controller.picVMargin),
+                                decoration: BoxDecoration(
+                                  borderRadius: borderRadius(
+                                      controller.picContainerRadius),
+                                  border: Border.all(
+                                      color: controller.picBorderColor,
+                                      width: controller.picBorderSize),
+                                ),
+                                child: SlideInSteps(
+                                  key: Key(getRandomString(20)),
+                                  pic: controller.csvData.isNotEmpty
+                                      ? widget.isFirst
+                                          ? controller.differencePic
+                                              ? widget.itemData['pic1']
+                                              : widget.itemData['pic']
+                                          : controller.differencePic
+                                              ? widget.itemData['pic2']
+                                              : widget.itemData['pic']
+                                      : widget.itemData['pic'].toString(),
+                                ),
+                              ),
+                            ),
                     ),
                   ],
                 ),
