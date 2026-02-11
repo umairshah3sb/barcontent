@@ -44,17 +44,7 @@ class _Design3State extends State<Design3> {
 
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "Ultimate Country vs Country Military Comparisons | Short Epic Videos",
-      description:
-          "Explore captivating short comparison videos between countries and their militaries. Dive into stats, strengths, histories, and head-to-head analyses in engaging clips for history buffs and strategy enthusiasts. Discover global power dynamics today!",
-      keywords:
-          "country comparison videos, military comparison videos, global power comparisons, country vs country, military strength clips, short military videos, geopolitical comparisons, military stats videos, country highlights, engaging military content",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design3.png',
-      ogUrl: '${domainUrl}${AppRoutes.design3VideoGenerator}',
-    );
+    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

@@ -26,17 +26,7 @@ class _Design7State extends State<Design7> {
   double containerSize = 360;
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "3D Data Bar Video Maker | Free Animated Chart & Ranking Generator",
-      description:
-          "Create stunning 3D data bar videos online for free. Turn CSV data into animated charts, rankings, and comparison videos with smooth 3D effects—just like Blender. Perfect for visualizing growth, economy, population, sports stats, and more. No watermark, easy export for YouTube and presentations.",
-      keywords:
-          "3d data bar video maker, free animated chart generator, blender style bar chart race video, csv to 3d animation video, 3d ranking video creator, animated bar chart comparison video tool, data visualization video maker free, economy growth 3d bar video, population ranking 3d chart generator, free 3d data video tool no watermark",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design7.png',
-      ogUrl: '${domainUrl}${AppRoutes.design7VideoGenerator}',
-    );
+    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

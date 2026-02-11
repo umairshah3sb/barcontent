@@ -45,17 +45,7 @@ class _Design10State extends State<Design10> {
 
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "Free Country Comparison Video Generator | Military, Economy & Population Rankings",
-      description:
-          "Generate country comparison videos online for free with smooth sliding effects. Compare nations by economy, military strength, population, GDP, sports, or technology. Create Top 10 global ranking videos or detailed country vs country comparisons with no watermark—perfect for YouTube, education, and research.",
-      keywords:
-          "free country comparison video maker, economy ranking video generator, military strength comparison video, country vs country video creator, gdp comparison video maker, strongest countries video tool, population ranking video generator, global comparison video creator, free video maker no watermark, world power comparison video",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design10.png',
-      ogUrl: '${domainUrl}${AppRoutes.design10VideoGenerator}',
-    );
+   
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

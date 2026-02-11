@@ -44,17 +44,7 @@ class _Design5State extends State<Design5> {
   @override
   Widget build(BuildContext context) {
     Offset distance = const Offset(10, 10);
-    MetaHelper.setMetaData(
-      title:
-          "Power Comparison Video Maker | Free Country, Economy & Military Ranking Generator",
-      description:
-          "Create power comparison videos online for free using your CSV data. Compare countries by military strength, economic power, population, and global influence with smooth sliding effects. Generate Top 10 rankings or country vs country power videos—no watermark, perfect for YouTube and education.",
-      keywords:
-          "power comparison video maker, free global power ranking video generator, country vs country power video, military and economy power video creator, strongest countries video tool, top 10 power ranking video maker, free video maker no watermark, economic power comparison video, global influence ranking video generator, world power comparison video",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design5.png',
-      ogUrl: '${domainUrl}${AppRoutes.design5VideoGenerator}',
-    );
+    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

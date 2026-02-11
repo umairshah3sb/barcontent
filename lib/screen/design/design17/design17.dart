@@ -39,17 +39,7 @@ class _Design17State extends State<Design17> {
 
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "Free Top 10 Video Maker | Create YouTube Comparison & Ranking Videos Online",
-      description:
-          "Easily create Top 10 and comparison videos for YouTube using your CSV data. Make sliding ranking videos with smooth transitions, free and without watermark. Perfect for military power, economy, sports, tech, and trending list videos.",
-      keywords:
-          "top 10 video maker for youtube, free ranking video creator, comparison video generator online, youtube list video maker, csv to ranking video, top 10 countries video maker, military power comparison video tool, economy ranking video creator, free youtube video maker no watermark, automated comparison video generator",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design17.png',
-      ogUrl: '${domainUrl}${AppRoutes.design17VideoGenerator}',
-    );
+    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

@@ -31,17 +31,7 @@ class _Design1State extends State<Design1> {
 
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "CSV to Video Generator | Free Sliding Comparison Video Maker Online",
-      description:
-          "Turn your CSV data into stunning comparison videos online for free. Create ranking videos, list videos, and sliding content videos with smooth transitions. No watermark, no limits—perfect for YouTube, social media, and presentations.",
-      keywords:
-          "csv to video maker, free video generator online, comparison video creator, sliding ranking video maker, top 10 video generator, csv data to video tool, free video editing tool no watermark, create list videos online, automated video maker free, youtube ranking video creator",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design1.png',
-      ogUrl: '${domainUrl}${AppRoutes.design1VideoGenerator}',
-    );
+    
     return Scaffold(
       drawer: drawerWidget(),
       key: scaffoldKey,

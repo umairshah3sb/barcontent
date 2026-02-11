@@ -47,17 +47,7 @@ class _Design4State extends State<Design4> {
 
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "Exciting Athlete & Cricketer Comparison Videos | Short & Engaging Clips",
-      description:
-          "Discover thrilling short comparison videos showcasing athletes, cricketers, and notable personalities. Watch head-to-head battles, stats, and highlights in engaging clips designed for sports fans. Explore now for the ultimate comparison experience!",
-      keywords:
-          "athlete comparison videos, cricketer comparison videos, sports comparison clips, short sports videos, athlete vs athlete, cricketer vs cricketer, sports highlights, comparison videos online, sports stats videos, engaging sports content",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design4.png',
-      ogUrl: '${domainUrl}${AppRoutes.design4VideoGenerator}',
-    );
+    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

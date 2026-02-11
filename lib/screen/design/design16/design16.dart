@@ -45,17 +45,7 @@ class _Design16State extends State<Design16> {
 
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "Mobile Comparison Video Maker | Free Phone Specs & Price Video Generator",
-      description:
-          "Create professional mobile comparison videos online for free. Compare smartphones by specs, price, features, and design with sliding video effects. No watermark, easy CSV upload, and perfect for YouTube, reviews, and tech channels.",
-      keywords:
-          "mobile comparison video maker, phone comparison video creator, smartphone vs video generator, free mobile video maker online, iphone vs samsung video creator, specs comparison video tool, budget vs flagship phone video maker, tech review video generator, phone comparison video free, create mobile comparison videos for youtube",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design16.png',
-      ogUrl: '${domainUrl}${AppRoutes.design16VideoGenerator}',
-    );
+   
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

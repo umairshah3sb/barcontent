@@ -36,17 +36,7 @@ class _Design2State extends State<Design2> {
 
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "Free Comparison Video Maker | Create Sliding Content Videos Online from CSV",
-      description:
-          "Create professional sliding comparison videos online for free using your CSV data. Generate long or short videos with smooth left-to-right transitions, no watermark, and easy export. Perfect for data, rankings, lists, and comparisons",
-      keywords:
-          "free comparison video maker, create sliding videos online, csv to video generator, data comparison video creator, free video maker no watermark, automated video generator, top 10 list video creator, ranking video maker, free online video editor, create long and short videos",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design2.png',
-      ogUrl: '${domainUrl}${AppRoutes.design2VideoGenerator}',
-    );
+    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,

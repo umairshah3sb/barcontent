@@ -46,17 +46,7 @@ class _Design15State extends State<Design15> {
 
   @override
   Widget build(BuildContext context) {
-    MetaHelper.setMetaData(
-      title:
-          "Dynamic Long Animated Country & Military Comparison Videos | In-Depth Insights",
-      description:
-          "Watch engaging long-form animated comparison videos exploring countries and their militaries. Dive deep into detailed stats, historical contexts, and strategic showdowns with stunning animations. Perfect for fans of geopolitics and military history!",
-      keywords:
-          "long animated comparison videos, country comparison animations, military comparison animations, animated geopolitical videos, in-depth country comparisons, military strength animations, long-form military videos, animated country stats, military history animations, engaging animated content",
-      author: "Umair Shah",
-      ogImage: '${domainUrl}assets/assets/img/Design15.png',
-      ogUrl: '${domainUrl}${AppRoutes.design15VideoGenerator}',
-    );
+   
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
