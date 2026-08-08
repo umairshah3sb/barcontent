@@ -25,11 +25,11 @@ class Design15Controller extends GetxController {
   double VideoContainerSpacingH = 10;
   double VideoContainerHeight = 600;
   double aspectRatio = 16 / 9;
+  int templateIndex = 0;
   bool isGenerating = false;
   bool enableScroll = false;
   bool differencePic = false;
   bool noPic = false;
-  bool changeStyle = false;
 
   bool showBackgroundGradient = false;
   double logoSize = 250;
@@ -43,6 +43,7 @@ class Design15Controller extends GetxController {
   double valueWidth = 200;
   String valueFontFamily = 'Russo One';
   double valueContainerSize = 70;
+  double valueContainerPosition = 140;
   Color valueFontColor = halfBlack;
   Color valueContainerLeft = Colors.transparent;
   Color valueContainerRight = Colors.transparent;
@@ -50,7 +51,10 @@ class Design15Controller extends GetxController {
 
   double picContainerWidth = 400;
   double picContainerHeight = 300;
+  double flagContainerWidth = 400;
+  double flagContainerHeight = 300;
   double picBorderSize = 5;
+  double picVgap = 25;
   Color picBorderColor = Colors.transparent;
 
   double picVMargin = 40;
@@ -98,6 +102,10 @@ class Design15Controller extends GetxController {
       duration: Duration(seconds: sec),
       curve: Curves.easeInOut,
     );
+  }
+
+  updateUI() {
+    update();
   }
 
   updateFlow() {

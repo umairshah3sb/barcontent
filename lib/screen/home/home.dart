@@ -2,7 +2,6 @@ import 'package:barcontent/util/app_routes.dart';
 import 'package:barcontent/util/colors.dart';
 import 'package:barcontent/util/exporter.dart';
 import 'package:barcontent/util/helper.dart';
-import 'package:barcontent/util/meta_data_helper.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

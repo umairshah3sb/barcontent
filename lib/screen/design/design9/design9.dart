@@ -27,418 +27,457 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
   final Design9Controller designController = Get.put(Design9Controller());
   TextEditingController videoTimer = TextEditingController();
   TypeWriterController? tcontroller;
+  final Map<String, String> icons = const {
+    'aircraft': 'https://i.postimg.cc/ncDY9vJF/image.png',
+    'attackHeli': 'https://i.postimg.cc/ZY1sQYb2/image.png',
+    'missiles': 'https://i.postimg.cc/s2vpySKk/image.png',
+    'uav': 'https://i.postimg.cc/C5VDj2Yw/image.png',
+    'tanks': 'https://i.postimg.cc/yYj9ZnbQ/image.png',
+    'submarines': 'https://i.postimg.cc/L801y5Rk/image.png',
+    'nuclear': 'https://i.postimg.cc/QdVBWD5s/image.png',
+    'personnel': 'https://i.postimg.cc/1t14TNdr/image.png',
+    'budget': 'https://i.postimg.cc/4yBdm2xW/image.png',
+  };
+
+  final Map<String, String> statLabels = const {
+    'aircraft': 'AIRCRAFT',
+    'attackHeli': 'ATTACK HELICOPTERS',
+    'missiles': 'MISSILES',
+    'uav': 'UAVs',
+    'tanks': 'TANKS',
+    'submarines': 'SUBMARINES',
+    'nuclear': 'NUCLEAR WEAPONS',
+    'personnel': 'MILITARY PERSONNEL',
+    'budget': 'DEFENSE BUDGET',
+  };
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<Design9Controller>(builder: (controller) {
-        return Stack(
-          children: [
-            Positioned(
-              right: 50,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: controller.containerBorder,
+      body: GetBuilder<Design9Controller>(
+        builder: (controller) {
+          return Stack(
+            children: [
+              Positioned(
+                right: 50,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: controller.containerBorder,
+                      ),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: controller.aspectRatio,
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: Get.height,
+                            width: controller
+                                .dataContainerWidth, // You can change this value
+                            decoration: BoxDecoration(
+                              color: designController.backgroundColor,
+                              gradient: controller.backgroundGradient,
+                            ),
+                            child: controller.backgroundImage.text.isNotEmpty
+                                ? Opacity(
+                                    opacity:
+                                        (controller.backgroundImageOpacity /
+                                        10),
+                                    child: Image.network(
+                                      controller.backgroundImage.text,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : gap(),
+                          ),
+                          Positioned(
+                            child: Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: controller.backgroundGradient,
+                                ),
+                                height: Get.height,
+                                width: controller.dataContainerWidth,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+                ),
+              ),
+              Positioned(
+                right: 50,
+                top: 0,
+                bottom: 0,
+                child: Center(
                   child: AspectRatio(
                     aspectRatio: controller.aspectRatio,
                     child: Stack(
                       children: [
                         Container(
-                          height: Get.height,
                           width: controller
                               .dataContainerWidth, // You can change this value
-                          decoration: BoxDecoration(
-                            color: designController.backgroundColor,
-                            gradient: controller.backgroundGradient,
+                          height: Get.height,
+
+                          margin: spaceOnly(
+                            top: controller.dataContainerMarginTop,
+                            bottom: controller.dataContainerMarginBottom,
+                            left: controller.dataContainerMarginH,
+                            right: controller.dataContainerMarginH,
                           ),
-                          child: controller.backgroundImage.text.isNotEmpty
-                              ? Opacity(
-                                  opacity:
-                                      (controller.backgroundImageOpacity / 10),
-                                  child: Image.network(
-                                    controller.backgroundImage.text,
-                                    fit: BoxFit.cover,
+                          child: Center(
+                            child: controller.template == 0
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          Container(
+                                            height:
+                                                controller.logoContainerHeight,
+                                            width:
+                                                controller.dataContainerWidth,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                FlagSection(
+                                                  designController.logo1.text,
+                                                  designController.name1.text,
+                                                  isFirst: true,
+                                                ),
+                                                FlagSection(
+                                                  designController.logo2.text,
+                                                  designController.name2.text,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          padding: spaceOnly(
+                                            bottom: controller.secrollPadding,
+                                          ),
+                                          controller:
+                                              controller.scrollController,
+                                          child: Column(
+                                            children: controller.itemsList,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : controller.template == 1
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: controller.logoContainerHeight,
+                                        width: controller.dataContainerWidth,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            gap(
+                                              w: controller.picContainerWidth,
+                                            ),
+                                            FlagSection(
+                                              designController.logo1.text,
+                                              designController.name1.text,
+                                              isFirst: true,
+                                            ),
+                                            FlagSection(
+                                              designController.logo2.text,
+                                              designController.name2.text,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          padding: spaceOnly(
+                                            bottom: controller.secrollPadding,
+                                          ),
+                                          controller:
+                                              controller.scrollController,
+                                          child: Column(
+                                            children: controller.itemsList,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            gap(
+                                              w: controller.picContainerWidth,
+                                            ),
+                                            Flag(designController.name1.text),
+                                            Flag(designController.name2.text),
+                                          ],
+                                        ),
+                                      ),
+                                      gap(
+                                        h: designController.flagBottomSpacing,
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          padding: spaceOnly(
+                                            bottom: controller.secrollPadding,
+                                          ),
+                                          controller:
+                                              controller.scrollController,
+                                          child: Column(
+                                            children: controller.itemsList,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: controller.UserPicHeght,
+                                        width: controller.dataContainerWidth,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            gap(
+                                              w: controller.picContainerWidth,
+                                            ),
+                                            designController.logo1.text
+                                                    .toString()
+                                                    .isEmpty
+                                                ? gap()
+                                                : SizedBox(
+                                                    width: designController
+                                                        .UserPicWidth,
+                                                    height: designController
+                                                        .UserPicHeght,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          borderRadius(
+                                                            designController
+                                                                .logoRadius,
+                                                          ),
+                                                      child: CachedNetworkImage(
+                                                        imageUrl:
+                                                            designController
+                                                                .logo1
+                                                                .text,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                            designController.logo2.text
+                                                    .toString()
+                                                    .isEmpty
+                                                ? gap()
+                                                : SizedBox(
+                                                    width: designController
+                                                        .UserPicWidth,
+                                                    height: designController
+                                                        .UserPicHeght,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          borderRadius(
+                                                            designController
+                                                                .logoRadius,
+                                                          ),
+                                                      child: CachedNetworkImage(
+                                                        imageUrl:
+                                                            designController
+                                                                .logo2
+                                                                .text,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                        Positioned(
+                          left: designController.titlePositionLeft,
+                          top: designController.titlePositionTop,
+                          child: Center(
+                            child: Container(
+                              width: controller.titleContainerWidth,
+                              alignment: Alignment.centerLeft,
+                              child: designController.typeTitle
+                                  ? TextTypeWriter(
+                                      key: Key(getRandomString(20)),
+                                      text: controller.title.text,
+                                      style: GoogleFonts.getFont(
+                                        controller.titleFontFamily,
+                                        color: controller.titleFontColor,
+                                        fontSize:
+                                            controller.titleTextStyle.fontSize,
+                                        fontWeight: controller
+                                            .titleTextStyle
+                                            .fontWeight,
+                                        wordSpacing: controller
+                                            .titleTextStyle
+                                            .wordSpacing,
+                                        decoration: controller
+                                            .titleTextStyle
+                                            .decoration,
+                                        letterSpacing: controller
+                                            .titleTextStyle
+                                            .letterSpacing,
+                                        height:
+                                            controller.titleTextStyle.height,
+                                        backgroundColor: controller
+                                            .titleTextStyle
+                                            .backgroundColor,
+                                        shadows: [
+                                          Shadow(
+                                            color: controller.titleShadowColor,
+                                            offset: Offset.zero,
+                                            blurRadius: 10,
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: controller.titleTextAlign,
+                                      typingSpeed: controller.typingSpeed,
+                                    )
+                                  : Text(
+                                      controller.title.text,
+                                      style: GoogleFonts.getFont(
+                                        controller.titleFontFamily,
+                                        color: controller.titleFontColor,
+                                        fontSize:
+                                            controller.titleTextStyle.fontSize,
+                                        fontWeight: controller
+                                            .titleTextStyle
+                                            .fontWeight,
+                                        wordSpacing: controller
+                                            .titleTextStyle
+                                            .wordSpacing,
+                                        decoration: controller
+                                            .titleTextStyle
+                                            .decoration,
+                                        letterSpacing: controller
+                                            .titleTextStyle
+                                            .letterSpacing,
+                                        height:
+                                            controller.titleTextStyle.height,
+                                        backgroundColor: controller
+                                            .titleTextStyle
+                                            .backgroundColor,
+                                        shadows: [
+                                          Shadow(
+                                            color: controller.titleShadowColor,
+                                            offset: Offset.zero,
+                                            blurRadius: 10,
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: controller.titleTextAlign,
+                                    ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: designController.title2PositionLeft,
+                          top: designController.title2PositionTop,
+                          child: designController.showTitle2
+                              ? Center(
+                                  child: Container(
+                                    width: controller.title2ContainerWidth,
+                                    alignment: Alignment.centerLeft,
+                                    child: TextTypeWriter(
+                                      key: Key(getRandomString(20)),
+                                      text: controller.title2.text,
+                                      style: GoogleFonts.getFont(
+                                        controller.title2FontFamily,
+                                        color: controller.title2FontColor,
+                                        fontSize:
+                                            controller.title2TextStyle.fontSize,
+                                        fontWeight: controller
+                                            .title2TextStyle
+                                            .fontWeight,
+                                        wordSpacing: controller
+                                            .title2TextStyle
+                                            .wordSpacing,
+                                        decoration: controller
+                                            .title2TextStyle
+                                            .decoration,
+                                        letterSpacing: controller
+                                            .title2TextStyle
+                                            .letterSpacing,
+                                        height:
+                                            controller.title2TextStyle.height,
+                                        backgroundColor: controller
+                                            .title2TextStyle
+                                            .backgroundColor,
+                                        shadows: [
+                                          Shadow(
+                                            color: controller.title2ShadowColor,
+                                            offset: Offset.zero,
+                                            blurRadius: 10,
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: controller.title2TextAlign,
+                                      typingSpeed: controller.typingSpeed,
+                                    ),
                                   ),
                                 )
                               : gap(),
-                        ),
-                        Positioned(
-                          child: Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: controller.backgroundGradient,
-                              ),
-                              height: Get.height,
-                              width: controller.dataContainerWidth,
-                            ),
-                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              right: 50,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: controller.aspectRatio,
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: controller
-                            .dataContainerWidth, // You can change this value
-                        height: Get.height,
-
-                        margin: spaceOnly(
-                          top: controller.dataContainerMarginTop,
-                          bottom: controller.dataContainerMarginBottom,
-                          left: controller.dataContainerMarginH,
-                          right: controller.dataContainerMarginH,
-                        ),
-                        child: Center(
-                          child: controller.template == 0
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        Container(
-                                          height:
-                                              controller.logoContainerHeight,
-                                          width: controller.dataContainerWidth,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              FlagSection(
-                                                designController.logo1.text,
-                                                designController.name1.text,
-                                                isFirst: true,
-                                              ),
-                                              FlagSection(
-                                                designController.logo2.text,
-                                                designController.name2.text,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Expanded(
-                                      child: SingleChildScrollView(
-                                        padding: spaceOnly(
-                                            bottom: controller.secrollPadding),
-                                        controller: controller.scrollController,
-                                        child: Column(
-                                          children: controller.itemsList,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : controller.template == 1
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height:
-                                              controller.logoContainerHeight,
-                                          width: controller.dataContainerWidth,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              gap(
-                                                w: controller.picContainerWidth,
-                                              ),
-                                              FlagSection(
-                                                designController.logo1.text,
-                                                designController.name1.text,
-                                                isFirst: true,
-                                              ),
-                                              FlagSection(
-                                                designController.logo2.text,
-                                                designController.name2.text,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: SingleChildScrollView(
-                                            padding: spaceOnly(
-                                                bottom:
-                                                    controller.secrollPadding),
-                                            controller:
-                                                controller.scrollController,
-                                            child: Column(
-                                              children: controller.itemsList,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              gap(
-                                                w: controller.picContainerWidth,
-                                              ),
-                                              Flag(
-                                                designController.name1.text,
-                                              ),
-                                              Flag(
-                                                designController.name2.text,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        gap(
-                                            h: designController
-                                                .flagBottomSpacing),
-                                        Expanded(
-                                          child: SingleChildScrollView(
-                                            padding: spaceOnly(
-                                                bottom:
-                                                    controller.secrollPadding),
-                                            controller:
-                                                controller.scrollController,
-                                            child: Column(
-                                              children: controller.itemsList,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          height: controller.UserPicHeght,
-                                          width: controller.dataContainerWidth,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              gap(
-                                                w: controller.picContainerWidth,
-                                              ),
-                                              designController.logo1.text
-                                                      .toString()
-                                                      .isEmpty
-                                                  ? gap()
-                                                  : SizedBox(
-                                                      width: designController
-                                                          .UserPicWidth,
-                                                      height: designController
-                                                          .UserPicHeght,
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            borderRadius(
-                                                                designController
-                                                                    .logoRadius),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          imageUrl:
-                                                              designController
-                                                                  .logo1.text,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    ),
-                                              designController.logo2.text
-                                                      .toString()
-                                                      .isEmpty
-                                                  ? gap()
-                                                  : SizedBox(
-                                                      width: designController
-                                                          .UserPicWidth,
-                                                      height: designController
-                                                          .UserPicHeght,
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            borderRadius(
-                                                                designController
-                                                                    .logoRadius),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          imageUrl:
-                                                              designController
-                                                                  .logo2.text,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                        ),
-                      ),
-                      Positioned(
-                        left: designController.titlePositionLeft,
-                        top: designController.titlePositionTop,
-                        child: Center(
-                          child: Container(
-                            width: controller.titleContainerWidth,
-                            alignment: Alignment.centerLeft,
-                            child: designController.typeTitle
-                                ? TextTypeWriter(
-                                    key: Key(getRandomString(20)),
-                                    text: controller.title.text,
-                                    style: GoogleFonts.getFont(
-                                      controller.titleFontFamily,
-                                      color: controller.titleFontColor,
-                                      fontSize:
-                                          controller.titleTextStyle.fontSize,
-                                      fontWeight:
-                                          controller.titleTextStyle.fontWeight,
-                                      wordSpacing:
-                                          controller.titleTextStyle.wordSpacing,
-                                      decoration:
-                                          controller.titleTextStyle.decoration,
-                                      letterSpacing: controller
-                                          .titleTextStyle.letterSpacing,
-                                      height: controller.titleTextStyle.height,
-                                      backgroundColor: controller
-                                          .titleTextStyle.backgroundColor,
-                                      shadows: [
-                                        Shadow(
-                                          color: controller.titleShadowColor,
-                                          offset: Offset.zero,
-                                          blurRadius: 10,
-                                        )
-                                      ],
-                                    ),
-                                    textAlign: controller.titleTextAlign,
-                                    typingSpeed: controller.typingSpeed,
-                                  )
-                                : Text(
-                                    controller.title.text,
-                                    style: GoogleFonts.getFont(
-                                      controller.titleFontFamily,
-                                      color: controller.titleFontColor,
-                                      fontSize:
-                                          controller.titleTextStyle.fontSize,
-                                      fontWeight:
-                                          controller.titleTextStyle.fontWeight,
-                                      wordSpacing:
-                                          controller.titleTextStyle.wordSpacing,
-                                      decoration:
-                                          controller.titleTextStyle.decoration,
-                                      letterSpacing: controller
-                                          .titleTextStyle.letterSpacing,
-                                      height: controller.titleTextStyle.height,
-                                      backgroundColor: controller
-                                          .titleTextStyle.backgroundColor,
-                                      shadows: [
-                                        Shadow(
-                                          color: controller.titleShadowColor,
-                                          offset: Offset.zero,
-                                          blurRadius: 10,
-                                        )
-                                      ],
-                                    ),
-                                    textAlign: controller.titleTextAlign,
-                                  ),
+              controller.isGenerating
+                  ? gap()
+                  : Positioned(
+                      top: 15,
+                      left: 15,
+                      child: InkWell(
+                        onTap: () {
+                          _Key.currentState!.openDrawer();
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: spacing(h: 7, v: 7),
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: borderRadius(50),
                           ),
-                        ),
-                      ),
-                      Positioned(
-                        left: designController.title2PositionLeft,
-                        top: designController.title2PositionTop,
-                        child: designController.showTitle2
-                            ? Center(
-                                child: Container(
-                                  width: controller.title2ContainerWidth,
-                                  alignment: Alignment.centerLeft,
-                                  child: TextTypeWriter(
-                                    key: Key(getRandomString(20)),
-                                    text: controller.title2.text,
-                                    style: GoogleFonts.getFont(
-                                      controller.title2FontFamily,
-                                      color: controller.title2FontColor,
-                                      fontSize:
-                                          controller.title2TextStyle.fontSize,
-                                      fontWeight:
-                                          controller.title2TextStyle.fontWeight,
-                                      wordSpacing: controller
-                                          .title2TextStyle.wordSpacing,
-                                      decoration:
-                                          controller.title2TextStyle.decoration,
-                                      letterSpacing: controller
-                                          .title2TextStyle.letterSpacing,
-                                      height: controller.title2TextStyle.height,
-                                      backgroundColor: controller
-                                          .title2TextStyle.backgroundColor,
-                                      shadows: [
-                                        Shadow(
-                                          color: controller.title2ShadowColor,
-                                          offset: Offset.zero,
-                                          blurRadius: 10,
-                                        )
-                                      ],
-                                    ),
-                                    textAlign: controller.title2TextAlign,
-                                    typingSpeed: controller.typingSpeed,
-                                  ),
-                                ),
-                              )
-                            : gap(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            controller.isGenerating
-                ? gap()
-                : Positioned(
-                    top: 15,
-                    left: 15,
-                    child: InkWell(
-                      onTap: () {
-                        _Key.currentState!.openDrawer();
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: spacing(h: 7, v: 7),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: borderRadius(50),
-                        ),
-                        child: Icon(
-                          Icons.menu,
-                          color: halfBlack,
-                          size: 25,
+                          child: Icon(Icons.menu, color: halfBlack, size: 25),
                         ),
                       ),
                     ),
-                  ),
-          ],
-        );
-      }),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -490,7 +529,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                     ),
                   ),
                 ),
-              )
+              ),
       ],
     );
   }
@@ -562,9 +601,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
                   color: darkBlue,
-                  borderRadius: borderRadius(
-                    10,
-                  ),
+                  borderRadius: borderRadius(10),
                 ),
                 child: Text(
                   'Choose file',
@@ -577,6 +614,133 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
               ),
             ),
             gap(h: 15),
+            GetBuilder<Design9Controller>(
+              builder: (controller) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Or load from JSON (countries):',
+                      style: GoogleFonts.manrope(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    gap(h: 8),
+                    InkWell(
+                      onTap: () async {
+                        await designController.fetchCountriesData();
+                      },
+                      child: Container(
+                        padding: spacing(h: 15, v: 7),
+                        decoration: BoxDecoration(
+                          color: darkBlue,
+                          borderRadius: borderRadius(10),
+                        ),
+                        child: Text(
+                          controller.isLoadingCountryData
+                              ? 'Loading...'
+                              : 'Load Countries Data',
+                          style: GoogleFonts.manrope(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: whiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (controller.countryDataError != null)
+                      Padding(
+                        padding: spaceOnly(top: 6),
+                        child: Text(
+                          controller.countryDataError!,
+                          style: GoogleFonts.manrope(color: Colors.red),
+                        ),
+                      ),
+                    if (controller.countriesData.isNotEmpty) ...[
+                      gap(h: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Text('Country 1'),
+                              value: controller.selectedCountryKey1,
+                              items: controller.countriesData.keys
+                                  .map(
+                                    (key) => DropdownMenuItem(
+                                      value: key,
+                                      child: Text(
+                                        controller.countriesData[key]['name']
+                                                ?.toString() ??
+                                            key,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                controller.selectedCountryKey1 = value;
+                                controller.update();
+                              },
+                            ),
+                          ),
+                          gap(w: 10),
+                          Expanded(
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Text('Country 2'),
+                              value: controller.selectedCountryKey2,
+                              items: controller.countriesData.keys
+                                  .map(
+                                    (key) => DropdownMenuItem(
+                                      value: key,
+                                      child: Text(
+                                        controller.countriesData[key]['name']
+                                                ?.toString() ??
+                                            key,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                controller.selectedCountryKey2 = value;
+                                controller.update();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      gap(h: 10),
+                      InkWell(
+                        onTap: () {
+                          controller.buildComparisonFromCountries(
+                            icons: icons,
+                            statLabels: statLabels,
+                          );
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: spacing(h: 15, v: 7),
+                          decoration: BoxDecoration(
+                            color: darkBlue,
+                            borderRadius: borderRadius(10),
+                          ),
+                          child: Text(
+                            'Build Comparison',
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                              color: whiteColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                );
+              },
+            ),
+            gap(h: 15),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -585,17 +749,13 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                     Container(
                       width: 300,
                       height: 50,
-                      padding: spacing(
-                        h: 14,
-                      ),
+                      padding: spacing(h: 14),
                       decoration: BoxDecoration(
-                          color: whiteColor,
-                          boxShadow: shadow,
-                          borderRadius: borderRadius(50),
-                          border: Border.all(
-                            width: 2,
-                            color: halfBlack,
-                          )),
+                        color: whiteColor,
+                        boxShadow: shadow,
+                        borderRadius: borderRadius(50),
+                        border: Border.all(width: 2, color: halfBlack),
+                      ),
                       child: TextFormField(
                         controller: videoTimer,
                         decoration: InputDecoration(
@@ -627,17 +787,13 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.backgroundImage,
                             onChanged: (v) {
@@ -675,17 +831,13 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.title,
                             onChanged: (x) {
@@ -719,17 +871,13 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.title2,
                             onChanged: (x) {
@@ -767,17 +915,13 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.name1,
                             onChanged: (x) {
@@ -811,17 +955,13 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.logo1,
                             onChanged: (x) {
@@ -859,17 +999,13 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.name2,
                             onChanged: (x) {
@@ -903,17 +1039,13 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.logo2,
                             onChanged: (x) {
@@ -947,10 +1079,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
               margin: spacing(v: 20),
               decoration: BoxDecoration(
                 color: whiteColor,
-                border: Border.all(
-                  width: 2,
-                  color: halfBlack,
-                ),
+                border: Border.all(width: 2, color: halfBlack),
                 borderRadius: borderRadius(60),
                 boxShadow: shadow,
               ),
@@ -978,7 +1107,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.UserPicWidth,
                         max: 250,
                         title:
@@ -989,7 +1118,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.UserPicHeght,
                         max: 250,
                         title:
@@ -1000,7 +1129,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.flagWidth,
                         max: 200,
                         title:
@@ -1011,7 +1140,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.flagBottomSpacing,
                         max: 200,
                         title:
@@ -1023,7 +1152,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         },
                       ),
                       designController.template == 2
-                          ? ValueChangeSlider(
+                          ? NewValueSlider(
                               value: designController.flagRightSpacing,
                               max: 200,
                               title:
@@ -1035,7 +1164,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                               },
                             )
                           : gap(),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.dataContainerHeight,
                         max: 250,
                         title:
@@ -1046,7 +1175,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.dataContainerWidth,
                         max: 2300,
                         title:
@@ -1057,7 +1186,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.dataContainerMarginTop,
                         max: 250,
                         title:
@@ -1068,7 +1197,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.dataContainerMarginBottom,
                         max: 250,
                         title:
@@ -1079,7 +1208,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.dataContainerMarginH,
                         max: 100,
                         title:
@@ -1090,7 +1219,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.valueWidth,
                         title:
                             'Value Width: ${designController.valueWidth.toInt()}',
@@ -1100,7 +1229,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.valueContainerSize,
                         max: 250,
                         title:
@@ -1127,7 +1256,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picContainerHeight,
                         max: 500,
                         title:
@@ -1138,7 +1267,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picContainerWidth,
                         max: 500,
                         title:
@@ -1149,7 +1278,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picContainerRadius,
                         max: 250,
                         title:
@@ -1179,9 +1308,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         width: 300,
                         child: Row(
                           children: [
-                            Text(
-                              'Enable Scroll',
-                            ),
+                            Text('Enable Scroll'),
                             Spacer(),
                             Switch(
                               value: designController.enableScroll,
@@ -1189,11 +1316,11 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                                 designController.enableScroll = value;
                                 setState(() {});
                               },
-                            )
+                            ),
                           ],
                         ),
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.secrollPadding,
                         max: 150,
                         title:
@@ -1239,8 +1366,9 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                               designController.titlePositionTop = 38;
                               designController.titlePositionLeft = 146;
                               designController.titleContainerWidth = 250;
-                              designController.titleTextStyle
-                                  .copyWith(backgroundColor: Colors.black);
+                              designController.titleTextStyle.copyWith(
+                                backgroundColor: Colors.black,
+                              );
                               designController.title2PositionTop = 84;
                               designController.title2PositionLeft = 150;
                               designController.title2ContainerWidth = 250;
@@ -1249,10 +1377,10 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                               designController.dataContainerMarginH = 50;
                               designController.valueTextStyle =
                                   GoogleFonts.lobster(
-                                fontSize: 27,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              );
+                                    fontSize: 27,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  );
                               designController.title2ShadowColor = Colors.white;
                               designController.valueTextAlign = TextAlign.left;
                               designController.dataContainerMarginTop = 125;
@@ -1288,8 +1416,9 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                               designController.titlePositionTop = 38;
                               designController.titlePositionLeft = 146;
                               designController.titleContainerWidth = 250;
-                              designController.titleTextStyle
-                                  .copyWith(backgroundColor: Colors.black);
+                              designController.titleTextStyle.copyWith(
+                                backgroundColor: Colors.black,
+                              );
                               designController.title2PositionTop = 84;
                               designController.title2PositionLeft = 150;
                               designController.title2ContainerWidth = 250;
@@ -1298,10 +1427,10 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                               designController.dataContainerMarginH = 50;
                               designController.valueTextStyle =
                                   GoogleFonts.lobster(
-                                fontSize: 27,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              );
+                                    fontSize: 27,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  );
                               designController.title2ShadowColor = Colors.white;
                               designController.valueTextAlign = TextAlign.left;
                               designController.dataContainerMarginTop = 125;
@@ -1335,9 +1464,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        'Aspect Ratio',
-                      ),
+                      Text('Aspect Ratio'),
                       Row(
                         children: [
                           InkWell(
@@ -1393,10 +1520,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '3/4',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('3/4', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
@@ -1413,10 +1537,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '4/3',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('4/3', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
@@ -1433,10 +1554,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '1/1',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('1/1', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
@@ -1534,8 +1652,8 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           colorPicker(
                             currentColor:
                                 designController.valueContainerLeft == null
-                                    ? Colors.white
-                                    : designController.valueContainerLeft!,
+                                ? Colors.white
+                                : designController.valueContainerLeft!,
                             onChange: (color) {
                               designController.valueContainerLeft = color;
                               designController.update();
@@ -1544,8 +1662,8 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         },
                         currentColor:
                             designController.valueContainerLeft == null
-                                ? Colors.white
-                                : designController.valueContainerLeft!,
+                            ? Colors.white
+                            : designController.valueContainerLeft!,
                       ),
                       ColorPickerItem(
                         hintText: 'Value Container Right Color',
@@ -1553,8 +1671,8 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           colorPicker(
                             currentColor:
                                 designController.valueContainerRight == null
-                                    ? Colors.white
-                                    : designController.valueContainerRight!,
+                                ? Colors.white
+                                : designController.valueContainerRight!,
                             onChange: (color) {
                               designController.valueContainerRight = color;
                               designController.update();
@@ -1563,8 +1681,8 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         },
                         currentColor:
                             designController.valueContainerRight == null
-                                ? Colors.white
-                                : designController.valueContainerRight!,
+                            ? Colors.white
+                            : designController.valueContainerRight!,
                       ),
                       FontSizer(
                         hintText: 'Value Container Radius',
@@ -1584,8 +1702,8 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                       ),
                       FontSizer(
                         hintText: 'Value Container Spacing Horizontal',
-                        fontSize:
-                            designController.valueContainerSpacing.toInt(),
+                        fontSize: designController.valueContainerSpacing
+                            .toInt(),
                         increase: () {
                           designController.valueContainerSpacing++;
                           designController.update();
@@ -1638,7 +1756,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         },
                         currentColor: designController.titleBackgroundColor,
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.titleContainerWidth,
                         title:
                             'Title Container Width: ${designController.titleContainerWidth.toInt()}',
@@ -1648,7 +1766,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.titlePositionTop,
                         max: 150,
                         title:
@@ -1659,7 +1777,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.titlePositionLeft,
                         max: 150,
                         title:
@@ -1698,17 +1816,12 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                       Container(
                         width: 300,
                         height: 50,
-                        padding: spacing(
-                          h: 14,
-                        ),
+                        padding: spacing(h: 14),
                         decoration: BoxDecoration(
                           color: whiteColor,
                           boxShadow: shadow,
                           borderRadius: borderRadius(50),
-                          border: Border.all(
-                            width: 2,
-                            color: halfBlack,
-                          ),
+                          border: Border.all(width: 2, color: halfBlack),
                         ),
                         child: TextFormField(
                           controller: designController.typingSpeedController,
@@ -1722,8 +1835,9 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                             ),
                           ),
                           onChanged: (value) {
-                            designController.typingSpeed =
-                                int.parse(value.toString());
+                            designController.typingSpeed = int.parse(
+                              value.toString(),
+                            );
                             designController.update();
                             setState(() {});
                           },
@@ -1772,7 +1886,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                         },
                         currentColor: designController.titleShadowColor,
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.title2ContainerWidth,
                         title:
                             'Title2 Container Width: ${designController.title2ContainerWidth.toInt()}',
@@ -1782,7 +1896,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.title2PositionTop,
                         max: 150,
                         title:
@@ -1793,7 +1907,7 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.title2PositionLeft,
                         max: 150,
                         title:
@@ -1840,17 +1954,12 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                       Container(
                         width: 300,
                         height: 50,
-                        padding: spacing(
-                          h: 14,
-                        ),
+                        padding: spacing(h: 14),
                         decoration: BoxDecoration(
                           color: whiteColor,
                           boxShadow: shadow,
                           borderRadius: borderRadius(50),
-                          border: Border.all(
-                            width: 2,
-                            color: halfBlack,
-                          ),
+                          border: Border.all(width: 2, color: halfBlack),
                         ),
                         child: TextFormField(
                           decoration: InputDecoration(
@@ -1863,8 +1972,9 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                             ),
                           ),
                           onChanged: (value) {
-                            designController.title2Delay =
-                                int.parse(value.toString());
+                            designController.title2Delay = int.parse(
+                              value.toString(),
+                            );
                             designController.update();
                             setState(() {});
                           },
@@ -1968,8 +2078,8 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
                       ),
                       FontSizer(
                         hintText: 'Background Image Opacity',
-                        fontSize:
-                            designController.backgroundImageOpacity.toInt(),
+                        fontSize: designController.backgroundImageOpacity
+                            .toInt(),
                         increase: () {
                           if (designController.backgroundImageOpacity <= 10) {
                             designController.backgroundImageOpacity++;
@@ -1994,14 +2104,16 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
               onTap: () {
                 designController.isGenerating = true;
                 if (videoTimer.text.toString().isNotEmpty) {
-                  designController.animationGap =
-                      int.parse(videoTimer.text.toString().trim());
+                  designController.animationGap = int.parse(
+                    videoTimer.text.toString().trim(),
+                  );
                 }
                 if (designController.typingSpeedController.text.isNotEmpty) {
-                  designController.typingSpeed = int.parse(designController
-                      .typingSpeedController.text
-                      .toString()
-                      .trim());
+                  designController.typingSpeed = int.parse(
+                    designController.typingSpeedController.text
+                        .toString()
+                        .trim(),
+                  );
                 }
                 designController.updateFlow();
                 // _Key.currentState!.closeDrawer();
@@ -2010,10 +2122,9 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Generate',
                   style: GoogleFonts.manrope(
@@ -2041,8 +2152,10 @@ class _Design9State extends State<Design9> with SingleTickerProviderStateMixin {
     );
   }
 
-  colorPicker(
-      {required Color currentColor, required Function(Color) onChange}) {
+  colorPicker({
+    required Color currentColor,
+    required Function(Color) onChange,
+  }) {
     // create some values
 
     showDialog(

@@ -55,146 +55,147 @@ class _Design14State extends State<Design14> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<Design14Controller>(builder: (controller) {
-        return Stack(
-          children: [
-            Positioned(
-              right: 50,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: controller.aspectRatio,
-                  child: Container(
-                    height: (Get.height - 200),
-                    width: containerSize, // You can change this value
-                    decoration: BoxDecoration(
-                      gradient: controller.backgroundGradient,
-                    ),
-                    child: controller.backgroundImage.text.isNotEmpty
-                        ? Opacity(
-                            opacity: (controller.backgroundImageOpacity / 10),
-                            child: Image.network(
-                              controller.backgroundImage.text,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : gap(),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              right: 50,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: controller.aspectRatio,
-                  child: Container(
-                    width: containerSize, // You can change this value
-                    height: Get.height,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        gap(h: controller.topSpacing),
-                        Text(
-                          controller.title.text,
-                          style: controller.titleTextStyle.copyWith(
-                            color: controller.titleFontColor,
-                          ),
-                        ),
-                        controller.changeStyle
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  gap(w: 30),
-                                  DataItem(controller,
-                                      title: controller.name1.text,
-                                      image: controller.logo1.text,
-                                      index: 1),
-                                  gap(h: controller.spacingBetween),
-                                  Container(
-                                    height: controller.valueContainerHeight,
-                                    child: SingleChildScrollView(
-                                      controller: controller.scrollController,
-                                      padding: spaceOnly(bottom: 250),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: controller.dataItems,
-                                      ),
-                                    ),
-                                  ),
-                                  gap(w: 30),
-                                ],
-                              )
-                            : Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  gap(w: 30),
-                                  DataItem(controller,
-                                      title: controller.name1.text,
-                                      image: controller.logo1.text,
-                                      index: 1),
-                                  gap(w: controller.spacingBetween),
-                                  Container(
-                                    height: controller.valueContainerHeight,
-                                    child: SingleChildScrollView(
-                                      controller: controller.scrollController,
-                                      padding: spaceOnly(bottom: 250),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: controller.dataItems,
-                                      ),
-                                    ),
-                                  ),
-                                  gap(w: 30),
-                                ],
+      body: GetBuilder<Design14Controller>(
+        builder: (controller) {
+          return Stack(
+            children: [
+              Positioned(
+                right: 50,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: AspectRatio(
+                    aspectRatio: controller.aspectRatio,
+                    child: Container(
+                      height: (Get.height - 200),
+                      width: containerSize, // You can change this value
+                      decoration: BoxDecoration(
+                        gradient: controller.backgroundGradient,
+                      ),
+                      child: controller.backgroundImage.text.isNotEmpty
+                          ? Opacity(
+                              opacity: (controller.backgroundImageOpacity / 10),
+                              child: Image.network(
+                                controller.backgroundImage.text,
+                                fit: BoxFit.cover,
                               ),
-                      ],
+                            )
+                          : gap(),
                     ),
                   ),
                 ),
               ),
-            ),
-            controller.isGenerating
-                ? gap()
-                : Positioned(
-                    top: 15,
-                    left: 15,
-                    child: InkWell(
-                      onTap: () {
-                        _Key.currentState!.openDrawer();
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: spacing(h: 7, v: 7),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: borderRadius(50),
-                        ),
-                        child: Icon(
-                          Icons.menu,
-                          color: halfBlack,
-                          size: 25,
-                        ),
+              Positioned(
+                right: 50,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: AspectRatio(
+                    aspectRatio: controller.aspectRatio,
+                    child: Container(
+                      width: containerSize, // You can change this value
+                      height: Get.height,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          gap(h: controller.topSpacing),
+                          Text(
+                            controller.title.text,
+                            style: controller.titleTextStyle.copyWith(
+                              color: controller.titleFontColor,
+                            ),
+                          ),
+                          controller.changeStyle
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    gap(w: 30),
+                                    DataItem(
+                                      controller,
+                                      title: controller.name1.text,
+                                      image: controller.logo1.text,
+                                      index: 1,
+                                    ),
+                                    gap(h: controller.spacingBetween),
+                                    Container(
+                                      height: controller.valueContainerHeight,
+                                      child: SingleChildScrollView(
+                                        controller: controller.scrollController,
+                                        padding: spaceOnly(bottom: 250),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: controller.dataItems,
+                                        ),
+                                      ),
+                                    ),
+                                    gap(w: 30),
+                                  ],
+                                )
+                              : Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    gap(w: 30),
+                                    DataItem(
+                                      controller,
+                                      title: controller.name1.text,
+                                      image: controller.logo1.text,
+                                      index: 1,
+                                    ),
+                                    gap(w: controller.spacingBetween),
+                                    Container(
+                                      height: controller.valueContainerHeight,
+                                      child: SingleChildScrollView(
+                                        controller: controller.scrollController,
+                                        padding: spaceOnly(bottom: 250),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: controller.dataItems,
+                                        ),
+                                      ),
+                                    ),
+                                    gap(w: 30),
+                                  ],
+                                ),
+                        ],
                       ),
                     ),
                   ),
-          ],
-        );
-      }),
+                ),
+              ),
+              controller.isGenerating
+                  ? gap()
+                  : Positioned(
+                      top: 15,
+                      left: 15,
+                      child: InkWell(
+                        onTap: () {
+                          _Key.currentState!.openDrawer();
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: spacing(h: 7, v: 7),
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: borderRadius(50),
+                          ),
+                          child: Icon(Icons.menu, color: halfBlack, size: 25),
+                        ),
+                      ),
+                    ),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -222,9 +223,7 @@ class _Design14State extends State<Design14> {
           Container(
             width: controller.dataContainerWidth,
             margin: spaceOnly(top: controller.nameTopSpacing),
-            decoration: BoxDecoration(
-              color: controller.nameContainerColor,
-            ),
+            decoration: BoxDecoration(color: controller.nameContainerColor),
             child: Text(
               title.isEmpty ? 'Iphone 16 Pro Max' : title,
               style: controller.nameTextStyle.copyWith(
@@ -287,10 +286,9 @@ class _Design14State extends State<Design14> {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Choose file',
                   style: GoogleFonts.manrope(
@@ -308,17 +306,13 @@ class _Design14State extends State<Design14> {
                 Container(
                   width: 300,
                   height: 50,
-                  padding: spacing(
-                    h: 14,
-                  ),
+                  padding: spacing(h: 14),
                   decoration: BoxDecoration(
-                      color: whiteColor,
-                      boxShadow: shadow,
-                      borderRadius: borderRadius(50),
-                      border: Border.all(
-                        width: 2,
-                        color: halfBlack,
-                      )),
+                    color: whiteColor,
+                    boxShadow: shadow,
+                    borderRadius: borderRadius(50),
+                    border: Border.all(width: 2, color: halfBlack),
+                  ),
                   child: TextFormField(
                     controller: videoTimer,
                     decoration: InputDecoration(
@@ -352,17 +346,13 @@ class _Design14State extends State<Design14> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.title,
                             onChanged: (x) {
@@ -396,17 +386,13 @@ class _Design14State extends State<Design14> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.backgroundImage,
                             onChanged: (v) {
@@ -444,17 +430,13 @@ class _Design14State extends State<Design14> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.name1,
                             onChanged: (x) {
@@ -488,17 +470,13 @@ class _Design14State extends State<Design14> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.logo1,
                             onChanged: (x) {
@@ -533,10 +511,7 @@ class _Design14State extends State<Design14> {
               margin: spacing(v: 20),
               decoration: BoxDecoration(
                 color: whiteColor,
-                border: Border.all(
-                  width: 2,
-                  color: halfBlack,
-                ),
+                border: Border.all(width: 2, color: halfBlack),
                 borderRadius: borderRadius(60),
                 boxShadow: shadow,
               ),
@@ -580,7 +555,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.dataContainerHeight,
                         max: 1000,
                         title:
@@ -591,7 +566,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.dataContainerWidth,
                         max: 1000,
                         title:
@@ -602,7 +577,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.flagWidth,
                         max: 300,
                         title:
@@ -613,7 +588,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.flagPosition,
                         max: 600,
                         title:
@@ -624,7 +599,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picContainerSize,
                         max: 600,
                         title:
@@ -635,7 +610,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.IconsSpacing,
                         max: 200,
                         title:
@@ -646,7 +621,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.IconPosition,
                         max: 800,
                         title:
@@ -657,7 +632,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picContainerRadius,
                         max: 100,
                         title:
@@ -669,7 +644,7 @@ class _Design14State extends State<Design14> {
                         },
                       ),
                       gap(h: 20),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.topSpacing,
                         max: 200,
                         title:
@@ -680,7 +655,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.spacingBetween,
                         max: 200,
                         title:
@@ -819,7 +794,7 @@ class _Design14State extends State<Design14> {
                         },
                         currentColor: designController.nameContainerColor,
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.nameTopSpacing,
                         max: 200,
                         title:
@@ -890,9 +865,7 @@ class _Design14State extends State<Design14> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        'Aspect Ratio',
-                      ),
+                      Text('Aspect Ratio'),
                       Row(
                         children: [
                           InkWell(
@@ -948,10 +921,7 @@ class _Design14State extends State<Design14> {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '3/4',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('3/4', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
@@ -968,10 +938,7 @@ class _Design14State extends State<Design14> {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '4/3',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('4/3', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
@@ -988,16 +955,13 @@ class _Design14State extends State<Design14> {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '1/1',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('1/1', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.valueContainerWidth,
                         max: 1200,
                         title:
@@ -1008,7 +972,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.valueContainerHeight,
                         max: 1200,
                         title:
@@ -1019,7 +983,7 @@ class _Design14State extends State<Design14> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.valueContainerSpacing,
                         max: 100,
                         title:
@@ -1128,8 +1092,8 @@ class _Design14State extends State<Design14> {
                       ),
                       FontSizer(
                         hintText: 'Shadow Radius',
-                        fontSize:
-                            designController.valueContainerShadowRadius.toInt(),
+                        fontSize: designController.valueContainerShadowRadius
+                            .toInt(),
                         increase: () {
                           designController.valueContainerShadowRadius++;
                           designController.update();
@@ -1151,7 +1115,8 @@ class _Design14State extends State<Design14> {
                             onChange: (color) {
                               designController.valueFontColor = color;
                               designController.valueTextStyle.apply(
-                                  color: designController.valueFontColor);
+                                color: designController.valueFontColor,
+                              );
                               designController.update();
                             },
                           );
@@ -1208,12 +1173,13 @@ class _Design14State extends State<Design14> {
                       ),
                       FontSizer(
                         hintText: 'Background Image Opacity',
-                        fontSize:
-                            designController.backgroundImageOpacity.toInt(),
+                        fontSize: designController.backgroundImageOpacity
+                            .toInt(),
                         increase: () {
                           if (designController.backgroundImageOpacity <= 10) {
                             print(
-                                'Increaseing  ${designController.backgroundImageOpacity / 10}');
+                              'Increaseing  ${designController.backgroundImageOpacity / 10}',
+                            );
                             designController.backgroundImageOpacity++;
                             designController.update();
                             setState(() {});
@@ -1222,7 +1188,8 @@ class _Design14State extends State<Design14> {
                         decrease: () {
                           if (designController.backgroundImageOpacity >= 0) {
                             print(
-                                'Descreasing ${designController.backgroundImageOpacity / 10}');
+                              'Descreasing ${designController.backgroundImageOpacity / 10}',
+                            );
                             designController.backgroundImageOpacity--;
                             designController.update();
                             setState(() {});
@@ -1248,7 +1215,8 @@ class _Design14State extends State<Design14> {
                         increase: () {
                           if (designController.textShadowOpacity <= 10) {
                             print(
-                                'Increaseing  ${designController.textShadowOpacity / 10}');
+                              'Increaseing  ${designController.textShadowOpacity / 10}',
+                            );
                             designController.textShadowOpacity++;
                             designController.update();
                             setState(() {});
@@ -1257,7 +1225,8 @@ class _Design14State extends State<Design14> {
                         decrease: () {
                           if (designController.textShadowOpacity >= 0) {
                             print(
-                                'Descreasing ${designController.textShadowOpacity / 10}');
+                              'Descreasing ${designController.textShadowOpacity / 10}',
+                            );
                             designController.textShadowOpacity--;
                             designController.update();
                             setState(() {});
@@ -1269,9 +1238,7 @@ class _Design14State extends State<Design14> {
                         width: Get.width * 0.2,
                         child: Row(
                           children: [
-                            Text(
-                              'Enable Scroll',
-                            ),
+                            Text('Enable Scroll'),
                             Spacer(),
                             Switch(
                               value: designController.allowScroll,
@@ -1279,7 +1246,7 @@ class _Design14State extends State<Design14> {
                                 designController.allowScroll = value;
                                 setState(() {});
                               },
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -1287,9 +1254,7 @@ class _Design14State extends State<Design14> {
                         width: Get.width * 0.2,
                         child: Row(
                           children: [
-                            Text(
-                              'Change Style',
-                            ),
+                            Text('Change Style'),
                             Spacer(),
                             Switch(
                               value: designController.changeStyle,
@@ -1297,10 +1262,10 @@ class _Design14State extends State<Design14> {
                                 designController.changeStyle = value;
                                 setState(() {});
                               },
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -1310,8 +1275,9 @@ class _Design14State extends State<Design14> {
               onTap: () {
                 designController.isGenerating = true;
                 if (videoTimer.text.toString().isNotEmpty) {
-                  designController.animationGap =
-                      int.parse(videoTimer.text.toString().trim());
+                  designController.animationGap = int.parse(
+                    videoTimer.text.toString().trim(),
+                  );
                 }
                 designController.updateFlow();
                 // _Key.currentState!.closeDrawer();
@@ -1320,10 +1286,9 @@ class _Design14State extends State<Design14> {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Generate',
                   style: GoogleFonts.manrope(
@@ -1351,8 +1316,10 @@ class _Design14State extends State<Design14> {
     );
   }
 
-  colorPicker(
-      {required Color currentColor, required Function(Color) onChange}) {
+  colorPicker({
+    required Color currentColor,
+    required Function(Color) onChange,
+  }) {
     // create some values
 
     showDialog(

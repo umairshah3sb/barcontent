@@ -31,86 +31,81 @@ class _Design1State extends State<Design1> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       drawer: drawerWidget(),
       key: scaffoldKey,
-      body: GetBuilder<design1Controller>(builder: (controller) {
-        return Stack(
-          children: [
-            SizedBox(
-              key: Key(getRandomString(20)),
-              width: Get.width,
-              height: Get.height,
-              child: Center(
-                child: AutoScrollRow(
-                  reverse: false,
-                  enableUserScroll: false,
-                  scrollDuration: Duration(
-                    seconds: controller.videoDuration,
-                  ),
-                  children: List.generate((controller.csvData.length + 2), (i) {
-                    if (i == 0 || i == (controller.csvData.length + 1)) {
-                      return Container(
-                        width: Get.width * 1.5,
-                      );
-                    }
-                    // return Container(
-                    //   width: width,
-                    //   margin: spacing(h: 5, v: 7),
-                    //   color: darkBlue,
-                    //   child: Center(
-                    //     child: Text(
-                    //       i.toString(),
-                    //       style: GoogleFonts.manrope(
-                    //         fontSize: 14,
-                    //         color: whiteColor,
-                    //         fontWeight: FontWeight.w700,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // );
+      body: GetBuilder<design1Controller>(
+        builder: (controller) {
+          return Stack(
+            children: [
+              SizedBox(
+                key: Key(getRandomString(20)),
+                width: Get.width,
+                height: Get.height,
+                child: Center(
+                  child: AutoScrollRow(
+                    reverse: false,
+                    enableUserScroll: false,
+                    scrollDuration: Duration(seconds: controller.videoDuration),
+                    children: List.generate((controller.csvData.length + 2), (
+                      i,
+                    ) {
+                      if (i == 0 || i == (controller.csvData.length + 1)) {
+                        return Container(width: Get.width * 1.5);
+                      }
+                      // return Container(
+                      //   width: width,
+                      //   margin: spacing(h: 5, v: 7),
+                      //   color: darkBlue,
+                      //   child: Center(
+                      //     child: Text(
+                      //       i.toString(),
+                      //       style: GoogleFonts.manrope(
+                      //         fontSize: 14,
+                      //         color: whiteColor,
+                      //         fontWeight: FontWeight.w700,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // );
 
-                    return controller.csvData[(i - 1)]['index']
-                            .toString()
-                            .isNotEmpty
-                        ? dataWidget(
-                            controller.csvData[(i - 1)],
-                            designController.itemsPerScreen,
-                          )
-                        : gap();
-                  }),
+                      return controller.csvData[(i - 1)]['index']
+                              .toString()
+                              .isNotEmpty
+                          ? dataWidget(
+                              controller.csvData[(i - 1)],
+                              designController.itemsPerScreen,
+                            )
+                          : gap();
+                    }),
+                  ),
                 ),
               ),
-            ),
-            controller.isGenerating
-                ? gap()
-                : Positioned(
-                    top: 15,
-                    left: 15,
-                    child: InkWell(
-                      onTap: () {
-                        scaffoldKey.currentState!.openDrawer();
+              controller.isGenerating
+                  ? gap()
+                  : Positioned(
+                      top: 15,
+                      left: 15,
+                      child: InkWell(
+                        onTap: () {
+                          scaffoldKey.currentState!.openDrawer();
 
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: spacing(h: 7, v: 7),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: borderRadius(50),
-                        ),
-                        child: Icon(
-                          Icons.menu,
-                          color: halfBlack,
-                          size: 25,
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: spacing(h: 7, v: 7),
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: borderRadius(50),
+                          ),
+                          child: Icon(Icons.menu, color: halfBlack, size: 25),
                         ),
                       ),
                     ),
-                  )
-          ],
-        );
-      }),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -120,9 +115,7 @@ class _Design1State extends State<Design1> {
     return Container(
       key: Key(getRandomString(20)),
       margin: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
-      decoration: BoxDecoration(
-        boxShadow: shadow,
-      ),
+      decoration: BoxDecoration(boxShadow: shadow),
       child: ClipRRect(
         borderRadius: radiusOnly(
           topLeft: 30,
@@ -138,9 +131,7 @@ class _Design1State extends State<Design1> {
                   child: Container(
                     width: width,
                     height: width * 0.8,
-                    decoration: BoxDecoration(
-                      color: getRandomColor(),
-                    ),
+                    decoration: BoxDecoration(color: getRandomColor()),
                     child: CachedNetworkImage(
                       imageUrl: data['avatar'],
                       fit: BoxFit.cover,
@@ -169,7 +160,7 @@ class _Design1State extends State<Design1> {
                             ),
                           ),
                         ),
-                )
+                ),
               ],
             ),
             SizedBox(height: 2),
@@ -200,7 +191,7 @@ class _Design1State extends State<Design1> {
                           color: Color(0x26442A7C),
                           blurRadius: 5,
                           offset: Offset(0, 5),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -238,42 +229,41 @@ class _Design1State extends State<Design1> {
                   boxShadow: shadow,
                 ),
                 child: Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: designController.iconSize,
-                      child: Image.network(
-                        data['icon'],
-                        fit: BoxFit.cover,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: designController.iconSize,
+                        child: Image.network(data['icon'], fit: BoxFit.cover),
                       ),
-                    ),
-                    gap(w: 5),
-                    Text.rich(
-                      TextSpan(
-                        text: data['largeText'].toString(),
-                        style: GoogleFonts.manrope(
-                          color: designController.largeFontColor,
-                          fontWeight: FontWeight.w900,
-                          fontSize: designController.largTextSize,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: data['smallText']
-                                .toString()
-                                .replaceFirst(',', '\n'),
-                            style: GoogleFonts.manrope(
-                              color: designController.smallFontColor,
-                              fontWeight: FontWeight.w900,
-                              fontSize: designController.smallTextSize,
-                            ),
+                      gap(w: 5),
+                      Text.rich(
+                        TextSpan(
+                          text: data['largeText'].toString(),
+                          style: GoogleFonts.manrope(
+                            color: designController.largeFontColor,
+                            fontWeight: FontWeight.w900,
+                            fontSize: designController.largTextSize,
                           ),
-                        ],
+                          children: [
+                            TextSpan(
+                              text: data['smallText'].toString().replaceFirst(
+                                ',',
+                                '\n',
+                              ),
+                              style: GoogleFonts.manrope(
+                                color: designController.smallFontColor,
+                                fontWeight: FontWeight.w900,
+                                fontSize: designController.smallTextSize,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                )),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
@@ -330,10 +320,9 @@ class _Design1State extends State<Design1> {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Choose file',
                   style: GoogleFonts.manrope(
@@ -348,17 +337,13 @@ class _Design1State extends State<Design1> {
             Container(
               width: 400,
               height: 50,
-              padding: spacing(
-                h: 14,
-              ),
+              padding: spacing(h: 14),
               decoration: BoxDecoration(
-                  color: whiteColor,
-                  boxShadow: shadow,
-                  borderRadius: borderRadius(50),
-                  border: Border.all(
-                    width: 2,
-                    color: halfBlack,
-                  )),
+                color: whiteColor,
+                boxShadow: shadow,
+                borderRadius: borderRadius(50),
+                border: Border.all(width: 2, color: halfBlack),
+              ),
               child: TextFormField(
                 controller: videoTimer,
                 decoration: InputDecoration(
@@ -386,10 +371,7 @@ class _Design1State extends State<Design1> {
               margin: spacing(v: 20),
               decoration: BoxDecoration(
                 color: whiteColor,
-                border: Border.all(
-                  width: 2,
-                  color: halfBlack,
-                ),
+                border: Border.all(width: 2, color: halfBlack),
                 borderRadius: borderRadius(60),
                 boxShadow: shadow,
               ),
@@ -483,7 +465,7 @@ class _Design1State extends State<Design1> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.iconSize,
                         max: 1000,
                         title:
@@ -649,9 +631,7 @@ class _Design1State extends State<Design1> {
                         width: Get.width * 0.2,
                         child: Row(
                           children: [
-                            Text(
-                              'Hide Index',
-                            ),
+                            Text('Hide Index'),
                             Spacer(),
                             Switch(
                               value: designController.hideIndex,
@@ -659,10 +639,10 @@ class _Design1State extends State<Design1> {
                                 designController.hideIndex = value;
                                 setState(() {});
                               },
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -672,8 +652,9 @@ class _Design1State extends State<Design1> {
             InkWell(
               onTap: () {
                 designController.isGenerating = true;
-                designController.videoDuration =
-                    int.parse(videoTimer.text.toString().trim());
+                designController.videoDuration = int.parse(
+                  videoTimer.text.toString().trim(),
+                );
                 designController.updateFlow();
                 scaffoldKey.currentState!.closeDrawer();
                 setState(() {});
@@ -681,10 +662,9 @@ class _Design1State extends State<Design1> {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Generate',
                   style: GoogleFonts.manrope(

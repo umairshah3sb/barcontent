@@ -9,13 +9,11 @@ import 'dart:math' as math;
 
 Color diamondColor = Colors.red;
 Color diamondColorWithShade = Colors.red.shade900;
-String domainUrl =
-    true ? 'https://novabuildr.com/' : 'https://contentcreator-9774f.web.app/';
+String domainUrl = true
+    ? 'https://novabuildr.com/'
+    : 'https://contentcreator-9774f.web.app/';
 Widget gap({double h = 0, double w = 0}) {
-  return SizedBox(
-    width: w,
-    height: h,
-  );
+  return SizedBox(width: w, height: h);
 }
 
 Color darken(Color color, [double amount = .1]) {
@@ -28,11 +26,12 @@ BorderRadius borderRadius(double radius) {
   return BorderRadius.all(Radius.circular(radius));
 }
 
-BorderRadius radiusOnly(
-    {double topLeft = 0,
-    double topRight = 0,
-    double bottomLeft = 0,
-    double bottomRight = 0}) {
+BorderRadius radiusOnly({
+  double topLeft = 0,
+  double topRight = 0,
+  double bottomLeft = 0,
+  double bottomRight = 0,
+}) {
   return BorderRadius.only(
     topLeft: Radius.circular(topLeft),
     topRight: Radius.circular(topRight),
@@ -46,9 +45,9 @@ EdgeInsets spacing({double h = 0, double v = 0}) {
 }
 
 pushRoute(Widget screen) {
-  Navigator.of(Get.context!).push(
-    MaterialPageRoute(builder: (context) => screen),
-  );
+  Navigator.of(
+    Get.context!,
+  ).push(MaterialPageRoute(builder: (context) => screen));
 }
 
 pushNamedRoute(String route) {
@@ -56,17 +55,21 @@ pushNamedRoute(String route) {
 }
 
 pushReplacement(Widget screen) {
-  Navigator.of(Get.context!).pushReplacement(
-    MaterialPageRoute(builder: (context) => screen),
-  );
+  Navigator.of(
+    Get.context!,
+  ).pushReplacement(MaterialPageRoute(builder: (context) => screen));
 }
 
 popRoute() {
   Navigator.of(Get.context!).pop();
 }
 
-EdgeInsets spaceOnly(
-    {double left = 0, double right = 0, double bottom = 0, double top = 0}) {
+EdgeInsets spaceOnly({
+  double left = 0,
+  double right = 0,
+  double bottom = 0,
+  double top = 0,
+}) {
   return EdgeInsets.only(left: left, right: right, bottom: bottom, top: top);
 }
 
@@ -105,7 +108,7 @@ List<BoxShadow> shadow = [
     blurRadius: 28.68,
     offset: Offset(0, 28.68),
     spreadRadius: 0,
-  )
+  ),
 ];
 
 Map<String, dynamic> dumyData = {
@@ -148,20 +151,16 @@ String getRandomString(int len) {
 Widget tableItems(String title) {
   return Container(
     padding: spacing(v: 5, h: 7),
-    decoration: BoxDecoration(
-      border: Border.all(
-        width: 1,
-        color: halfBlack,
-      ),
-    ),
+    decoration: BoxDecoration(border: Border.all(width: 1, color: halfBlack)),
     child: Text(title),
   );
 }
 
-colorPicker(
-    {required Color currentColor,
-    required Function(Color) onChange,
-    required void Function()? onPressed}) {
+colorPicker({
+  required Color currentColor,
+  required Function(Color) onChange,
+  required void Function()? onPressed,
+}) {
   // create some values
 
   showDialog(
@@ -176,10 +175,7 @@ colorPicker(
           ),
         ),
         actions: <Widget>[
-          ElevatedButton(
-            child: const Text('Done'),
-            onPressed: onPressed,
-          ),
+          ElevatedButton(child: const Text('Done'), onPressed: onPressed),
         ],
       );
     },
@@ -196,10 +192,7 @@ Widget FontSizer({
     width: Get.width * 0.2,
     padding: spacing(h: 10, v: 2),
     decoration: BoxDecoration(
-      border: Border.all(
-        width: 2,
-        color: halfBlack,
-      ),
+      border: Border.all(width: 2, color: halfBlack),
       borderRadius: borderRadius(7),
     ),
     child: Row(
@@ -227,7 +220,7 @@ Widget FontSizer({
               ),
             ),
           ],
-        )
+        ),
       ],
     ),
   );
@@ -284,25 +277,29 @@ Color getRandomColor() {
 
 List<BoxShadow> newShadow = [
   BoxShadow(
-      color: Colors.grey.shade300,
-      spreadRadius: 0.0,
-      blurRadius: 3,
-      offset: Offset(3.0, 3.0)),
+    color: Colors.grey.shade300,
+    spreadRadius: 0.0,
+    blurRadius: 3,
+    offset: Offset(3.0, 3.0),
+  ),
   BoxShadow(
-      color: Colors.grey.shade400,
-      spreadRadius: 0.0,
-      blurRadius: 3 / 2.0,
-      offset: Offset(3.0, 3.0)),
+    color: Colors.grey.shade400,
+    spreadRadius: 0.0,
+    blurRadius: 3 / 2.0,
+    offset: Offset(3.0, 3.0),
+  ),
   BoxShadow(
-      color: Colors.black.withAlpha(80),
-      spreadRadius: 2.0,
-      blurRadius: 3,
-      offset: Offset(-3.0, -3.0)),
+    color: Colors.black.withAlpha(80),
+    spreadRadius: 2.0,
+    blurRadius: 3,
+    offset: Offset(-3.0, -3.0),
+  ),
   BoxShadow(
-      color: Colors.black.withAlpha(80),
-      spreadRadius: 2.0,
-      blurRadius: 3 / 2,
-      offset: Offset(-3.0, -3.0)),
+    color: Colors.black.withAlpha(80),
+    spreadRadius: 2.0,
+    blurRadius: 3 / 2,
+    offset: Offset(-3.0, -3.0),
+  ),
 ];
 
 int getRandomValue({int minValue = 0}) {
@@ -318,7 +315,11 @@ List<Color> generate100ColorShades() {
   final List<Color> colors = [];
   for (int i = 0; i < 30; i++) {
     final Color rgbaColor = Color.fromARGB(
-        getRandomValue(), getRandomValue(), getRandomValue(), 255);
+      getRandomValue(),
+      getRandomValue(),
+      getRandomValue(),
+      255,
+    );
 
     colors.add(rgbaColor);
   }
@@ -344,69 +345,90 @@ List<String> fontFamilies = [
   'Archivo Black',
 ];
 
-Widget ValueChangeSlider({
+Widget NewValueSlider({
   required String title,
-  required void Function(double)? onChanged,
   required double value,
-  Function()? increase,
-  Function()? decrease,
+  required ValueChanged<double> onChanged,
+  double min = 0,
   double max = 430,
+  double step = 1,
 }) {
-  return StatefulBuilder(builder: (context, setState) {
-    return Container(
-      margin: spacing(v: 10),
-      width: 300,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.russoOne(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: halfBlack,
+  return StatefulBuilder(
+    builder: (context, setState) {
+      void changeValue(double newValue) {
+        newValue = newValue.clamp(min, max);
+
+        onChanged(newValue);
+        setState(() {});
+      }
+
+      return Container(
+        margin: spacing(v: 10),
+        width: 300,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '$title',
+              style: GoogleFonts.russoOne(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: halfBlack,
+              ),
             ),
-          ),
-          gap(h: 10),
-          Row(
-            children: [
-              value > max
-                  ? gap()
-                  : Slider(
-                      max: max,
-                      value: value,
-                      onChanged: onChanged,
-                    ),
-              gap(w: 10),
-              InkWell(
-                onTap: increase,
-                child: Icon(
-                  Icons.keyboard_arrow_up_sharp,
-                  color: halfBlack,
-                  size: 18,
+            gap(h: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: Slider(
+                    min: min,
+                    max: max,
+                    value: value.clamp(min, max),
+                    onChanged: changeValue,
+                  ),
                 ),
-              ),
-              gap(w: 5),
-              InkWell(
-                onTap: decrease,
-                child: Icon(
-                  Icons.keyboard_arrow_down_sharp,
-                  color: halfBlack,
-                  size: 18,
+
+                gap(w: 10),
+
+                InkWell(
+                  onTap: () {
+                    changeValue(value + step);
+                  },
+                  child: Icon(
+                    Icons.keyboard_arrow_up_sharp,
+                    color: halfBlack,
+                    size: 18,
+                  ),
                 ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  });
+
+                gap(w: 5),
+
+                InkWell(
+                  onTap: () {
+                    changeValue(value - step);
+                  },
+                  child: Icon(
+                    Icons.keyboard_arrow_down_sharp,
+                    color: halfBlack,
+                    size: 18,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
 
 class NoScrollbarBehavior extends ScrollBehavior {
   @override
   Widget buildScrollbar(
-      BuildContext context, Widget child, ScrollableDetails details) {
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
     return child; // Don’t wrap in a scrollbar
   }
 }
@@ -502,7 +524,7 @@ List<LinearGradient> colorPalettes = [
       Color(0xFFff8c7f),
       Color(0xFFf99185),
       Color(0xFFcf556c),
-      Color(0xFFb12a5b)
+      Color(0xFFb12a5b),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -699,7 +721,7 @@ List<LinearGradient> colorPalettes = [
       Color(0xFFf093fb),
       Color(0xFFf5576c),
       Color(0xFFde6262),
-      Color(0xFFffb88c)
+      Color(0xFFffb88c),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -710,7 +732,7 @@ List<LinearGradient> colorPalettes = [
       Color(0xFFe0c3fc),
       Color(0xFF8ec5fc),
       Color(0xFFa1c4fd),
-      Color(0xFFc2e9fb)
+      Color(0xFFc2e9fb),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -727,7 +749,7 @@ List<LinearGradient> colorPalettes = [
       Color(0xFF43e97b),
       Color(0xFF38f9d7),
       Color(0xFF4facfe),
-      Color(0xFF00f2fe)
+      Color(0xFF00f2fe),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -756,7 +778,7 @@ List<LinearGradient> colorPalettes = [
       Color(0xFFfa709a),
       Color(0xFFfee140),
       Color(0xFFf6d365),
-      Color(0xFFfda085)
+      Color(0xFFfda085),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -767,7 +789,7 @@ List<LinearGradient> colorPalettes = [
       Color(0xFFfbc2eb),
       Color(0xFFa6c1ee),
       Color(0xFF84fab0),
-      Color(0xFF8fd3f4)
+      Color(0xFF8fd3f4),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -790,7 +812,7 @@ List<LinearGradient> colorPalettes = [
       Color(0xFF30cfd0),
       Color(0xFF330867),
       Color(0xFF5ee7df),
-      Color(0xFFb490ca)
+      Color(0xFFb490ca),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -873,7 +895,7 @@ List<LinearGradient> colorPalettes = [
       Color(0xFFf093fb),
       Color(0xFFf5576c),
       Color(0xFFde6262),
-      Color(0xFFffb88c)
+      Color(0xFFffb88c),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

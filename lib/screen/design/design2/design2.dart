@@ -36,102 +36,101 @@ class _Design2State extends State<Design2> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<design2Controller>(builder: (controller) {
-        return Stack(
-          children: [
-            Container(
-              key: Key(getRandomString(20)),
-              width: Get.width,
-              height: Get.height,
-              decoration: BoxDecoration(
-                image: backgroundImage.text.isNotEmpty
-                    ? DecorationImage(
-                        image: NetworkImage(backgroundImage.text),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-              ),
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: designController.aspectRatio,
-                  child: controller.isGenerating
-                      ? controller.isAnimate
-                          ? Row(
-                              children: controller.animatedItem,
-                            )
-                          : AutoScrollRow(
-                              reverse: false,
-                              enableUserScroll: false,
-                              scrollDuration: Duration(
-                                seconds: controller.videoDuration,
-                              ),
+      body: GetBuilder<design2Controller>(
+        builder: (controller) {
+          return Stack(
+            children: [
+              Container(
+                key: Key(getRandomString(20)),
+                width: Get.width,
+                height: Get.height,
+                decoration: BoxDecoration(
+                  image: backgroundImage.text.isNotEmpty
+                      ? DecorationImage(
+                          image: NetworkImage(backgroundImage.text),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: Center(
+                  child: AspectRatio(
+                    aspectRatio: designController.aspectRatio,
+                    child: controller.isGenerating
+                        ? controller.isAnimate
+                              ? Row(children: controller.animatedItem)
+                              : AutoScrollRow(
+                                  reverse: false,
+                                  enableUserScroll: false,
+                                  scrollDuration: Duration(
+                                    seconds: controller.videoDuration,
+                                  ),
+                                  children: List.generate(
+                                    ((controller.csvData.length + 1)),
+                                    (i) {
+                                      if (i == controller.csvData.length) {
+                                        return Container(
+                                          width: Get.width * 1.5,
+                                        );
+                                      }
+                                      return controller.csvData[(i)]['index']
+                                              .toString()
+                                              .isNotEmpty
+                                          ? Design2Item(
+                                              data: controller.csvData[(i)],
+                                            )
+                                          : gap();
+                                    },
+                                  ),
+                                )
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: List.generate(
-                                  ((controller.csvData.length + 1)), (i) {
-                                if (i == controller.csvData.length) {
-                                  return Container(
-                                    width: Get.width * 1.5,
-                                  );
-                                }
-                                return controller.csvData[(i)]['index']
-                                        .toString()
-                                        .isNotEmpty
-                                    ? Design2Item(
-                                        data: controller.csvData[(i)],
-                                      )
-                                    : gap();
-                              }),
-                            )
-                      : SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children:
-                                List.generate((controller.csvData.length), (i) {
-                              return controller.csvData[(i)]['index']
-                                      .toString()
-                                      .isNotEmpty
-                                  ? Design2Item(
-                                      data: controller.csvData[(i)],
-                                    )
-                                  : gap();
-                            }),
+                                (controller.csvData.length),
+                                (i) {
+                                  return controller.csvData[(i)]['index']
+                                          .toString()
+                                          .isNotEmpty
+                                      ? Design2Item(
+                                          data: controller.csvData[(i)],
+                                        )
+                                      : gap();
+                                },
+                              ),
+                            ),
                           ),
-                        ),
+                  ),
                 ),
               ),
-            ),
-            controller.isGenerating
-                ? gap()
-                : Positioned(
-                    top: 15,
-                    left: 15,
-                    child: InkWell(
-                      onTap: () {
-                        _Key.currentState!.openDrawer();
+              controller.isGenerating
+                  ? gap()
+                  : Positioned(
+                      top: 15,
+                      left: 15,
+                      child: InkWell(
+                        onTap: () {
+                          _Key.currentState!.openDrawer();
 
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: spacing(h: 7, v: 7),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: borderRadius(50),
-                        ),
-                        child: Icon(
-                          Icons.menu,
-                          color: halfBlack,
-                          size: 25,
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: spacing(h: 7, v: 7),
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: borderRadius(50),
+                          ),
+                          child: Icon(Icons.menu, color: halfBlack, size: 25),
                         ),
                       ),
                     ),
-                  )
-          ],
-        );
-      }),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -184,9 +183,7 @@ class _Design2State extends State<Design2> {
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
                   color: darkBlue,
-                  borderRadius: borderRadius(
-                    10,
-                  ),
+                  borderRadius: borderRadius(10),
                 ),
                 child: Text(
                   'Choose file',
@@ -204,17 +201,13 @@ class _Design2State extends State<Design2> {
                 Container(
                   width: 300,
                   height: 50,
-                  padding: spacing(
-                    h: 14,
-                  ),
+                  padding: spacing(h: 14),
                   decoration: BoxDecoration(
-                      color: whiteColor,
-                      boxShadow: shadow,
-                      borderRadius: borderRadius(50),
-                      border: Border.all(
-                        width: 2,
-                        color: halfBlack,
-                      )),
+                    color: whiteColor,
+                    boxShadow: shadow,
+                    borderRadius: borderRadius(50),
+                    border: Border.all(width: 2, color: halfBlack),
+                  ),
                   child: TextFormField(
                     controller: videoTimer,
                     decoration: InputDecoration(
@@ -240,17 +233,13 @@ class _Design2State extends State<Design2> {
                 Container(
                   width: 300,
                   height: 50,
-                  padding: spacing(
-                    h: 14,
-                  ),
+                  padding: spacing(h: 14),
                   decoration: BoxDecoration(
-                      color: whiteColor,
-                      boxShadow: shadow,
-                      borderRadius: borderRadius(50),
-                      border: Border.all(
-                        width: 2,
-                        color: halfBlack,
-                      )),
+                    color: whiteColor,
+                    boxShadow: shadow,
+                    borderRadius: borderRadius(50),
+                    border: Border.all(width: 2, color: halfBlack),
+                  ),
                   child: TextFormField(
                     controller: backgroundImage,
                     onChanged: (x) {
@@ -281,10 +270,7 @@ class _Design2State extends State<Design2> {
               margin: spacing(v: 20),
               decoration: BoxDecoration(
                 color: whiteColor,
-                border: Border.all(
-                  width: 2,
-                  color: halfBlack,
-                ),
+                border: Border.all(width: 2, color: halfBlack),
                 borderRadius: borderRadius(60),
                 boxShadow: shadow,
               ),
@@ -294,9 +280,7 @@ class _Design2State extends State<Design2> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        'Aspect Ratio',
-                      ),
+                      Text('Aspect Ratio'),
                       Row(
                         children: [
                           InkWell(
@@ -352,10 +336,7 @@ class _Design2State extends State<Design2> {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '3/4',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('3/4', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
@@ -372,10 +353,7 @@ class _Design2State extends State<Design2> {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '4/3',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('4/3', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
@@ -392,16 +370,13 @@ class _Design2State extends State<Design2> {
                                 borderRadius: borderRadius(50),
                               ),
                               child: Center(
-                                child: Text(
-                                  '1/1',
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text('1/1', textAlign: TextAlign.center),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 2000,
                         value: designController.itemsWidth,
                         title:
@@ -409,14 +384,6 @@ class _Design2State extends State<Design2> {
                         onChanged: (value) {
                           designController.itemsWidth = value;
                           designController.update();
-                          setState(() {});
-                        },
-                        increase: () {
-                          designController.itemsWidth++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.itemsWidth--;
                           setState(() {});
                         },
                       ),
@@ -432,7 +399,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 200,
                         value: designController.itemBorderRadius,
                         title:
@@ -443,7 +410,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 200,
                         value: designController.itemMarginH,
                         title:
@@ -454,7 +421,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 200,
                         value: designController.itemMarginV,
                         title:
@@ -465,7 +432,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 200,
                         value: designController.nameFontSize,
                         title:
@@ -476,7 +443,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 300,
                         value: designController.nameContainerHeight,
                         title:
@@ -487,7 +454,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 200,
                         value: designController.largTextSize,
                         title:
@@ -498,7 +465,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 300,
                         value: designController.largContainerHeight,
                         title:
@@ -509,7 +476,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 300,
                         value: designController.smallTextSize,
                         title:
@@ -520,7 +487,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic1ContainerHeight,
                         title:
@@ -531,7 +498,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic1Width,
                         title:
@@ -542,7 +509,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic1Height,
                         title:
@@ -553,7 +520,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic1Radius,
                         title:
@@ -564,7 +531,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic1Border,
                         title:
@@ -575,7 +542,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic2Width,
                         title:
@@ -586,7 +553,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic2Height,
                         title:
@@ -597,7 +564,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic2Radius,
                         title:
@@ -608,7 +575,7 @@ class _Design2State extends State<Design2> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.pic2Border,
                         title:
@@ -623,9 +590,7 @@ class _Design2State extends State<Design2> {
                         width: Get.width * 0.2,
                         child: Row(
                           children: [
-                            Text(
-                              'Hide Index',
-                            ),
+                            Text('Hide Index'),
                             Spacer(),
                             Switch(
                               value: designController.hideIndex,
@@ -633,7 +598,7 @@ class _Design2State extends State<Design2> {
                                 designController.hideIndex = value;
                                 setState(() {});
                               },
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -641,22 +606,20 @@ class _Design2State extends State<Design2> {
                         width: Get.width * 0.2,
                         child: Row(
                           children: [
-                            Text(
-                              'Reverse Data',
-                            ),
+                            Text('Reverse Data'),
                             Spacer(),
                             Switch(
                               value: designController.reverseData,
                               onChanged: (value) {
                                 List<dynamic> csvData =
                                     designController.csvData;
-                                designController.csvData =
-                                    csvData.reversed.toList();
+                                designController.csvData = csvData.reversed
+                                    .toList();
                                 designController.reverseData = value;
                                 designController.update();
                                 setState(() {});
                               },
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -664,9 +627,7 @@ class _Design2State extends State<Design2> {
                         width: Get.width * 0.2,
                         child: Row(
                           children: [
-                            Text(
-                              'Random Data',
-                            ),
+                            Text('Random Data'),
                             Spacer(),
                             Switch(
                               value: designController.reverseData,
@@ -675,7 +636,7 @@ class _Design2State extends State<Design2> {
                                 designController.update();
                                 setState(() {});
                               },
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -683,9 +644,7 @@ class _Design2State extends State<Design2> {
                         width: Get.width * 0.2,
                         child: Row(
                           children: [
-                            Text(
-                              'Enable Random Color',
-                            ),
+                            Text('Enable Random Color'),
                             Spacer(),
                             Switch(
                               value: designController.enableRandomColor,
@@ -693,10 +652,10 @@ class _Design2State extends State<Design2> {
                                 designController.enableRandomColor = value;
                                 setState(() {});
                               },
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                   gap(w: 40),
@@ -869,8 +828,9 @@ class _Design2State extends State<Design2> {
             InkWell(
               onTap: () {
                 if (videoTimer.text.isNotEmpty) {
-                  designController.videoDuration =
-                      int.parse(videoTimer.text.toString().trim());
+                  designController.videoDuration = int.parse(
+                    videoTimer.text.toString().trim(),
+                  );
                 }
                 _Key.currentState!.closeDrawer();
                 designController.updateFlow();
@@ -879,10 +839,9 @@ class _Design2State extends State<Design2> {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Generate',
                   style: GoogleFonts.manrope(
@@ -913,8 +872,10 @@ class _Design2State extends State<Design2> {
     );
   }
 
-  colorPicker(
-      {required Color currentColor, required Function(Color) onChange}) {
+  colorPicker({
+    required Color currentColor,
+    required Function(Color) onChange,
+  }) {
     // create some values
 
     showDialog(

@@ -28,79 +28,77 @@ class _Design19State extends State<Design19> {
   double containerSize = 360;
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
       body: SafeArea(
-        child: GetBuilder<Design19Controller>(builder: (controller) {
-          return Stack(
-            key: Key(getRandomString(30)),
-            children: [
-              Positioned(
-                right: 50,
-                top: 0,
-                bottom: 15,
-                child: Center(
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Container(
-                      height: (Get.height - 200),
-                      width: containerSize, // You can change this value
-                      decoration: BoxDecoration(
-                        gradient: controller.backgroundGradient,
+        child: GetBuilder<Design19Controller>(
+          builder: (controller) {
+            return Stack(
+              key: Key(getRandomString(30)),
+              children: [
+                Positioned(
+                  right: 50,
+                  top: 0,
+                  bottom: 15,
+                  child: Center(
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Container(
+                        height: (Get.height - 200),
+                        width: containerSize, // You can change this value
+                        decoration: BoxDecoration(
+                          gradient: controller.backgroundGradient,
+                        ),
+                        child: controller.backgroundImage.text.isNotEmpty
+                            ? Opacity(
+                                opacity:
+                                    (controller.backgroundImageOpacity / 10),
+                                child: Image.network(
+                                  controller.backgroundImage.text,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : gap(),
                       ),
-                      child: controller.backgroundImage.text.isNotEmpty
-                          ? Opacity(
-                              opacity: (controller.backgroundImageOpacity / 10),
-                              child: Image.network(
-                                controller.backgroundImage.text,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : gap(),
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                right: 50,
-                top: 0,
-                bottom: 15,
-                child: Center(
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: DemoChartRow(),
+                Positioned(
+                  right: 50,
+                  top: 0,
+                  bottom: 15,
+                  child: Center(
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: DemoChartRow(),
+                    ),
                   ),
                 ),
-              ),
-              controller.isGenerating
-                  ? gap()
-                  : Positioned(
-                      top: 15,
-                      left: 15,
-                      child: InkWell(
-                        onTap: () {
-                          _Key.currentState!.openDrawer();
-                          setState(() {});
-                        },
-                        child: Container(
-                          padding: spacing(h: 7, v: 7),
-                          decoration: BoxDecoration(
-                            color: whiteColor,
-                            borderRadius: borderRadius(50),
-                          ),
-                          child: Icon(
-                            Icons.menu,
-                            color: halfBlack,
-                            size: 25,
+                controller.isGenerating
+                    ? gap()
+                    : Positioned(
+                        top: 15,
+                        left: 15,
+                        child: InkWell(
+                          onTap: () {
+                            _Key.currentState!.openDrawer();
+                            setState(() {});
+                          },
+                          child: Container(
+                            padding: spacing(h: 7, v: 7),
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              borderRadius: borderRadius(50),
+                            ),
+                            child: Icon(Icons.menu, color: halfBlack, size: 25),
                           ),
                         ),
                       ),
-                    ),
-            ],
-          );
-        }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -154,10 +152,9 @@ class _Design19State extends State<Design19> {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Choose file',
                   style: GoogleFonts.manrope(
@@ -183,17 +180,13 @@ class _Design19State extends State<Design19> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: videoTimer,
                             decoration: InputDecoration(
@@ -213,7 +206,8 @@ class _Design19State extends State<Design19> {
                             keyboardType: TextInputType.phone,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                  RegExp("[0-9]")),
+                                RegExp("[0-9]"),
+                              ),
                             ],
                           ),
                         ),
@@ -228,17 +222,13 @@ class _Design19State extends State<Design19> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.backgroundImage,
                             onChanged: (v) {
@@ -273,10 +263,7 @@ class _Design19State extends State<Design19> {
               margin: spacing(v: 20),
               decoration: BoxDecoration(
                 color: whiteColor,
-                border: Border.all(
-                  width: 2,
-                  color: halfBlack,
-                ),
+                border: Border.all(width: 2, color: halfBlack),
                 borderRadius: borderRadius(60),
                 boxShadow: shadow,
               ),
@@ -288,7 +275,7 @@ class _Design19State extends State<Design19> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 600,
                         value: designController.barWidth,
                         title:
@@ -298,16 +285,10 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.barWidth++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.barWidth--;
-                          setState(() {});
-                        },
+                      
+
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 600,
                         value: designController.maxValue,
                         title:
@@ -317,17 +298,7 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.maxValue++;
-                          designController.update();
-
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.maxValue--;
-                          designController.update();
-                          setState(() {});
-                        },
+                        
                       ),
                       ColorPickerItem(
                         hintText: 'Bar Color',
@@ -343,7 +314,7 @@ class _Design19State extends State<Design19> {
                         },
                         currentColor: designController.barColor,
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 300,
                         value: designController.spaceBetween,
                         title:
@@ -353,16 +324,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.spaceBetween++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.spaceBetween--;
-                          setState(() {});
-                        },
+                       
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 2000,
                         value: designController.picContainerWidth,
                         title:
@@ -372,18 +336,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.picContainerWidth++;
-                          designController.update();
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.picContainerWidth--;
-                          designController.update();
-                          setState(() {});
-                        },
+                      
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 500,
                         value: designController.picBottomSpace,
                         title:
@@ -393,16 +348,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.picBottomSpace++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.picBottomSpace--;
-                          setState(() {});
-                        },
+                       
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 600,
                         value: designController.nameContainerWidth,
                         title:
@@ -412,16 +360,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.nameContainerWidth++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.nameContainerWidth--;
-                          setState(() {});
-                        },
+                       
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 100,
                         value: designController.nameContainerPadding,
                         title:
@@ -431,16 +372,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.nameContainerPadding++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.nameContainerPadding--;
-                          setState(() {});
-                        },
+                       
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 100,
                         value: designController.nameContainerRadius,
                         title:
@@ -450,16 +384,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.nameContainerRadius++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.nameContainerRadius--;
-                          setState(() {});
-                        },
+                        
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 200,
                         value: designController.nameTopSpacing,
                         title:
@@ -469,14 +396,7 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.nameTopSpacing++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.nameTopSpacing--;
-                          setState(() {});
-                        },
+                        
                       ),
                       ColorPickerItem(
                         hintText: 'Name Font Color',
@@ -539,7 +459,7 @@ class _Design19State extends State<Design19> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 600,
                         value: designController.valueContainerWidth,
                         title:
@@ -549,16 +469,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.valueContainerWidth++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueContainerWidth--;
-                          setState(() {});
-                        },
+                        
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 100,
                         value: designController.valueContainerPadding,
                         title:
@@ -568,16 +481,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.valueContainerPadding++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueContainerPadding--;
-                          setState(() {});
-                        },
+                        
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 100,
                         value: designController.valueContainerRadius,
                         title:
@@ -587,16 +493,9 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.valueContainerRadius++;
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueContainerRadius--;
-                          setState(() {});
-                        },
+                        
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         max: 200,
                         value: designController.valueTopSpacing,
                         title:
@@ -606,16 +505,7 @@ class _Design19State extends State<Design19> {
                           designController.update();
                           setState(() {});
                         },
-                        increase: () {
-                          designController.valueTopSpacing++;
-                          designController.update();
-                          setState(() {});
-                        },
-                        decrease: () {
-                          designController.valueTopSpacing--;
-                          designController.update();
-                          setState(() {});
-                        },
+                        
                       ),
                       ColorPickerItem(
                         hintText: 'Value Font Color',
@@ -736,12 +626,13 @@ class _Design19State extends State<Design19> {
                       ),
                       FontSizer(
                         hintText: 'Background Image Opacity',
-                        fontSize:
-                            designController.backgroundImageOpacity.toInt(),
+                        fontSize: designController.backgroundImageOpacity
+                            .toInt(),
                         increase: () {
                           if (designController.backgroundImageOpacity <= 10) {
                             print(
-                                'Increaseing  ${designController.backgroundImageOpacity / 10}');
+                              'Increaseing  ${designController.backgroundImageOpacity / 10}',
+                            );
                             designController.backgroundImageOpacity++;
                             designController.update();
                             setState(() {});
@@ -750,7 +641,8 @@ class _Design19State extends State<Design19> {
                         decrease: () {
                           if (designController.backgroundImageOpacity >= 0) {
                             print(
-                                'Descreasing ${designController.backgroundImageOpacity / 10}');
+                              'Descreasing ${designController.backgroundImageOpacity / 10}',
+                            );
                             designController.backgroundImageOpacity--;
                             designController.update();
                             setState(() {});
@@ -769,8 +661,9 @@ class _Design19State extends State<Design19> {
                 InkWell(
                   onTap: () async {
                     if (videoTimer.text.isNotEmpty) {
-                      designController.animationGap =
-                          int.parse(videoTimer.text.toString().trim());
+                      designController.animationGap = int.parse(
+                        videoTimer.text.toString().trim(),
+                      );
                     }
                     _Key.currentState!.closeDrawer();
                     designController.isGenerating = true;
@@ -780,10 +673,9 @@ class _Design19State extends State<Design19> {
                   child: Container(
                     padding: spacing(h: 15, v: 7),
                     decoration: BoxDecoration(
-                        color: darkBlue,
-                        borderRadius: borderRadius(
-                          10,
-                        )),
+                      color: darkBlue,
+                      borderRadius: borderRadius(10),
+                    ),
                     child: Text(
                       'Generate',
                       style: GoogleFonts.manrope(
@@ -805,10 +697,9 @@ class _Design19State extends State<Design19> {
                   child: Container(
                     padding: spacing(h: 15, v: 7),
                     decoration: BoxDecoration(
-                        color: darkBlue,
-                        borderRadius: borderRadius(
-                          10,
-                        )),
+                      color: darkBlue,
+                      borderRadius: borderRadius(10),
+                    ),
                     child: Text(
                       'Show All',
                       style: GoogleFonts.manrope(
@@ -839,8 +730,10 @@ class _Design19State extends State<Design19> {
     );
   }
 
-  colorPicker(
-      {required Color currentColor, required Function(Color) onChange}) {
+  colorPicker({
+    required Color currentColor,
+    required Function(Color) onChange,
+  }) {
     // create some values
 
     showDialog(

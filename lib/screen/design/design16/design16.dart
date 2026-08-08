@@ -45,116 +45,115 @@ class _Design16State extends State<Design16> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       drawer: drawerWidget(),
       key: _Key,
-      body: GetBuilder<Design16Controller>(builder: (controller) {
-        return Stack(
-          children: [
-            Positioned(
-              right: 50,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    height: (Get.height - 200),
-                    width: containerSize, // You can change this value
-                    decoration: BoxDecoration(
-                      gradient: controller.backgroundGradient,
+      body: GetBuilder<Design16Controller>(
+        builder: (controller) {
+          return Stack(
+            children: [
+              Positioned(
+                right: 50,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Container(
+                      height: (Get.height - 200),
+                      width: containerSize, // You can change this value
+                      decoration: BoxDecoration(
+                        gradient: controller.backgroundGradient,
+                      ),
+                      child: controller.backgroundImage.text.isNotEmpty
+                          ? Opacity(
+                              opacity: (controller.backgroundImageOpacity / 10),
+                              child: Image.network(
+                                controller.backgroundImage.text,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : gap(),
                     ),
-                    child: controller.backgroundImage.text.isNotEmpty
-                        ? Opacity(
-                            opacity: (controller.backgroundImageOpacity / 10),
-                            child: Image.network(
-                              controller.backgroundImage.text,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : gap(),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              right: 50,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    width: containerSize, // You can change this value
-                    height: Get.height,
-                    child: Column(
-                      children: [
-                        gap(h: 10),
-                        Container(
-                          alignment: Alignment.center,
-                          margin: spacing(v: 10),
-                          padding: spacing(h: 15),
-                          child: Text(
-                            controller.title.text,
-                            style: GoogleFonts.getFont(
-                              controller.titleFontFamily,
-                              fontWeight: FontWeight.bold,
-                              color: controller.titleFontColor,
-                              fontSize: controller.titleFontSize,
-                              shadows: [
-                                Shadow(
-                                  color: controller.shadowColor.withAlpha(
-                                    (255 * (controller.textShadowOpacity / 10))
-                                        .toInt(),
+              Positioned(
+                right: 50,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Container(
+                      width: containerSize, // You can change this value
+                      height: Get.height,
+                      child: Column(
+                        children: [
+                          gap(h: 10),
+                          Container(
+                            alignment: Alignment.center,
+                            margin: spacing(v: 10),
+                            padding: spacing(h: 15),
+                            child: Text(
+                              controller.title.text,
+                              style: GoogleFonts.getFont(
+                                controller.titleFontFamily,
+                                fontWeight: FontWeight.bold,
+                                color: controller.titleFontColor,
+                                fontSize: controller.titleFontSize,
+                                shadows: [
+                                  Shadow(
+                                    color: controller.shadowColor.withAlpha(
+                                      (255 *
+                                              (controller.textShadowOpacity /
+                                                  10))
+                                          .toInt(),
+                                    ),
+                                    offset: Offset.zero,
+                                    blurRadius: 10,
                                   ),
-                                  offset: Offset.zero,
-                                  blurRadius: 10,
-                                )
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Design16MainUI(
-                          itemData: controller.csvData.isEmpty
-                              ? controller.dumyData
-                              : controller.csvData[controller.currentIndex],
-                          key: Key(getRandomString(20)),
-                        ),
-                        gap(h: 20),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            controller.isGenerating
-                ? gap()
-                : Positioned(
-                    top: 15,
-                    left: 15,
-                    child: InkWell(
-                      onTap: () {
-                        _Key.currentState!.openDrawer();
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: spacing(h: 7, v: 7),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: borderRadius(50),
-                        ),
-                        child: Icon(
-                          Icons.menu,
-                          color: halfBlack,
-                          size: 25,
-                        ),
+                          Design16MainUI(
+                            itemData: controller.csvData.isEmpty
+                                ? controller.dumyData
+                                : controller.csvData[controller.currentIndex],
+                            key: Key(getRandomString(20)),
+                          ),
+                          gap(h: 20),
+                        ],
                       ),
                     ),
                   ),
-          ],
-        );
-      }),
+                ),
+              ),
+              controller.isGenerating
+                  ? gap()
+                  : Positioned(
+                      top: 15,
+                      left: 15,
+                      child: InkWell(
+                        onTap: () {
+                          _Key.currentState!.openDrawer();
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: spacing(h: 7, v: 7),
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: borderRadius(50),
+                          ),
+                          child: Icon(Icons.menu, color: halfBlack, size: 25),
+                        ),
+                      ),
+                    ),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -207,10 +206,9 @@ class _Design16State extends State<Design16> {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Choose file',
                   style: GoogleFonts.manrope(
@@ -234,17 +232,13 @@ class _Design16State extends State<Design16> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: videoTimer,
                             decoration: InputDecoration(
@@ -264,7 +258,8 @@ class _Design16State extends State<Design16> {
                             keyboardType: TextInputType.phone,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                  RegExp("[0-9]")),
+                                RegExp("[0-9]"),
+                              ),
                             ],
                           ),
                         ),
@@ -279,17 +274,13 @@ class _Design16State extends State<Design16> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.verserImage,
                             onChanged: (x) {
@@ -327,17 +318,13 @@ class _Design16State extends State<Design16> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.title,
                             onChanged: (x) {
@@ -371,17 +358,13 @@ class _Design16State extends State<Design16> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.backgroundImage,
                             onChanged: (v) {
@@ -419,17 +402,13 @@ class _Design16State extends State<Design16> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.name1,
                             onChanged: (x) {
@@ -463,17 +442,13 @@ class _Design16State extends State<Design16> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.logo1,
                             onChanged: (x) {
@@ -511,17 +486,13 @@ class _Design16State extends State<Design16> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.name2,
                             onChanged: (x) {
@@ -555,17 +526,13 @@ class _Design16State extends State<Design16> {
                         Container(
                           width: 300,
                           height: 50,
-                          padding: spacing(
-                            h: 14,
-                          ),
+                          padding: spacing(h: 14),
                           decoration: BoxDecoration(
-                              color: whiteColor,
-                              boxShadow: shadow,
-                              borderRadius: borderRadius(50),
-                              border: Border.all(
-                                width: 2,
-                                color: halfBlack,
-                              )),
+                            color: whiteColor,
+                            boxShadow: shadow,
+                            borderRadius: borderRadius(50),
+                            border: Border.all(width: 2, color: halfBlack),
+                          ),
                           child: TextFormField(
                             controller: designController.logo2,
                             onChanged: (x) {
@@ -599,10 +566,7 @@ class _Design16State extends State<Design16> {
               margin: spacing(v: 20),
               decoration: BoxDecoration(
                 color: whiteColor,
-                border: Border.all(
-                  width: 2,
-                  color: halfBlack,
-                ),
+                border: Border.all(width: 2, color: halfBlack),
                 borderRadius: borderRadius(60),
                 boxShadow: shadow,
               ),
@@ -710,7 +674,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picContainerWidth,
                         max: 1000,
                         title:
@@ -721,7 +685,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picContainerHeight,
                         max: 1000,
                         title:
@@ -732,7 +696,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.deviceMarginTop,
                         max: 100,
                         title:
@@ -743,7 +707,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.deviceMarginBottom,
                         max: 100,
                         title:
@@ -754,7 +718,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picHMargin,
                         max: 200,
                         title:
@@ -765,7 +729,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.picVMargin,
                         max: 200,
                         title:
@@ -776,7 +740,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.correctIconSize,
                         max: 500,
                         title:
@@ -787,7 +751,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.correctIconBottom,
                         max: 200,
                         title:
@@ -814,7 +778,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.vsImageWidth,
                         max: 300,
                         title:
@@ -833,7 +797,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.titleFontSize,
                         max: 200,
                         title:
@@ -872,7 +836,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.nameTextSize,
                         max: 200,
                         title:
@@ -904,7 +868,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.valueFontSize,
                         max: 200,
                         title:
@@ -976,7 +940,7 @@ class _Design16State extends State<Design16> {
                           setState(() {});
                         },
                       ),
-                      ValueChangeSlider(
+                      NewValueSlider(
                         value: designController.countryNameFontSize,
                         max: 200,
                         title:
@@ -1050,12 +1014,13 @@ class _Design16State extends State<Design16> {
                       ),
                       FontSizer(
                         hintText: 'Background Image Opacity',
-                        fontSize:
-                            designController.backgroundImageOpacity.toInt(),
+                        fontSize: designController.backgroundImageOpacity
+                            .toInt(),
                         increase: () {
                           if (designController.backgroundImageOpacity <= 10) {
                             print(
-                                'Increaseing  ${designController.backgroundImageOpacity / 10}');
+                              'Increaseing  ${designController.backgroundImageOpacity / 10}',
+                            );
                             designController.backgroundImageOpacity++;
                             designController.update();
                             setState(() {});
@@ -1064,7 +1029,8 @@ class _Design16State extends State<Design16> {
                         decrease: () {
                           if (designController.backgroundImageOpacity >= 0) {
                             print(
-                                'Descreasing ${designController.backgroundImageOpacity / 10}');
+                              'Descreasing ${designController.backgroundImageOpacity / 10}',
+                            );
                             designController.backgroundImageOpacity--;
                             designController.update();
                             setState(() {});
@@ -1090,7 +1056,8 @@ class _Design16State extends State<Design16> {
                         increase: () {
                           if (designController.textShadowOpacity <= 10) {
                             print(
-                                'Increaseing  ${designController.textShadowOpacity / 10}');
+                              'Increaseing  ${designController.textShadowOpacity / 10}',
+                            );
                             designController.textShadowOpacity++;
                             designController.update();
                             setState(() {});
@@ -1099,7 +1066,8 @@ class _Design16State extends State<Design16> {
                         decrease: () {
                           if (designController.textShadowOpacity >= 0) {
                             print(
-                                'Descreasing ${designController.textShadowOpacity / 10}');
+                              'Descreasing ${designController.textShadowOpacity / 10}',
+                            );
                             designController.textShadowOpacity--;
                             designController.update();
                             setState(() {});
@@ -1125,7 +1093,8 @@ class _Design16State extends State<Design16> {
                         increase: () {
                           if (designController.flagShadowOpacity <= 10) {
                             print(
-                                'Increaseing  ${designController.flagShadowOpacity / 10}');
+                              'Increaseing  ${designController.flagShadowOpacity / 10}',
+                            );
                             designController.flagShadowOpacity++;
                             designController.update();
                             setState(() {});
@@ -1134,7 +1103,8 @@ class _Design16State extends State<Design16> {
                         decrease: () {
                           if (designController.flagShadowOpacity >= 0) {
                             print(
-                                'Descreasing ${designController.flagShadowOpacity / 10}');
+                              'Descreasing ${designController.flagShadowOpacity / 10}',
+                            );
                             designController.flagShadowOpacity--;
                             designController.update();
                             setState(() {});
@@ -1159,14 +1129,16 @@ class _Design16State extends State<Design16> {
                         fontSize: designController.picBorderSize.toInt(),
                         increase: () {
                           print(
-                              'Increaseing  ${designController.picBorderSize / 10}');
+                            'Increaseing  ${designController.picBorderSize / 10}',
+                          );
                           designController.picBorderSize++;
                           designController.update();
                           setState(() {});
                         },
                         decrease: () {
                           print(
-                              'Descreasing ${designController.picBorderSize / 10}');
+                            'Descreasing ${designController.picBorderSize / 10}',
+                          );
                           designController.picBorderSize--;
                           designController.update();
                           setState(() {});
@@ -1190,14 +1162,16 @@ class _Design16State extends State<Design16> {
                         fontSize: designController.flagBorderSize.toInt(),
                         increase: () {
                           print(
-                              'Increaseing  ${designController.flagBorderSize / 10}');
+                            'Increaseing  ${designController.flagBorderSize / 10}',
+                          );
                           designController.flagBorderSize++;
                           designController.update();
                           setState(() {});
                         },
                         decrease: () {
                           print(
-                              'Descreasing ${designController.flagBorderSize / 10}');
+                            'Descreasing ${designController.flagBorderSize / 10}',
+                          );
                           designController.flagBorderSize--;
                           designController.update();
                           setState(() {});
@@ -1212,8 +1186,9 @@ class _Design16State extends State<Design16> {
               onTap: () {
                 designController.isGenerating = true;
                 if (videoTimer.text.toString().isNotEmpty) {
-                  designController.animationGap =
-                      int.parse(videoTimer.text.toString().trim());
+                  designController.animationGap = int.parse(
+                    videoTimer.text.toString().trim(),
+                  );
                 }
                 designController.updateFlow();
                 // _Key.currentState!.closeDrawer();
@@ -1222,10 +1197,9 @@ class _Design16State extends State<Design16> {
               child: Container(
                 padding: spacing(h: 15, v: 7),
                 decoration: BoxDecoration(
-                    color: darkBlue,
-                    borderRadius: borderRadius(
-                      10,
-                    )),
+                  color: darkBlue,
+                  borderRadius: borderRadius(10),
+                ),
                 child: Text(
                   'Generate',
                   style: GoogleFonts.manrope(
@@ -1256,8 +1230,10 @@ class _Design16State extends State<Design16> {
     );
   }
 
-  colorPicker(
-      {required Color currentColor, required Function(Color) onChange}) {
+  colorPicker({
+    required Color currentColor,
+    required Function(Color) onChange,
+  }) {
     // create some values
 
     showDialog(
