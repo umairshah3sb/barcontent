@@ -128,6 +128,7 @@ class _Design15State extends State<Design15> {
                                   ),
                                 ],
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                           Design15MainUI(
@@ -256,6 +257,10 @@ class _Design15State extends State<Design15> {
       designController.flagContainerWidth = 220;
       designController.flagContainerHeight = 140;
       designController.valueContainerPosition = 210;
+      designController.picContainerWidth = 450;
+      designController.picContainerHeight = 260;
+      designController.valueContainerPosition = 230;
+      designController.picVgap = 60;
     }
 
     // TODO: point this at whatever actually decides which template

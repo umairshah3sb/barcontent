@@ -97,7 +97,7 @@ class _Design15Item2State extends State<Design15Item2> {
                       fontSize: controller.nameTextSize,
                       fontWeight: FontWeight.w800,
                       color: controller.nameFontColor,
-                    
+
                       shadows: [
                         Shadow(
                           color: controller.shadowColor.withAlpha(
@@ -179,30 +179,115 @@ class _Design15Item2State extends State<Design15Item2> {
               ? controller.logo2.text
               : 'https://flagcdn.com/w320/in.png');
 
-    return Container(
-      width: controller.flagContainerWidth * 0.55,
-      height: controller.flagContainerHeight * 0.55,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: borderRadius(controller.logoRadius),
-        border: Border.all(
-          color: controller.flagBorderColor,
-          width: controller.flagBorderSize,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: controller.flagShadowColor.withAlpha(
-              (255 * (controller.flagShadowOpacity / 10)).toInt(),
-            ),
-            blurRadius: 28.68,
-            offset: Offset(0, 28.68),
-            spreadRadius: 0,
+    return Transform(
+      alignment: Alignment.center,
+      transform: Matrix4.identity()
+        ..setEntry(3, 2, 0.0015) // perspective
+        ..rotateX(-0.05) // slight tilt back
+        ..rotateY(0.08), // slight tilt sideways
+      child: Container(
+        width: controller.flagContainerWidth * 0.55,
+        height: controller.flagContainerHeight * 0.55,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius(controller.logoRadius),
+          border: Border.all(
+            color: controller.flagBorderColor,
+            width: controller.flagBorderSize,
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: borderRadius(controller.logoRadius),
-        child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+          boxShadow: [
+            // Soft ambient shadow (close, diffuse)
+            BoxShadow(
+              color: controller.flagShadowColor.withAlpha(
+                (255 * (controller.flagShadowOpacity / 10) * 0.5).toInt(),
+              ),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+              spreadRadius: -2,
+            ),
+            // Main directional shadow (depth)
+            BoxShadow(
+              color: controller.flagShadowColor.withAlpha(
+                (255 * (controller.flagShadowOpacity / 10)).toInt(),
+              ),
+              blurRadius: 28.68,
+              offset: const Offset(0, 20),
+              spreadRadius: -4,
+            ),
+            // Far soft glow for extra lift off the background
+            BoxShadow(
+              color: controller.flagShadowColor.withAlpha(
+                (255 * (controller.flagShadowOpacity / 10) * 0.35).toInt(),
+              ),
+              blurRadius: 45,
+              offset: const Offset(0, 32),
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: borderRadius(controller.logoRadius),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // The flag image
+              CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+
+              // Subtle top-light glossy sheen (glass/waving-flag feel)
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.white.withOpacity(0.25),
+                        Colors.white.withOpacity(0.05),
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.08),
+                      ],
+                      stops: const [0.0, 0.25, 0.6, 1.0],
+                    ),
+                  ),
+                ),
+              ),
+
+              // Diagonal highlight streak for a "polished" reflective edge
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: Opacity(
+                    opacity: 0.15,
+                    child: Transform.rotate(
+                      angle: -0.5,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [Colors.white, Colors.transparent],
+                            stops: [0.0, 0.4],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Inner border highlight for a "raised edge" 3D feel
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: borderRadius(controller.logoRadius),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.15),
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

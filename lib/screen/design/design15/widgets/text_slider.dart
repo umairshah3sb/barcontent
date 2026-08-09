@@ -29,6 +29,7 @@ class _SlideUpPauseDownState extends State<SlideUpPauseDown>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnim;
+  late Animation<double> _fadeAnim;
   Design15Controller designcontroller = Get.put(Design15Controller());
 
   @override
@@ -37,27 +38,31 @@ class _SlideUpPauseDownState extends State<SlideUpPauseDown>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 600), // smooth slide duration
+      duration: Duration(milliseconds: 700), // slightly longer = smoother feel
     );
 
     _slideAnim = Tween<Offset>(
-      begin: Offset(0, 1), // start from bottom of container
-      end: Offset(0, 0), // slide into visible area (top)
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+      begin: Offset(0, 1),
+      end: Offset(0, 0),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+
+    // Fade synced with the slide so it doesn't just "pop" in/out
+    _fadeAnim = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn, // fade in during the first part of the forward anim
+      reverseCurve: Curves.easeOut,
+    );
 
     _startAnimationFlow();
   }
 
   Future<void> _startAnimationFlow() async {
-    // Step 1: Slide up
     Timer(Duration(seconds: widget.isFirst ? 1 : 2), () async {
       await _controller.forward();
     });
 
-    // Step 2: Pause at top
     await Future.delayed(Duration(milliseconds: 4500));
 
-    // Step 3: Slide down back
     await _controller.reverse();
   }
 
@@ -70,33 +75,52 @@ class _SlideUpPauseDownState extends State<SlideUpPauseDown>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ClipRect(
-        child: SlideTransition(
-          position: _slideAnim,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              alignment: Alignment.center,
-              child: AutoSizeText(
-                widget.text.toString(),
-                style: GoogleFonts.getFont(
-                  designcontroller.valueFontFamily,
-                  fontWeight: widget.fontWeight,
-                  color: widget.color,
-                  fontSize: widget.fontSize,
-                  backgroundColor: widget.isFirst
-                      ? designcontroller.valueContainerLeft
-                      : designcontroller.valueContainerRight,
-                  shadows: [
-                    Shadow(
-                      color: designcontroller.shadowColor.withAlpha(
-                        (255 * (designcontroller.textShadowOpacity / 10))
-                            .toInt(),
-                      ),
-                      offset: Offset.zero,
-                      blurRadius: 10,
-                    )
-                  ],
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: const [
+              Colors.transparent,
+              Colors.black,
+              Colors.black,
+              Colors.transparent,
+            ],
+            stops: const [0.0, 0.15, 0.85, 1.0],
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstIn,
+        child: ClipRect(
+          child: FadeTransition(
+            opacity: _fadeAnim,
+            child: SlideTransition(
+              position: _slideAnim,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                    widget.text.toString(),
+                    style: GoogleFonts.getFont(
+                      designcontroller.valueFontFamily,
+                      fontWeight: widget.fontWeight,
+                      color: widget.color,
+                      fontSize: widget.fontSize,
+                      backgroundColor: widget.isFirst
+                          ? designcontroller.valueContainerLeft
+                          : designcontroller.valueContainerRight,
+                      shadows: [
+                        Shadow(
+                          color: designcontroller.shadowColor.withAlpha(
+                            (255 * (designcontroller.textShadowOpacity / 10))
+                                .toInt(),
+                          ),
+                          offset: Offset.zero,
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
