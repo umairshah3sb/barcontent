@@ -94,9 +94,10 @@ class _Design15Item2State extends State<Design15Item2> {
                   Text(
                     widget.itemData['name'],
                     style: GoogleFonts.alfaSlabOne(
-                      fontSize: controller.countryNameFontSize,
+                      fontSize: controller.nameTextSize,
                       fontWeight: FontWeight.w800,
-                      color: controller.countryNameFontColor,
+                      color: controller.nameFontColor,
+                    
                       shadows: [
                         Shadow(
                           color: controller.shadowColor.withAlpha(
@@ -139,8 +140,8 @@ class _Design15Item2State extends State<Design15Item2> {
             ),
             Positioned(
               top: controller.valueContainerPosition,
-              left: controller.VideoContainerSpacingH,
-              right: controller.VideoContainerSpacingH,
+              left: controller.valueContainerHSpacing,
+              right: controller.valueContainerHSpacing,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

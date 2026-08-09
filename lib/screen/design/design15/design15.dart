@@ -1215,6 +1215,18 @@ class _Design15State extends State<Design15> {
             setState(() {});
           },
         ),
+
+        NewValueSlider(
+          value: designController.valueContainerHSpacing,
+          max: 1200,
+          title:
+              'Value Container H Spacing: ${designController.valueContainerHSpacing.toInt()}',
+          onChanged: (value) {
+            designController.valueContainerHSpacing = value;
+            designController.update();
+            setState(() {});
+          },
+        ),
         NewValueSlider(
           value: designController.valueWidth,
           max: 1200,

@@ -44,6 +44,7 @@ class Design15Controller extends GetxController {
   String valueFontFamily = 'Russo One';
   double valueContainerSize = 70;
   double valueContainerPosition = 140;
+  double valueContainerHSpacing = 30;
   Color valueFontColor = halfBlack;
   Color valueContainerLeft = Colors.transparent;
   Color valueContainerRight = Colors.transparent;
